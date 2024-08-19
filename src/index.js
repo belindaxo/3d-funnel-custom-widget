@@ -26,6 +26,7 @@ var parseMetadata = metadata => {
 (function() {
     class Funnel3D extends HTMLElement {
         constructor() {
+            super();
             this.attachShadow({ mode: 'open' });
             this.shadowRoot.innerHTML = `
                 <div id="container" style="width: 100%; height: 100%;"></div>    
