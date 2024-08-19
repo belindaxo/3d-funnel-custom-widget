@@ -160,6 +160,14 @@ var parseMetadata = metadata => {
                 exporting: {
                     enabled: true
                 },
+                tooltip: {
+                    valueDecimals: 0,
+                    formatter: function () {
+                        const category = categoryData[this.point.index];
+                        const value = this.y;
+                        return `${category}: ${value}`;
+                    }
+                },
                 series
             }
             this._chart = Highcharts.chart(this.shadowRoot.getElementById('container'), chartOptions);
