@@ -147,7 +147,10 @@ var parseMetadata = metadata => {
                             formatter: function () {
                                 const category = categoryData[this.point.index];
                                 const value = scaleFormat(this.y);
-                                return `${category}: ${value}`;
+                                return `${category} - ${value}`;
+                            },
+                            style: {
+                                textOverflow: 'clip'
                             },
                             y: 10
                         },
@@ -164,8 +167,8 @@ var parseMetadata = metadata => {
                     valueDecimals: 0,
                     formatter: function () {
                         const category = categoryData[this.point.index];
-                        const value = this.y;
-                        return `${category}: ${value}`;
+                        const value = scaleFormat(this.y);
+                        return `${category} - ${value}`;
                     }
                 },
                 series
