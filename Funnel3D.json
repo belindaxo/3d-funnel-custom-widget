@@ -1,0 +1,52 @@
+{
+    "name": "3D Funnel Chart",
+    "description": "A 3D funnel chart with data binding",
+    "eula": "",
+    "vendor": "",
+    "license": "",
+    "id": "com.sap.sample.funnel3d",
+    "newInstancePrefix": "Funnel3D",
+    "version": "0.0.1",
+    "webcomponents": [
+        {
+            "kind": "main",
+            "tag": "com-sap-sample-funnel3d",
+            "url": "",
+            "integrity": "",
+            "ignoreIntegrity": true
+        }
+    ],
+    "properties": {
+        "width": {
+            "type": "integer",
+            "default": 600
+        },
+        "height": {
+            "type": "integer",
+            "default": 400
+        }
+    },
+    "methods": {
+
+    },
+    "events": {
+
+    },
+    "dataBindings": {
+        "dataBinding": {
+            "feeds": [
+                {
+                    "id": "dimensions",
+                    "description": "Dimensions",
+                    "type": "dimension"
+                },
+                {
+                    "id": "measures",
+                    "description": "Measures",
+                    "type": "mainStructureMember"
+                }
+            ]
+        }
+    }
+
+}
