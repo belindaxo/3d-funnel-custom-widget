@@ -90,7 +90,7 @@ var parseMetadata = metadata => {
                     series: {
                         dataLabels: {
                             enabled: true,
-                            format: '<b>{point.name}</b> ({point.y:,.0f})',
+                            format: '{point.y:,.0f}',
                             allowOverlap: true,
                             y: 10
                         },
