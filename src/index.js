@@ -44,6 +44,22 @@ var parseMetadata = metadata => {
         onCustomWidgetDestroy(){
         }
 
+        static get observedAttributes() {
+            return [
+                'chartTitle', 'titleSize', 'titleFontStyle', 'titleAlignment', 'titleColor',                // Title properties
+                'chartSubtitle', 'subtitleSize', 'subtitleFontStyle', 'subtitleAlignment', 'subtitleColor', // Subtitle properties
+                'scaleFormat', 'decimalPlaces',                                                             // Number formatting properties
+                'showDataLabels', 'allowLabelOverlap',                                                      // Data label properties            
+            ];
+        }
+
+        attributeChangedCallback(name, oldValue, newValue) {
+            if (oldValue !== newValue) {
+                this[name] = newValue;
+                this._renderChart();
+            }
+        }
+
         _renderChart() {
             const dataBinding = this.dataBinding;
             if (!dataBinding || dataBinding.state !== 'success') {
@@ -74,6 +90,28 @@ var parseMetadata = metadata => {
                 });
             });
 
+            const scaleFormat = (value) =>{
+                let scaledValue = value;
+                let suffix = '';
+                switch (this.scaleFormat) {
+                    case 'k':
+                        scaledValue = value / 1000;
+                        suffix = 'k';
+                        break;
+                    case 'm':
+                        scaledValue = value / 1000000;
+                        suffix = 'm';
+                        break;
+                    case 'b':
+                        scaledValue = value / 1000000000;
+                        suffix = 'b';
+                        break;
+                    default:
+                        break;
+                }
+                return scaledValue.toFixed(this.decimalPlaces);
+            }
+
             const chartOptions = {
                 chart: {
                     type: 'funnel3d',
@@ -84,14 +122,31 @@ var parseMetadata = metadata => {
                     }
                 },
                 title: {
-                    text: 'Highcharts 3D Funnel Chart'
+                    text: this.chartTitle || '',
+                    align: this.titleAlignment || 'center',
+                    style: {
+                    fontSize: this.titleSize || '20px',
+                    fontWeight: this.titleFontStyle || 'bold',
+                    color: this.titleColor || '#333333'
+                    }
+                },
+                subtitle: {
+                    text: this.chartSubtitle || '',
+                    align: this.subtitleAlignment || 'center',
+                    style: {
+                        fontSize: this.subtitleSize || '12px',
+                        fontStyle: this.subtitleFontStyle || 'normal',
+                        color: this.subtitleColor || '#666666'
+                    }
                 },
                 plotOptions: {
                     series: {
                         dataLabels: {
-                            enabled: true,
-                            format: '{point.y:,.0f}',
-                            allowOverlap: true,
+                            enabled: this.showDataLabels || false,
+                            allowOverlap: this.allowLabelOverlap || false,
+                            formatter: function () {
+                                return scaleFormat(this.y);
+                            },
                             y: 10
                         },
                         neckWidth: '30%',
