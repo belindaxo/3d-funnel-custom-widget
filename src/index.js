@@ -15,6 +15,13 @@ var parseMetadata = metadata => {
         const dimension = dimensionsMap[key];
         dimensions.push({ key, ...dimension });
     }
+
+    dimensions.sort((a, b) => {
+        if (a.id < b.id) return -1;
+        if (a.id > b.id) return 1;
+        return 0;
+    });
+
     const measures = [];
     for (const key in measuresMap) {
         const measure = measuresMap[key];
@@ -109,7 +116,7 @@ var parseMetadata = metadata => {
                     default:
                         break;
                 }
-                return scaledValue.toFixed(this.decimalPlaces) + suffix;
+                return scaledValue.toFixed(this.decimalPlaces);
             }
 
             const chartOptions = {
