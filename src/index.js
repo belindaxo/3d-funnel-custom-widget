@@ -109,7 +109,7 @@ var parseMetadata = metadata => {
                     default:
                         break;
                 }
-                return scaledValue.toFixed(this.decimalPlaces);
+                return scaledValue.toFixed(this.decimalPlaces) + suffix;
             }
 
             const chartOptions = {
