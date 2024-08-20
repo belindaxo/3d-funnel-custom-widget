@@ -83,8 +83,6 @@ var parseMetadata = metadata => {
                 }
             });
 
-            dimensions = dimensions.sort((d1, d2) => d1.id.localeCompare(d2.id));
-
             data.forEach(row => {
                 categoryData.push(dimensions.map(dimension => {
                     return row[dimension.key].label;
