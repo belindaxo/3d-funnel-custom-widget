@@ -63,7 +63,7 @@ var parseMetadata = metadata => {
         }
 
         _renderChart() {
-            const dataBinding = this.dataBindings.getDataBinding('dataBinding');
+            const dataBinding = this.dataBinding;
             if (!dataBinding || dataBinding.state !== 'success') {
                 return;
             }
