@@ -63,13 +63,11 @@ var parseMetadata = metadata => {
         }
 
         _renderChart() {
-            const dataBinding = this.dataBinding;
+            const dataBinding = this.dataBindings.getDataBinding('dataBinding');
             if (!dataBinding || dataBinding.state !== 'success') {
                 return;
             }
-            dataBinding.getDataSource().getDimensions().forEach(dimension => {
-                console.log(dimension.id); // Log the id of each dimension  
-            });
+            
 
             const { data, metadata } = dataBinding;
             const { dimensions, measures } = parseMetadata(metadata);
