@@ -16,6 +16,8 @@ var parseMetadata = metadata => {
         dimensions.push({ key, ...dimension });
     }
 
+    dimensions.sort((a, b) => a.id.localeCompare(b.id));
+
 
     const measures = [];
     for (const key in measuresMap) {
@@ -150,9 +152,6 @@ var parseMetadata = metadata => {
                                 const category = categoryData[this.point.index];
                                 const value = scaleFormat(this.y);
                                 return `${category} - ${value}`;
-                            },
-                            style: {
-                                textOverflow: 'clip'
                             },
                             y: 10
                         },
