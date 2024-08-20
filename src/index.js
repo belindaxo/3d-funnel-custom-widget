@@ -153,6 +153,9 @@ var parseMetadata = metadata => {
                             },
                             y: 10
                         },
+                        dataSorting: {
+                            enabled: false
+                        },
                         neckWidth: '30%',
                         neckHeight: '25%',
                         width: '80%',
