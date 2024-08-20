@@ -85,7 +85,7 @@ var parseMetadata = metadata => {
 
             data.forEach(row => {
                 categoryData.push(dimensions.map(dimension => {
-                    return row[dimension.key].id;
+                    return row[dimension.key].label;
                 }).join('/'));
                 series.forEach(series => {
                     series.data.push(row[series.key].raw);
