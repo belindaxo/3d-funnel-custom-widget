@@ -67,6 +67,9 @@ var parseMetadata = metadata => {
             if (!dataBinding || dataBinding.state !== 'success') {
                 return;
             }
+            dataBinding.getDataSource().getDimensions().forEach(dimension => {
+                console.log(dimension.id); // Log the id of each dimension  
+            });
 
             const { data, metadata } = dataBinding;
             const { dimensions, measures } = parseMetadata(metadata);
@@ -82,6 +85,8 @@ var parseMetadata = metadata => {
                     type: 'funnel3d'
                 }
             });
+
+            dimensions = dimensions.sort((d1, d2) => d1.id.localeCompare(d2.id));
 
             data.forEach(row => {
                 categoryData.push(dimensions.map(dimension => {
