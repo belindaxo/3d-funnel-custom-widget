@@ -51,7 +51,7 @@ var parseMetadata = metadata => {
                 'chartTitle', 'titleSize', 'titleFontStyle', 'titleAlignment', 'titleColor',                // Title properties
                 'chartSubtitle', 'subtitleSize', 'subtitleFontStyle', 'subtitleAlignment', 'subtitleColor', // Subtitle properties
                 'scaleFormat', 'decimalPlaces',                                                             // Number formatting properties
-                'showDataLabels', 'allowLabelOverlap',                                                      // Data label properties            
+                'showDataLabels', 'allowLabelOverlap'                                                       // Data label properties            
             ];
         }
 
@@ -64,6 +64,7 @@ var parseMetadata = metadata => {
 
         _renderChart() {
             const dataBinding = this.dataBinding;
+
             if (!dataBinding || dataBinding.state !== 'success') {
                 return;
             }
