@@ -16,8 +16,6 @@ var parseMetadata = metadata => {
         dimensions.push({ key, ...dimension });
     }
 
-    dimensions.sort((a, b) => a.id.localeCompare(b.id));
-
 
     const measures = [];
     for (const key in measuresMap) {
