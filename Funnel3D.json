@@ -14,6 +14,13 @@
             "url": "https://belindaxo.github.io/3d-funnel-custom-widget/dist/bundle.js",
             "integrity": "",
             "ignoreIntegrity": true
+        },
+        {
+            "kind": "styling",
+            "tag": "com-sap-sample-funnel3d-aps",
+            "url": "https://belindaxo.github.io/3d-funnel-custom-widget/dist/bundle.js",
+            "integrity": "",
+            "ignoreIntegrity": true
         }
     ],
     "properties": {
@@ -24,6 +31,76 @@
         "height": {
             "type": "integer",
             "default": 400
+        },
+        "chartTitle": {
+            "type": "string",
+            "description": "The title of the chart",
+            "default": ""
+        },
+        "titleSize": {
+            "type": "string",
+            "description": "The font size of the title text",
+            "default": "20px"
+        },
+        "titleFontStyle": {
+            "type": "string",
+            "description": "The font style of the title text",
+            "default": "bold"
+        },
+        "titleAlignment": {
+            "type": "string",
+            "description": "The alignment of the title text",
+            "default": "center"
+        },
+        "titleColor": {
+            "type": "string",
+            "description": "The color of the title text",
+            "default": "#333333"
+        },
+        "chartSubtitle": {
+            "type": "string",
+            "description": "The subtitle of the chart",
+            "default": ""
+        },
+        "subtitleSize": {
+            "type": "string",
+            "description": "The font size of the subtitle text",
+            "default": "12px"
+        },
+        "subtitleFontStyle": {
+            "type": "string",
+            "description": "The font style of the subtitle text",
+            "default": "normal"
+        },
+        "subtitleAlignment": {
+            "type": "string",
+            "description": "The alignment of the subtitle text",
+            "default": "center"
+        },
+        "subtitleColor": {
+            "type": "string",
+            "description": "The color of the subtitle text",
+            "default": "#666666"
+        },
+        "scaleFormat": {
+            "type": "string",
+            "description": "The scale of the numbers (unformatted, k, m, b)",
+            "default": "unformatted"
+        },
+        "decimalPlaces": {
+            "type": "integer",
+            "description": "The number of decimal places to display",
+            "default": 2
+        },
+        "showDataLabels": {
+            "type": "boolean",
+            "description": "Show the data labels",
+            "default": false
+        },
+        "allowLabelOverlap": {
+            "type": "boolean",
+            "description": "Allow data label overlap",
+            "default": false
         }
     },
     "methods": {

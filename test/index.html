@@ -2,56 +2,78 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1, initial-scale=1">
-    <title>Highcharts Test</title>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
-    <script src="https://code.highcharts.com/modules/cylinder.js"></script>
-    <script src="https://code.highcharts.com/modules/funnel3d.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <title>Drag and Drop Reorder Options</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css">
+    <style>
+        /* Remove bullet points from the list */
+        #sortable {
+            list-style-type: none;  /* Remove bullets */
+            margin: 0;
+            padding: 0;
+            width: 200px;
+        }
+        #sortable li {
+            margin: 5px 0;
+            padding: 10px;
+            font-size: 1.2em;
+            cursor: move;
+            background-color: #f2f2f2;
+            border: 1px solid #ddd;
+        }
+    </style>
 </head>
 <body>
-    <div id="container", style="width:fit-content; height:fit-content;"></div>
-    <script>
-       Highcharts.chart('container', {
-    chart: {
-        type: 'funnel3d',
-        options3d: {
-            enabled: true,
-            alpha: 10,
-            viewDistance: 50
-        }
-    },
-    title: {
-        text: 'Highcharts Funnel3D Chart'
-    },
-    plotOptions: {
-        series: {
-            dataLabels: {
-                enabled: true,
-                format: '<b>{point.name}</b> ({point.y:,.0f})',
-                allowOverlap: true,
-                y: 10
-            },
-            neckWidth: '30%',
-            neckHeight: '25%',
-            width: '80%',
-            height: '80%',
 
+<form id="myForm" action="/submit" method="post">
+    <select id="mySelect" name="orderedOptions[]" multiple style="display: none;">
+        <!-- Options will be dynamically generated -->
+    </select>
+    <ul id="sortable">
+        <!-- Drag-and-drop list items corresponding to options -->
+    </ul>
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+$(document).ready(function() {
+    // Example array of strings
+    var optionsArray = ["Option 1", "Option 2", "Option 3", "Option 4", "Option 5"];
+
+    // Select the form element
+    var $select = $('#mySelect');
+
+    // Set the size attribute based on the length of the options array
+    $select.attr('size', optionsArray.length);
+
+    // Clear existing options and list items
+    $select.empty();
+    $('#sortable').empty();
+
+    // Populate the select and sortable list
+    $.each(optionsArray, function(index, value) {
+        // Add to select element
+        $select.append($('<option></option>').val(value).text(value));
+
+        // Add to sortable list
+        $('#sortable').append('<li class="ui-state-default" data-value="' + value + '">' + value + '</li>');
+    });
+
+    // Make the list sortable
+    $('#sortable').sortable({
+        update: function(event, ui) {
+            // Update the order of options in the select element after sorting
+            var sortedValues = $(this).sortable('toArray', { attribute: 'data-value' });
+            $select.empty();  // Clear the select element
+            $.each(sortedValues, function(index, value) {
+                $select.append($('<option></option>').val(value).text(value).attr('selected', true));
+            });
         }
-    },
-    series: [{
-        name: 'Unique users',
-        data: [
-            ['Website visits', 15654],
-            ['Downloads', 4064],
-            ['Requested price list', 1987],
-            ['Invoice sent', 976],
-            ['Finalized', 846]
-        ]
-    }]
+    });
+    $('#sortable').disableSelection();
 });
-    </script>
-    
+</script>
+
 </body>
 </html>
