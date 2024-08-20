@@ -67,7 +67,6 @@ var parseMetadata = metadata => {
             if (!dataBinding || dataBinding.state !== 'success') {
                 return;
             }
-            
 
             const { data, metadata } = dataBinding;
             const { dimensions, measures } = parseMetadata(metadata);
