@@ -185,7 +185,7 @@ var parseMetadata = metadata => {
                             enabled: this.showDataLabels || false,
                             allowOverlap: this.allowLabelOverlap || false,
                             formatter: function () {
-                                const category = categoryData[0].data[series.data.indexOf(this.y)];
+                                const category = categoryData[0].data[series[0].data.indexOf(this.y)];
                                 const value = scaleFormat(this.y);
                                 return `${category} - ${value}`;
                             },
