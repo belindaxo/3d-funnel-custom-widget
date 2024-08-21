@@ -124,7 +124,7 @@ var parseMetadata = metadata => {
             series.forEach(series => {
                 series.data = sortedIndices.map(i => series.data[i]);
             });
-            
+
             console.log("Category Data (After Sorting):");
             console.log(categoryData);
             console.log("Series (After Sorting):");
@@ -187,7 +187,7 @@ var parseMetadata = metadata => {
                             formatter: function () {
                                 const category = categoryData[this.point.index];
                                 const value = scaleFormat(this.y);
-                                return `${category.name} - ${value}`;
+                                return `${category} - ${value}`;
                             },
                             y: 10
                         },
@@ -205,7 +205,7 @@ var parseMetadata = metadata => {
                     formatter: function () {
                         const category = categoryData[this.point.index];
                         const value = scaleFormat(this.y);
-                        return `${category.name} - ${value}`;
+                        return `${category} - ${value}`;
                     }
                 },
                 series
