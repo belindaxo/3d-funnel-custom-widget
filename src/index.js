@@ -113,6 +113,23 @@ var parseMetadata = metadata => {
             console.log("Series:");
             console.log(series);
 
+            let sortedIndices = [...Array(categoryData[0].data.length).keys()].sort((a, b) => {
+                return categoryData[0].data[a] - categoryData[0].data[b];
+            });
+
+            categoryData.forEach(category => {
+                category.data = sortedIndices.map(i => category.data[i]);
+            });
+
+            series.forEach(series => {
+                series.data = sortedIndices.map(i => series.data[i]);
+            });
+            
+            console.log("Category Data (After Sorting):");
+            console.log(categoryData);
+            console.log("Series (After Sorting):");
+            console.log(series);
+
             const scaleFormat = (value) =>{
                 let scaledValue = value;
                 let suffix = '';
@@ -170,7 +187,7 @@ var parseMetadata = metadata => {
                             formatter: function () {
                                 const category = categoryData[this.point.index];
                                 const value = scaleFormat(this.y);
-                                return `${category} - ${value}`;
+                                return `${category.name} - ${value}`;
                             },
                             y: 10
                         },
@@ -188,7 +205,7 @@ var parseMetadata = metadata => {
                     formatter: function () {
                         const category = categoryData[this.point.index];
                         const value = scaleFormat(this.y);
-                        return `${category} - ${value}`;
+                        return `${category.name} - ${value}`;
                     }
                 },
                 series
