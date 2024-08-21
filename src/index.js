@@ -64,14 +64,17 @@ var parseMetadata = metadata => {
 
         _renderChart() {
             const dataBinding = this.dataBinding;
-
+            console.log(dataBinding);
             if (!dataBinding || dataBinding.state !== 'success') {
                 return;
             }
 
             const { data, metadata } = dataBinding;
+            console.log(data);
+            console.log(metadata);
             const { dimensions, measures } = parseMetadata(metadata);
-
+            console.log(dimensions);
+            console.log(measures);
             const categoryData = [];
 
             const series = measures.map(measure => {
