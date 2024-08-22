@@ -161,7 +161,7 @@ var parseMetadata = metadata => {
                         viewDistance: 50
                     },
                     marginLeft: 0,
-                    spacingRight: 70
+                    marginRight: 70
                 },
                 title: {
                     text: this.chartTitle || '',
