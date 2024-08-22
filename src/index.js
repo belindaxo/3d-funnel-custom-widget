@@ -161,10 +161,13 @@ var parseMetadata = metadata => {
 
             const subtitleText = this._updateSubtitle();
 
-            const chartOptions = {
+            Highcharts.setOptions({
                 lang: {
-                    thousandsSep: '\u002c'
-                },
+                    thousandsSep: ','
+                }
+            });
+
+            const chartOptions = {
                 chart: {
                     type: 'funnel3d',
                     options3d: {
