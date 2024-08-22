@@ -16,7 +16,6 @@ var parseMetadata = metadata => {
         dimensions.push({ key, ...dimension });
     }
 
-
     const measures = [];
     for (const key in measuresMap) {
         const measure = measuresMap[key];
