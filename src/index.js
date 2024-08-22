@@ -101,7 +101,10 @@ var parseMetadata = metadata => {
 
             data.forEach(row => {
                 categoryData.forEach(category => {
-                    category.data.push(row[category.key].label);
+                    category.data.push({
+                        id: row[category.key].id,
+                        name: row[category.key].label,
+                    })
                 })
                 series.forEach(series => {
                     series.data.push(row[series.key].raw);
@@ -113,7 +116,7 @@ var parseMetadata = metadata => {
             // console.log(series);
 
             let sortedIndices = [...Array(categoryData[0].data.length).keys()].sort((a, b) => {
-                return categoryData[0].data[a] - categoryData[0].data[b];
+                return categoryData[0].data[a].id - categoryData[0].data[b].id;
             });
 
             categoryData.forEach(category => {
@@ -187,7 +190,7 @@ var parseMetadata = metadata => {
                             formatter: function () {
                                 const category = categoryData[0].data[series[0].data.indexOf(this.y)];
                                 const value = scaleFormat(this.y);
-                                return `${category} - ${value}`;
+                                return `${category.name} - ${value}`;
                             },
                             y: 10
                         },
