@@ -101,7 +101,7 @@ var parseMetadata = metadata => {
 
             data.forEach(row => {
                 categoryData.forEach(category => {
-                    category.data.push(row[category.key].id);
+                    category.data.push(row[category.key].label);
                 })
                 series.forEach(series => {
                     series.data.push(row[series.key].raw);
