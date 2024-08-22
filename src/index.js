@@ -103,17 +103,17 @@ var parseMetadata = metadata => {
                 categoryData.forEach(category => {
                     category.data.push({
                         id: row[category.key].id,
-                        name: row[category.key].label,
+                        description: row[category.key].name,
                     })
                 })
                 series.forEach(series => {
                     series.data.push(row[series.key].raw);
                 });
             });
-            // console.log("Category Data:");
-            // console.log(categoryData);
-            // console.log("Series:");
-            // console.log(series);
+            console.log("Category Data:");
+            console.log(categoryData);
+            console.log("Series:");
+            console.log(series);
 
             let sortedIndices = [...Array(categoryData[0].data.length).keys()].sort((a, b) => {
                 return categoryData[0].data[a].id - categoryData[0].data[b].id;
@@ -127,10 +127,10 @@ var parseMetadata = metadata => {
                 series.data = sortedIndices.map(i => series.data[i]);
             });
 
-            // console.log("Category Data (After Sorting):");
-            // console.log(categoryData);
-            // console.log("Series (After Sorting):");
-            // console.log(series);
+            console.log("Category Data (After Sorting):");
+            console.log(categoryData);
+            console.log("Series (After Sorting):");
+            console.log(series);
 
             const scaleFormat = (value) =>{
                 let scaledValue = value;
