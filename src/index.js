@@ -191,6 +191,18 @@ var parseMetadata = metadata => {
                 },
                 plotOptions: {
                     series: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        point: {
+                            events: {
+                                select: function (event) {
+                                    this._handlePointClick(event);
+                                }.bind(this),
+                                unselect: function (event) {
+                                    this._handlePointClick(event);
+                                }.bind(this)
+                            }
+                        },
                         dataLabels: {
                             enabled: this.showDataLabels || false,
                             allowOverlap: this.allowLabelOverlap || false,
@@ -216,6 +228,46 @@ var parseMetadata = metadata => {
                 series
             }
             this._chart = Highcharts.chart(this.shadowRoot.getElementById('container'), chartOptions);
+        }
+
+        _handlePointClick(event) {
+            console.log('Event object:', event);
+    
+            const point = event.target;
+            if (!point) {
+                console.error('Point is undefined');
+                return;
+            }
+    
+            console.log('Point object:', point); 
+    
+            const dataBinding = this.dataBinding;
+            const metadata = dataBinding.metadata;
+            const { dimensions } = parseMetadata(metadata);
+            const [dimension] = dimensions;
+    
+            const label = point.category || point.options.x || point.name;
+            const key = dimension.key;
+            const dimensionId = dimension.id;
+            const selectedItem = dataBinding.data.find(item => item[key].label === label);
+     
+            console.log('Selected item:', selectedItem); 
+    
+            const linkedAnalysis = this.dataBindings.getDataBinding('dataBinding').getLinkedAnalysis();
+    
+            if (event.type === 'select') {
+                if (selectedItem) {
+                    const selection = {};
+                    selection[dimensionId] = selectedItem[key].id;
+                    console.log('Setting filter with selection:', selection); // Log the filter selection
+                    linkedAnalysis.setFilters(selection);
+                    this._selectedPoint = point;
+                }
+            } else if (event.type === 'unselect') {
+                console.log('Removing filters'); // Log when filters are removed
+                linkedAnalysis.removeFilters();
+                this._selectedPoint = null;
+            }
         }
     }
     customElements.define('com-sap-sample-funnel3d', Funnel3D);
