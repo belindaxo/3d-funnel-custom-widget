@@ -86,22 +86,12 @@ var parseMetadata = metadata => {
 
         _renderChart() {
             const dataBinding = this.dataBinding;
-            // console.log("Data Binding:");
-            // console.log(dataBinding);
             if (!dataBinding || dataBinding.state !== 'success') {
                 return;
             }
 
             const { data, metadata } = dataBinding;
-            // console.log("Data:");
-            // console.log(data);
-            // console.log("Metadata:");
-            // console.log(metadata);
             const { dimensions, measures } = parseMetadata(metadata);
-            // console.log("Dimensions:")
-            // console.log(dimensions);
-            // console.log("Measures:")
-            // console.log(measures);
 
             const categoryData = dimensions.map(dimension => {
                 return {
@@ -133,10 +123,6 @@ var parseMetadata = metadata => {
                     series.data.push(row[series.key].raw);
                 });
             });
-            console.log("Category Data:");
-            console.log(categoryData);
-            console.log("Series:");
-            console.log(series);
 
             let sortedIndices = [...Array(categoryData[0].data.length).keys()].sort((a, b) => {
                 return categoryData[0].data[a].id - categoryData[0].data[b].id;
@@ -174,9 +160,11 @@ var parseMetadata = metadata => {
             }
 
             const subtitleText = this._updateSubtitle();
-            
 
             const chartOptions = {
+                lang: {
+                    thousandsSep: '\u002c'
+                },
                 chart: {
                     type: 'funnel3d',
                     options3d: {
