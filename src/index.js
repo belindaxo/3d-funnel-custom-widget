@@ -159,7 +159,11 @@ var parseMetadata = metadata => {
                         enabled: true,
                         alpha: 10,
                         viewDistance: 50
-                    }
+                    },
+                    spacingRight: 30,
+                    spacingLeft: 20,
+                    spacingTop: 10,
+                    spacingBottom: 10
                 },
                 title: {
                     text: this.chartTitle || '',
