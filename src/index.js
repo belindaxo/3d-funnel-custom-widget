@@ -160,10 +160,8 @@ var parseMetadata = metadata => {
                         alpha: 10,
                         viewDistance: 50
                     },
-                    spacingRight: 10,
-                    spacingLeft: 0,
-                    spacingTop: 10,
-                    spacingBottom: 10
+                    marginLeft: 0,
+                    spacingRight: 70
                 },
                 title: {
                     text: this.chartTitle || '',
@@ -195,9 +193,9 @@ var parseMetadata = metadata => {
                             },
                             y: 10
                         },
-                        neckWidth: '30%',
-                        neckHeight: '25%',
-                        width: '80%',
+                        neckWidth: (20/50*0.7)*100+"%",
+	                    neckHeight: (20+5)/(50+20+5)*100+"%",
+                        width: '70%',
                         height: '80%'
                     }
                 },
