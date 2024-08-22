@@ -160,8 +160,8 @@ var parseMetadata = metadata => {
                         alpha: 10,
                         viewDistance: 50
                     },
-                    spacingRight: 30,
-                    spacingLeft: 20,
+                    spacingRight: 10,
+                    spacingLeft: 0,
                     spacingTop: 10,
                     spacingBottom: 10
                 },
