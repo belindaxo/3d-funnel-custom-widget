@@ -61,6 +61,29 @@ var parseMetadata = metadata => {
             }
         }
 
+        _updateSubtitle() {
+            if (!this.chartSubtitle || this.chartSubtitle.trim() === '') {
+                let subtitleText = '';
+                switch (this.scaleFormat) {
+                    case 'k':
+                        subtitleText = 'in k';
+                        break;
+                    case 'm':
+                        subtitleText = 'in m';
+                        break;
+                    case 'b':
+                        subtitleText = 'in b';
+                        break;
+                    default:
+                        subtitleText = '';
+                        break;
+                }
+                return subtitleText;
+            } else {
+                return this.chartSubtitle;
+            }
+        }
+
         _renderChart() {
             const dataBinding = this.dataBinding;
             // console.log("Data Binding:");
@@ -134,25 +157,24 @@ var parseMetadata = metadata => {
 
             const scaleFormat = (value) =>{
                 let scaledValue = value;
-                let suffix = '';
                 switch (this.scaleFormat) {
                     case 'k':
                         scaledValue = value / 1000;
-                        suffix = 'k';
                         break;
                     case 'm':
                         scaledValue = value / 1000000;
-                        suffix = 'm';
                         break;
                     case 'b':
                         scaledValue = value / 1000000000;
-                        suffix = 'b';
                         break;
                     default:
                         break;
                 }
                 return scaledValue.toFixed(this.decimalPlaces);
             }
+
+            const subtitleText = this._updateSubtitle();
+            
 
             const chartOptions = {
                 chart: {
@@ -174,7 +196,7 @@ var parseMetadata = metadata => {
                     }
                 },
                 subtitle: {
-                    text: this.chartSubtitle || '',
+                    text: subtitleText,
                     align: this.subtitleAlignment || 'center',
                     style: {
                         fontSize: this.subtitleSize || '12px',
