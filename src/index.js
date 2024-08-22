@@ -103,7 +103,7 @@ var parseMetadata = metadata => {
                 categoryData.forEach(category => {
                     category.data.push({
                         id: row[category.key].id,
-                        description: row[category.key].name,
+                        description: row[category.key].label,
                     })
                 })
                 series.forEach(series => {
