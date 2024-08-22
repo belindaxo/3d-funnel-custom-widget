@@ -190,7 +190,7 @@ var parseMetadata = metadata => {
                             formatter: function () {
                                 const category = categoryData[0].data[series[0].data.indexOf(this.y)];
                                 const value = scaleFormat(this.y);
-                                return `${category.name} - ${value}`;
+                                return `${category.description} - ${value}`;
                             },
                             y: 10
                         },
