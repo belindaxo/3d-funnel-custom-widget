@@ -1,12 +1,13 @@
 {
     "name": "3D Funnel Chart",
-    "description": "A 3D funnel chart with data binding",
+    "description": "A 3D funnel chart with data binding support, sorted by member labels",
     "eula": "",
     "vendor": "",
     "license": "",
     "id": "com.sap.sample.funnel3d",
     "newInstancePrefix": "Funnel3D",
     "version": "0.0.1",
+    "supportsLinkedAnalysisFilterOnSelection": true,
     "webcomponents": [
         {
             "kind": "main",

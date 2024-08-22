@@ -63,22 +63,22 @@ var parseMetadata = metadata => {
 
         _renderChart() {
             const dataBinding = this.dataBinding;
-            console.log("Data Binding:");
-            console.log(dataBinding);
+            // console.log("Data Binding:");
+            // console.log(dataBinding);
             if (!dataBinding || dataBinding.state !== 'success') {
                 return;
             }
 
             const { data, metadata } = dataBinding;
-            console.log("Data:");
-            console.log(data);
-            console.log("Metadata:");
-            console.log(metadata);
+            // console.log("Data:");
+            // console.log(data);
+            // console.log("Metadata:");
+            // console.log(metadata);
             const { dimensions, measures } = parseMetadata(metadata);
-            console.log("Dimensions:")
-            console.log(dimensions);
-            console.log("Measures:")
-            console.log(measures);
+            // console.log("Dimensions:")
+            // console.log(dimensions);
+            // console.log("Measures:")
+            // console.log(measures);
 
             const categoryData = dimensions.map(dimension => {
                 return {
@@ -107,10 +107,10 @@ var parseMetadata = metadata => {
                     series.data.push(row[series.key].raw);
                 });
             });
-            console.log("Category Data:");
-            console.log(categoryData);
-            console.log("Series:");
-            console.log(series);
+            // console.log("Category Data:");
+            // console.log(categoryData);
+            // console.log("Series:");
+            // console.log(series);
 
             let sortedIndices = [...Array(categoryData[0].data.length).keys()].sort((a, b) => {
                 return categoryData[0].data[a] - categoryData[0].data[b];
@@ -124,10 +124,10 @@ var parseMetadata = metadata => {
                 series.data = sortedIndices.map(i => series.data[i]);
             });
 
-            console.log("Category Data (After Sorting):");
-            console.log(categoryData);
-            console.log("Series (After Sorting):");
-            console.log(series);
+            // console.log("Category Data (After Sorting):");
+            // console.log(categoryData);
+            // console.log("Series (After Sorting):");
+            // console.log(series);
 
             const scaleFormat = (value) =>{
                 let scaledValue = value;
