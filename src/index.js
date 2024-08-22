@@ -159,7 +159,6 @@ var parseMetadata = metadata => {
                         alpha: 10,
                         viewDistance: 50
                     },
-                    marginLeft: 0,
                     marginRight: 70
                 },
                 title: {
