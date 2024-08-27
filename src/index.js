@@ -269,7 +269,7 @@ var parseMetadata = metadata => {
             const dataBinding = this.dataBinding;
             const metadata = dataBinding.metadata;
             const { categoryData } = parseMetadata(metadata);
-            const [ dimension ] = categoryData[0];
+            const [ dimension ] = categoryData;
 
             const pointIndex = point.index;
     
