@@ -187,67 +187,78 @@ var parseMetadata = metadata => {
             });
             
             const chartOptions = {
-                chart: {
-                    type: 'funnel3d',
-                    options3d: {
-                        enabled: true,
-                        alpha: 10,
-                        viewDistance: 50
+              chart: {
+                type: "funnel3d",
+                options3d: {
+                  enabled: true,
+                  alpha: 10,
+                  viewDistance: 50,
+                },
+                marginRight: 70,
+              },
+              title: {
+                text: this.chartTitle || "",
+                align: this.titleAlignment || "center",
+                style: {
+                  fontSize: this.titleSize || "20px",
+                  fontWeight: this.titleFontStyle || "bold",
+                  color: this.titleColor || "#333333",
+                },
+              },
+              subtitle: {
+                text: subtitleText,
+                align: this.subtitleAlignment || "center",
+                style: {
+                  fontSize: this.subtitleSize || "12px",
+                  fontStyle: this.subtitleFontStyle || "normal",
+                  color: this.subtitleColor || "#666666",
+                },
+              },
+              plotOptions: {
+                series: {
+                  allowPointSelect: true,
+                  cursor: "pointer",
+                  point: {
+                    events: {
+                      select: this._handlePointClick,
+                      unselect: this._handlePointClick,
                     },
-                    marginRight: 70
+                  },
+                  dataLabels: {
+                    enabled: this.showDataLabels || false,
+                    allowOverlap: this.allowLabelOverlap || false,
+                    formatter: function () {
+                      const index = series[0].data.indexOf(this.y);
+                      if (
+                        index !== -1 &&
+                        this.instance.categoryData &&
+                        this.instance.categoryData[0] &&
+                        this.instance.categoryData[0].data[index]
+                      ) {
+                        const category =
+                          this.instance.categoryData[0].data[index];
+                        const value = scaleFormat(this.y);
+                        return `${category.name} - ${value}`;
+                      } else {
+                        return ""; // Return an empty string or a placeholder if the data is not available
+                      }
+                    }.bind({ instance: this }), // Bind 'this' to the correct context
+                    y: 10,
+                  },
+                  neckWidth: (20 / 50) * 0.7 * 100 + "%",
+                  neckHeight: ((20 + 5) / (50 + 20 + 5)) * 100 + "%",
+                  width: "70%",
+                  height: "80%",
                 },
-                title: {
-                    text: this.chartTitle || '',
-                    align: this.titleAlignment || 'center',
-                    style: {
-                    fontSize: this.titleSize || '20px',
-                    fontWeight: this.titleFontStyle || 'bold',
-                    color: this.titleColor || '#333333'
-                    }
-                },
-                subtitle: {
-                    text: subtitleText,
-                    align: this.subtitleAlignment || 'center',
-                    style: {
-                        fontSize: this.subtitleSize || '12px',
-                        fontStyle: this.subtitleFontStyle || 'normal',
-                        color: this.subtitleColor || '#666666'
-                    }
-                },
-                plotOptions: {
-                    series: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        point: {
-                            events: {
-                                select: this._handlePointClick,
-                                unselect: this._handlePointClick
-                            }
-                        },
-                        dataLabels: {
-                            enabled: this.showDataLabels || false,
-                            allowOverlap: this.allowLabelOverlap || false,
-                            formatter: function () {
-                                const category = this.instance.categoryData[0].data[series[0].data.indexOf(this.y)];
-                                const value = scaleFormat(this.y);
-                                return `${category.name} - ${value}`;
-                            }.bind({ instance: this }),
-                            y: 10
-                        },
-                        neckWidth: (20/50*0.7)*100+"%",
-	                    neckHeight: (20+5)/(50+20+5)*100+"%",
-                        width: '70%',
-                        height: '80%'
-                    }
-                },
-                exporting: {
-                    enabled: true
-                },
-                tooltip: {
-                    valueDecimals: 0
-                },
-                series
-            }
+              },
+              exporting: {
+                enabled: true,
+              },
+              tooltip: {
+                valueDecimals: 0,
+              },
+              series,
+            };
             this._chart = Highcharts.chart(this.shadowRoot.getElementById('container'), chartOptions);
         }
 
