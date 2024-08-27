@@ -187,7 +187,6 @@ var parseMetadata = metadata => {
             });
 
             const categoryData = this.categoryData;
-            const seriesData = series[0].data;
             
             const chartOptions = {
               chart: {
@@ -231,11 +230,11 @@ var parseMetadata = metadata => {
                     enabled: this.showDataLabels || false,
                     allowOverlap: this.allowLabelOverlap || false,
                     formatter: function () {
-                        const index = seriesData.indexOf(this.y);
+                        const index = series[0].data.indexOf(this.y);
                         if (index !== -1 && categoryData && categoryData[0].data[index]) {
                             const category = categoryData[0].data[index];
                             const value = scaleFormat(this.y);
-                            return `${category.name}: ${value}`;
+                            return `${category.name} - ${value}`;
                         } else {
                             return '';
                         }
