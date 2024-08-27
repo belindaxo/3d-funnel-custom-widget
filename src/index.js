@@ -258,7 +258,7 @@ var parseMetadata = metadata => {
                         } else {
                             return '';
                         }
-                    }.bind(this),
+                    },
                     y: 10,
                   },
                   neckWidth: (20 / 50) * 0.7 * 100 + "%",
