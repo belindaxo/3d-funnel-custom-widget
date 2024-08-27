@@ -34,7 +34,7 @@ var parseMetadata = metadata => {
             `;
             this._selectedPoint = null;
 
-            this._handlePointClick = _handlePointClick.bind(this);
+            this._handlePointClick = this._handlePointClick.bind(this);
         }
 
         onCustomWidgetResize(width, height) {
