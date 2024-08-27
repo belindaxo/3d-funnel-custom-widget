@@ -33,6 +33,8 @@ var parseMetadata = metadata => {
                 <div id="container" style="width: 100%; height: 100%;"></div>    
             `;
             this._selectedPoint = null;
+
+            this._handlePointClick = _handlePointClick.bind(this);
         }
 
         onCustomWidgetResize(width, height) {
@@ -110,7 +112,7 @@ var parseMetadata = metadata => {
                 return
             }
 
-            const categoryData = dimensions.map(dimension => {
+            this.categoryData = dimensions.map(dimension => {
                 return {
                     id: dimension.id,   
                     name: dimension.description,
@@ -130,7 +132,7 @@ var parseMetadata = metadata => {
             });
 
             data.forEach(row => {
-                categoryData.forEach(category => {
+                this.categoryData.forEach(category => {
                     category.data.push({
                         id: row[category.key].id,
                         name: row[category.key].label
@@ -141,11 +143,11 @@ var parseMetadata = metadata => {
                 });
             });
 
-            let sortedIndices = [...Array(categoryData[0].data.length).keys()].sort((a, b) => {
-                return categoryData[0].data[a].id - categoryData[0].data[b].id;
+            let sortedIndices = [...Array(this.categoryData[0].data.length).keys()].sort((a, b) => {
+                return this.categoryData[0].data[a].id - this.categoryData[0].data[b].id;
             });
 
-            categoryData.forEach(category => {
+            this.categoryData.forEach(category => {
                 category.data = sortedIndices.map(i => category.data[i]);
             });
 
@@ -154,7 +156,7 @@ var parseMetadata = metadata => {
             });
 
             console.log("Category Data (After Sorting):");
-            console.log(categoryData);
+            console.log(this.categoryData);
             console.log("Series (After Sorting):");
             console.log(series);
 
@@ -177,63 +179,6 @@ var parseMetadata = metadata => {
             }
 
             const subtitleText = this._updateSubtitle();
-
-            const _handlePointClick = (event) => {
-                console.log('Event object:', event);
-        
-                const point = event.target;
-                if (!point) {
-                    console.error('Point is undefined');
-                    return;
-                }
-        
-                console.log('Point object: ', point);
-        
-                const pointIndex = point.index;
-        
-                // Retrieve the correct label based on the index from the categoryData
-                const label = categoryData[0].data[pointIndex].name;
-        
-                // Use the dimension key to find the corresponding item in dataBinding.data
-                const selectedItem = dataBinding.data.find(item => item[categoryData[0].key].label === label);
-        
-                console.log('Selected item: ', selectedItem);
-        
-                const linkedAnalysis = this.dataBindings.getDataBinding('dataBinding').getLinkedAnalysis();
-
-                if (this._selectedPoint && this._selectedPoint !== point) {
-                    console.log('Unselecting previous point: ', this._selectedPoint);
-                    
-                    const prevLabel = categoryData[0].data[this._selectedPoint.index].name;
-                    const prevItem = dataBinding.data.find(item => item[categoryData[0].key].label === prevLabel);
-
-                    if (prevItem) {
-                        const prevSelection = {};
-
-                        prevSelection[categoryData[0].id] = prevItem[categoryData[0].key].id;
-                        linkedAnalysis.removeFilters(prevSelection);
-
-                        console.log('Removing filters for previous selection: ', prevSelection);
-    
-                        this._selectedPoint.select(false, false);
-                    }
-                }
-
-                if (event.type === 'select') {
-                    if (selectedItem) {
-                        const selection = {};
-                        selection[categoryData[0].id] = selectedItem[categoryData[0].key].id;
-                        console.log('Setting filter with selection:', selection); // Log the filter selection
-                        linkedAnalysis.setFilters(selection);
-                        this._selectedPoint = point;
-                    }
-                } else if (event.type === 'unselect') {
-                    console.log('Removing filters'); // Log when filters are removed
-                    linkedAnalysis.removeFilters();
-                    this._selectedPoint = null;
-                }
-            }
-            
 
             Highcharts.setOptions({
                 lang: {
@@ -275,22 +220,18 @@ var parseMetadata = metadata => {
                         cursor: 'pointer',
                         point: {
                             events: {
-                                select: function (event) {
-                                    this._handlePointClick(event);
-                                }.bind(this),
-                                unselect: function (event) {
-                                    this._handlePointClick(event);
-                                }.bind(this)
+                                select: this._handlePointClick,
+                                unselect: this._handlePointClick
                             }
                         },
                         dataLabels: {
                             enabled: this.showDataLabels || false,
                             allowOverlap: this.allowLabelOverlap || false,
                             formatter: function () {
-                                const category = categoryData[0].data[series[0].data.indexOf(this.y)];
+                                const category = this.categoryData[0].data[series[0].data.indexOf(this.y)];
                                 const value = scaleFormat(this.y);
                                 return `${category.name} - ${value}`;
-                            },
+                            }.bind(this),
                             y: 10
                         },
                         neckWidth: (20/50*0.7)*100+"%",
@@ -308,6 +249,31 @@ var parseMetadata = metadata => {
                 series
             }
             this._chart = Highcharts.chart(this.shadowRoot.getElementById('container'), chartOptions);
+        }
+
+        _handlePointClick(event) {
+            const point = event.target;
+            if (!point) {
+                console.error('Point is undefined');
+                return;
+            }
+
+            const pointIndex = point.index;
+            const label = this.categoryData[0].data[pointIndex].name;
+            const selectedItem = this.dataBinding.data.find(item => item[this.categoryData[0].key].label === label);
+            const linkedAnalysis = this.dataBindings.getDataBinding('dataBinding').getLinkedAnalysis();
+
+            if (event.type === 'select') {
+                if (selectedItem) {
+                    const selection = {};
+                    selection[this.categoryData[0].key] = selectedItem[this.categoryData[0].key];
+                    linkedAnalysis.setFilters(selection);
+                    this._selectedPoint = point;
+                }
+            } else if (event.type === 'unselect') {
+                linkedAnalysis.removeFilters();
+                this._selectedPoint = null;
+            }
         }
     }
     customElements.define('com-sap-sample-funnel3d', Funnel3D);
