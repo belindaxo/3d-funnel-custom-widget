@@ -57,7 +57,7 @@ var parseMetadata = metadata => {
                 'chartTitle', 'titleSize', 'titleFontStyle', 'titleAlignment', 'titleColor',                // Title properties
                 'chartSubtitle', 'subtitleSize', 'subtitleFontStyle', 'subtitleAlignment', 'subtitleColor', // Subtitle properties
                 'scaleFormat', 'decimalPlaces',                                                             // Number formatting properties
-                'showDataLabels', 'allowLabelOverlap'                                                       // Data label properties            
+                'showDataLabels', 'labelContent', 'allowLabelOverlap'                                       // Data label properties            
             ];
         }
 
@@ -234,7 +234,14 @@ var parseMetadata = metadata => {
                         if (index !== -1 && categoryData && categoryData[0].data[index]) {
                             const category = categoryData[0].data[index];
                             const value = scaleFormat(this.y);
-                            return `${category.name} - ${value}`;
+                            switch (this.labelContent) {
+                                case 'labelOnly':
+                                    return `${category.name}`;
+                                case 'valueOnly':
+                                    return `${value}`;
+                                default:
+                                    return `${category.name} - ${value}`;
+                            }
                         } else {
                             return '';
                         }
