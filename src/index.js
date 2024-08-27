@@ -91,6 +91,26 @@ var parseMetadata = metadata => {
             }
         }
 
+        _formatLabelContent(category, value) {
+            let format = ``;
+            switch (this.labelContent) {
+                case 'label':
+                    format = `${category.name}`;
+                    break;
+                case 'value':
+                    format = `${value}`;
+                    break;
+                case 'both':
+                    format = `${category.name} - ${value}`;
+                    break;
+                default:
+                    format = `${category.name} - ${value}`;
+                    break;
+            }
+
+            return format;
+        }
+
         _renderChart() {
             const dataBinding = this.dataBinding;
             if (!dataBinding || dataBinding.state !== 'success' || !dataBinding.data || dataBinding.data.length === 0) {
@@ -234,13 +254,7 @@ var parseMetadata = metadata => {
                         if (index !== -1 && categoryData && categoryData[0].data[index]) {
                           const category = categoryData[0].data[index];
                           const value = scaleFormat(this.y);
-                          if (this.labelContent === "label") {
-                            return `${category.name}`;
-                          } else if (this.labelContent === "value") {
-                            return `${value}`;
-                          } else {
-                            return `${category.name} - ${value}`;
-                          }
+                          return this._formatLabelContent(category, value);
                         } else {
                             return '';
                         }
