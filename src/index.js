@@ -232,19 +232,19 @@ var parseMetadata = metadata => {
                     formatter: function () {
                         const index = series[0].data.indexOf(this.y);
                         if (index !== -1 && categoryData && categoryData[0].data[index]) {
-                            const category = categoryData[0].data[index];
-                            const value = scaleFormat(this.y);
-                            if (this.labelContent === 'label') {
-                                return `${category.name}`;
-                            } else if (this.labelContent === 'value') {
-                                return `${value}`;
-                            } else {
-                                return `${category.name} - ${value}`;
-                            }
+                          const category = categoryData[0].data[index];
+                          const value = scaleFormat(this.y);
+                          if (this.labelContent === "label") {
+                            return `${category.name}`;
+                          } else if (this.labelContent === "value") {
+                            return `${value}`;
+                          } else {
+                            return `${category.name} - ${value}`;
+                          }
                         } else {
                             return '';
                         }
-                    },
+                    }.bind(this),
                     y: 10,
                   },
                   neckWidth: (20 / 50) * 0.7 * 100 + "%",
