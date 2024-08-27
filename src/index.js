@@ -266,13 +266,21 @@ var parseMetadata = metadata => {
     
             console.log('Point object: ', point);
     
+            const dataBinding = this.dataBinding;
+            const metadata = dataBinding.metadata;
+            const { categoryData } = parseMetadata(metadata);
+            const [ dimension ] = categoryData[0];
+
             const pointIndex = point.index;
     
             // Retrieve the correct label based on the index from the categoryData
-            const label = categoryData[0].data[pointIndex].name;
-    
+            const label = dimension.data[pointIndex].name;
+            // Retrieve the dimension key from categoryData
+            const key = dimension.key;
+            // Retrieve the dimension id from categoryData
+            const id = dimension.id;
             // Use the dimension key to find the corresponding item in dataBinding.data
-            const selectedItem = dataBinding.data.find(item => item[categoryData[0].key].label === label);
+            const selectedItem = dataBinding.data.find(item => item[key].label === label);
     
             console.log('Selected item: ', selectedItem);
     
@@ -281,9 +289,9 @@ var parseMetadata = metadata => {
             if (event.type === 'select') {
                 if (selectedItem) {
                     const selection = {};
-                    selection[categoryData[0].id] = selectedItem[categoryData[0].key].id;
+                    selection[id] = selectedItem[key].id;
                     console.log('Setting filter with selection:', selection); // Log the filter selection
-                    linkedAnalysis.removeFilters();
+                    // linkedAnalysis.removeFilters();
                     linkedAnalysis.setFilters(selection);
                     this._selectedPoint = point;
                 }
