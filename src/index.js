@@ -228,10 +228,10 @@ var parseMetadata = metadata => {
                             enabled: this.showDataLabels || false,
                             allowOverlap: this.allowLabelOverlap || false,
                             formatter: function () {
-                                const category = this.categoryData[0].data[series[0].data.indexOf(this.y)];
+                                const category = this.instance.categoryData[0].data[series[0].data.indexOf(this.y)];
                                 const value = scaleFormat(this.y);
                                 return `${category.name} - ${value}`;
-                            }.bind(this),
+                            }.bind({ instance: this }),
                             y: 10
                         },
                         neckWidth: (20/50*0.7)*100+"%",
