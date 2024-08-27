@@ -234,13 +234,12 @@ var parseMetadata = metadata => {
                         if (index !== -1 && categoryData && categoryData[0].data[index]) {
                             const category = categoryData[0].data[index];
                             const value = scaleFormat(this.y);
-                            switch (this.labelContent) {
-                                case 'labelOnly':
-                                    return `${category.name}`;
-                                case 'valueOnly':
-                                    return `${value}`;
-                                default:
-                                    return `${category.name} - ${value}`;
+                            if (this.labelContent === 'label') {
+                                return `${category.name}`;
+                            } else if (this.labelContent === 'value') {
+                                return `${value}`;
+                            } else if (this.labelContent === 'both') {
+                                return `${category.name} - ${value}`;
                             }
                         } else {
                             return '';

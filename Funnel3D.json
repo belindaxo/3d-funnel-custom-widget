@@ -101,7 +101,7 @@
         "labelContent": {
             "type": "string",
             "description": "The content of the data labels",
-            "default": "labelAndValue"
+            "default": "both"
         },
         "allowLabelOverlap": {
             "type": "boolean",

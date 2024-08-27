@@ -144,11 +144,13 @@
             </tr>
             <tr>
                 <td>Label Content</td>
+            </tr>
+            <tr>
                 <td>
                     <select id="labelContent">
-                        <option value="labelOnly">Label only</option>
-                        <option value="valueOnly">Value only</option>
-                        <option value="labelAndValue" selected>Value and label</option>
+                        <option value="label">Label only</option>
+                        <option value="value">Value only</option>
+                        <option value="both" selected>Both</option>
                     </select>
                 </td>
             </tr>
