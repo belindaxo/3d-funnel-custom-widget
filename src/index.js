@@ -186,7 +186,7 @@ var parseMetadata = metadata => {
                     return;
                 }
         
-                console.log('Point object:', point);
+                console.log('Point object: ', point);
         
                 const pointIndex = point.index;
         
@@ -196,9 +196,24 @@ var parseMetadata = metadata => {
                 // Use the dimension key to find the corresponding item in dataBinding.data
                 const selectedItem = dataBinding.data.find(item => item[categoryData[0].key].label === label);
         
-                console.log('Selected item:', selectedItem);
+                console.log('Selected item: ', selectedItem);
         
                 const linkedAnalysis = this.dataBindings.getDataBinding('dataBinding').getLinkedAnalysis();
+
+                if (this._selectedPoint && this._selectedPoint !== point) {
+                    console.log('Unselecting previous point: ', this._selectedPoint);
+                    const prevLabel = categoryData[0].data[this._selectedPoint.index].name;
+                    const prevItem = dataBinding.data.find(item => item[categoryData[0].key].label === prevLabel);
+                }
+
+                if (prevItem) {
+                    const prevSelection = {};
+                    prevSelection[categoryData[0].id] = prevItem[categoryData[0].key].id;
+                    linkedAnalysis.removeFilters(prevSelection);
+                    console.log('Removing filters for previous selection: ', prevSelection);
+
+                    this._selectedPoint.select(false, false);
+                }
         
                 if (event.type === 'select') {
                     if (selectedItem) {
