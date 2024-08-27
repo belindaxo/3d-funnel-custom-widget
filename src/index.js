@@ -238,7 +238,7 @@ var parseMetadata = metadata => {
                                 return `${category.name}`;
                             } else if (this.labelContent === 'value') {
                                 return `${value}`;
-                            } else if (this.labelContent === 'both') {
+                            } else {
                                 return `${category.name} - ${value}`;
                             }
                         } else {
