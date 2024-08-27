@@ -259,34 +259,46 @@ var parseMetadata = metadata => {
         }
 
         _handlePointClick(event) {
-            const point = event.target;
-            if (!point) {
-                console.error('Point is undefined');
-                return;
+          const point = event.target;
+          if (!point) {
+            console.error("Point is undefined");
+            return;
+          }
+
+          const dataBinding = this.dataBinding;
+
+          const pointIndex = point.index;
+          // Retrieve the correct label based on the index from the categoryData
+          const label = this.categoryData[0].data[pointIndex].name;
+          // Use the dimension key to find the corresponding item in dataBinding.data
+          const selectedItem = dataBinding.data.find(
+            (item) => item[this.categoryData[0].key].label === label
+          );
+          const linkedAnalysis = this.dataBindings
+            .getDataBinding("dataBinding")
+            .getLinkedAnalysis();
+
+          // If there was a previously selected point, remove its filter before applying the new one
+          if (this._selectedPoint && this._selectedPoint !== point) {
+            linkedAnalysis.removeFilters(); // Clear any previous filters
+            this._selectedPoint.select(false, false); // Deselect the previous point
+            this._selectedPoint = null; // Clear the reference to the previous point
+          }
+
+          if (event.type === "select") {
+            if (selectedItem) {
+              const selection = {};
+              selection[this.categoryData[0].id] =
+                selectedItem[this.categoryData[0].key].id;
+              console.log("Setting filter with selection:", selection);
+
+              linkedAnalysis.setFilters(selection);
+              this._selectedPoint = point;
             }
-
-            const dataBinding = this.dataBinding;
-
-            const pointIndex = point.index;
-            // Retrieve the correct label based on the index from the categoryData
-            const label = this.categoryData[0].data[pointIndex].name;
-            // Use the dimension key to find the corresponding item in dataBinding.data
-            const selectedItem = dataBinding.data.find(item => item[this.categoryData[0].key].label === label);
-            const linkedAnalysis = this.dataBindings.getDataBinding('dataBinding').getLinkedAnalysis();
-
-            if (event.type === 'select') {
-                if (selectedItem) {
-                    const selection = {};
-                    selection[this.categoryData[0].id] = selectedItem[this.categoryData[0].key].id;
-                    console.log('Setting filter with selection:', selection);
-                    
-                    linkedAnalysis.setFilters(selection);
-                    this._selectedPoint = point;
-                }
-            } else if (event.type === 'unselect') {
-                linkedAnalysis.removeFilters();
-                this._selectedPoint = null;
-            }
+          } else if (event.type === "unselect") {
+            linkedAnalysis.removeFilters();
+            this._selectedPoint = null;
+          }
         }
     }
     customElements.define('com-sap-sample-funnel3d', Funnel3D);
