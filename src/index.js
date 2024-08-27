@@ -185,6 +185,9 @@ var parseMetadata = metadata => {
                     thousandsSep: ','
                 }
             });
+
+            const categoryData = this.categoryData;
+            const seriesData = series[0].data;
             
             const chartOptions = {
               chart: {
@@ -228,21 +231,15 @@ var parseMetadata = metadata => {
                     enabled: this.showDataLabels || false,
                     allowOverlap: this.allowLabelOverlap || false,
                     formatter: function () {
-                      const index = series[0].data.indexOf(this.y);
-                      if (
-                        index !== -1 &&
-                        this.instance.categoryData &&
-                        this.instance.categoryData[0] &&
-                        this.instance.categoryData[0].data[index]
-                      ) {
-                        const category =
-                          this.instance.categoryData[0].data[index];
-                        const value = scaleFormat(this.y);
-                        return `${category.name} - ${value}`;
-                      } else {
-                        return ""; // Return an empty string or a placeholder if the data is not available
-                      }
-                    }.bind({ instance: this }), // Bind 'this' to the correct context
+                        const index = seriesData.indexOf(this.y);
+                        if (index !== -1 && categoryData && categoryData[0].data[index]) {
+                            const category = categoryData[0].data[index];
+                            const value = scaleFormat(this.y);
+                            return `${category.name}: ${value}`;
+                        } else {
+                            return '';
+                        }
+                    },
                     y: 10,
                   },
                   neckWidth: (20 / 50) * 0.7 * 100 + "%",
