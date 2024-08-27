@@ -265,6 +265,8 @@ var parseMetadata = metadata => {
                 return;
             }
 
+            const dataBinding = this.dataBinding;
+
             const pointIndex = point.index;
             // Retrieve the correct label based on the index from the categoryData
             const label = this.categoryData[0].data[pointIndex].name;
