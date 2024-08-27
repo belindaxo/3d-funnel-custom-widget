@@ -57,7 +57,7 @@ var parseMetadata = metadata => {
                 'chartTitle', 'titleSize', 'titleFontStyle', 'titleAlignment', 'titleColor',                // Title properties
                 'chartSubtitle', 'subtitleSize', 'subtitleFontStyle', 'subtitleAlignment', 'subtitleColor', // Subtitle properties
                 'scaleFormat', 'decimalPlaces',                                                             // Number formatting properties
-                'showDataLabels', 'labelContent', 'allowLabelOverlap'                                       // Data label properties            
+                'showDataLabels', 'allowLabelOverlap'                                                       // Data label properties            
             ];
         }
 
@@ -89,26 +89,6 @@ var parseMetadata = metadata => {
             } else {
                 return this.chartSubtitle;
             }
-        }
-
-        _formatLabelContent(category, value) {
-            let format = ``;
-            switch (this.labelContent) {
-                case 'label':
-                    format = `${category.name}`;
-                    break;
-                case 'value':
-                    format = `${value}`;
-                    break;
-                case 'both':
-                    format = `${category.name} - ${value}`;
-                    break;
-                default:
-                    format = `${category.name} - ${value}`;
-                    break;
-            }
-
-            return format;
         }
 
         _renderChart() {
@@ -252,9 +232,9 @@ var parseMetadata = metadata => {
                     formatter: function () {
                         const index = series[0].data.indexOf(this.y);
                         if (index !== -1 && categoryData && categoryData[0].data[index]) {
-                          const category = categoryData[0].data[index];
-                          const value = scaleFormat(this.y);
-                          return this._formatLabelContent(category, value);
+                            const category = categoryData[0].data[index];
+                            const value = scaleFormat(this.y);
+                            return `${category.name} - ${value}`;
                         } else {
                             return '';
                         }

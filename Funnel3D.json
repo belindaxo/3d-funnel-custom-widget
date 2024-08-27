@@ -98,11 +98,6 @@
             "description": "Show the data labels",
             "default": false
         },
-        "labelContent": {
-            "type": "string",
-            "description": "The content of the data labels",
-            "default": "both"
-        },
         "allowLabelOverlap": {
             "type": "boolean",
             "description": "Allow data label overlap",

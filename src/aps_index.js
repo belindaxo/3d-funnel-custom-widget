@@ -143,18 +143,6 @@
                 </td>
             </tr>
             <tr>
-                <td>Label Content</td>
-            </tr>
-            <tr>
-                <td>
-                    <select id="labelContent">
-                        <option value="label">Label only</option>
-                        <option value="value">Value only</option>
-                        <option value="both" selected>Both</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
                 <td>
                     <input id="allowLabelOverlap" type="checkbox">
                     <label for="allowLabelOverlap">Allow data label overlap</label>
@@ -182,7 +170,6 @@
             this._shadowRoot.getElementById('scaleFormat').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('decimalPlaces').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('showDataLabels').addEventListener('change', this._submit.bind(this));
-            this._shadowRoot.getElementById('labelContent').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('allowLabelOverlap').addEventListener('change', this._submit.bind(this));
         }
 
@@ -204,7 +191,6 @@
                         scaleFormat: this.scaleFormat,
                         decimalPlaces: this.decimalPlaces,
                         showDataLabels: this.showDataLabels,
-                        labelContent: this.labelContent,
                         allowLabelOverlap: this.allowLabelOverlap,
                     }
                 }
@@ -315,14 +301,6 @@
 
         get showDataLabels() {
             return this._shadowRoot.getElementById('showDataLabels').checked;
-        }
-
-        set labelContent(value) {
-            this._shadowRoot.getElementById('labelContent').value = value;
-        }
-
-        get labelContent() {
-            return this._shadowRoot.getElementById('labelContent').value;
         }
 
         set allowLabelOverlap(value) {
