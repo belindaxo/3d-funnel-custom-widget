@@ -43,6 +43,10 @@ var parseMetadata = metadata => {
         }
 
         onCustomWidgetDestroy(){
+            if (this._chart) {
+                this._chart.destroy();
+                this._chart = null;
+            }
         }
 
         static get observedAttributes() {
@@ -86,12 +90,24 @@ var parseMetadata = metadata => {
 
         _renderChart() {
             const dataBinding = this.dataBinding;
-            if (!dataBinding || dataBinding.state !== 'success') {
+            if (!dataBinding || dataBinding.state !== 'success' || !dataBinding.data || dataBinding.data.length === 0) {
+                if (this._chart) {
+                    this._chart.destroy();
+                    this._chart = null;
+                }
                 return;
             }
 
             const { data, metadata } = dataBinding;
             const { dimensions, measures } = parseMetadata(metadata);
+
+            if (dimensions.length === 0 || measures.length === 0) {
+                if (this._chart) {
+                    this._chart.destroy();
+                    this._chart = null;
+                }
+                return
+            }
 
             const categoryData = dimensions.map(dimension => {
                 return {
