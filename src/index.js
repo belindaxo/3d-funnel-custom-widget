@@ -266,14 +266,17 @@ var parseMetadata = metadata => {
             }
 
             const pointIndex = point.index;
+            // Retrieve the correct label based on the index from the categoryData
             const label = this.categoryData[0].data[pointIndex].name;
-            const selectedItem = this.dataBinding.data.find(item => item[this.categoryData[0].key].label === label);
+            // Use the dimension key to find the corresponding item in dataBinding.data
+            const selectedItem = dataBinding.data.find(item => item[this.categoryData[0].key].label === label);
             const linkedAnalysis = this.dataBindings.getDataBinding('dataBinding').getLinkedAnalysis();
 
             if (event.type === 'select') {
                 if (selectedItem) {
                     const selection = {};
-                    selection[this.categoryData[0].key] = selectedItem[this.categoryData[0].key];
+                    selection[this.categoryData[0].id] = selectedItem[this.categoryData[0].key].id;
+                    console.log('Setting filter with selection:', selection);
                     linkedAnalysis.setFilters(selection);
                     this._selectedPoint = point;
                 }
