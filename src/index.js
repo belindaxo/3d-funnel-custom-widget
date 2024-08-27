@@ -274,6 +274,18 @@ var parseMetadata = metadata => {
             const selectedItem = dataBinding.data.find(item => item[this.categoryData[0].key].label === label);
             const linkedAnalysis = this.dataBindings.getDataBinding('dataBinding').getLinkedAnalysis();
 
+            if (this._selectedPoint && this._selectedPoint !== point) {
+                const prevLabel = this.categoryData[0].data[this._selectedPoint.index].name;
+                const prevItem = this.dataBinding.data.find(item => item[this.categoryData[0].key].label === prevLabel);
+
+                if (prevItem) {
+                    const prevSelection = {};
+                    prevSelection[this.categoryData[0].id] = prevItem[this.categoryData[0].key].id;
+                    linkedAnalysis.removeFilters();
+                    this._selectedPoint.select(false, false);
+                }
+            }
+
             if (event.type === 'select') {
                 if (selectedItem) {
                     const selection = {};
