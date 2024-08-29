@@ -13,14 +13,14 @@
             "kind": "main",
             "tag": "com-sap-sample-funnel3d",
             "url": "https://belindaxo.github.io/3d-funnel-custom-widget/dist/bundle.js",
-            "integrity": "",
+            "integrity": "sha256-e8c25a32b112d0d21eabdff4b1c430174690cfc6c3caf9e60b9c877729fd6faa",
             "ignoreIntegrity": false
         },
         {
             "kind": "styling",
             "tag": "com-sap-sample-funnel3d-aps",
             "url": "https://belindaxo.github.io/3d-funnel-custom-widget/dist/bundle.js",
-            "integrity": "",
+            "integrity": "sha256-e8c25a32b112d0d21eabdff4b1c430174690cfc6c3caf9e60b9c877729fd6faa",
             "ignoreIntegrity": false
         }
     ],
