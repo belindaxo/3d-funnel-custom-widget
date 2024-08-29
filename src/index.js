@@ -200,7 +200,7 @@ var parseMetadata = metadata => {
               },
               title: {
                 text: this.chartTitle || "",
-                align: this.titleAlignment || "center",
+                align: this.titleAlignment || "left",
                 style: {
                   fontSize: this.titleSize || "20px",
                   fontWeight: this.titleFontStyle || "bold",
@@ -209,7 +209,7 @@ var parseMetadata = metadata => {
               },
               subtitle: {
                 text: subtitleText,
-                align: this.subtitleAlignment || "center",
+                align: this.subtitleAlignment || "left",
                 style: {
                   fontSize: this.subtitleSize || "12px",
                   fontStyle: this.subtitleFontStyle || "normal",

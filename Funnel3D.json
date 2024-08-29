@@ -51,7 +51,7 @@
         "titleAlignment": {
             "type": "string",
             "description": "The alignment of the title text",
-            "default": "center"
+            "default": "left"
         },
         "titleColor": {
             "type": "string",
@@ -76,7 +76,7 @@
         "subtitleAlignment": {
             "type": "string",
             "description": "The alignment of the subtitle text",
-            "default": "center"
+            "default": "left"
         },
         "subtitleColor": {
             "type": "string",

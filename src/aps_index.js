@@ -41,8 +41,8 @@
                         </td>
                         <td>
                             <select id="titleAlignment">
-                                <option value="left">Left</option>
-                                <option value="center" selected>Center</option>
+                                <option value="left" selected>Left</option>
+                                <option value="center">Center</option>
                                 <option value="right">Right</option>
                             </select>
                         </td>
@@ -91,8 +91,8 @@
                         </td>
                         <td>
                             <select id="subtitleAlignment">
-                                <option value="left">Left</option>
-                                <option value="center" selected>Center</option>
+                                <option value="left" selected>Left</option>
+                                <option value="center">Center</option>
                                 <option value="right">Right</option>
                             </select>
                         </td>
