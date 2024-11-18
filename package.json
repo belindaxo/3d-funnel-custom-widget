@@ -16,6 +16,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "3d-funnel-custom-widget": "file:",
     "highcharts": "^11.4.7"
   }
 }
