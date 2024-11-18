@@ -229,8 +229,9 @@ var parseMetadata = metadata => {
                   dataLabels: {
                     enabled: this.showDataLabels || false,
                     allowOverlap: this.allowLabelOverlap || false,
-                    crop: false,
-                    overflow: "allow",
+                    style: {
+                        textOverflow: 'clip'
+                    },
                     formatter: function () {
                         const index = series[0].data.indexOf(this.y);
                         if (index !== -1 && categoryData && categoryData[0].data[index]) {
