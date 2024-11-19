@@ -194,6 +194,7 @@ var parseMetadata = metadata => {
                 options3d: {
                   enabled: true,
                   alpha: 10,
+                  depth: 50,
                   viewDistance: 50,
                 },
                 marginRight: 70,
@@ -229,6 +230,8 @@ var parseMetadata = metadata => {
                   dataLabels: {
                     enabled: this.showDataLabels || false,
                     allowOverlap: this.allowLabelOverlap || false,
+                    crop: false,
+                    overflow: 'allow',
                     useHTML: true,
                     style: {
                         whiteSpace: 'normal',
