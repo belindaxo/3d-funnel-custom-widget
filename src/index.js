@@ -187,6 +187,8 @@ var parseMetadata = metadata => {
             });
 
             const categoryData = this.categoryData;
+
+            const containerWidth = this.shadowRoot.getElementById('container').offsetWidth;
             
             const chartOptions = {
               chart: {
@@ -196,8 +198,7 @@ var parseMetadata = metadata => {
                   alpha: 10,
                   depth: 50,
                   viewDistance: 50,
-                },
-                marginRight: 70,
+                }
               },
               title: {
                 text: this.chartTitle || "",
@@ -235,7 +236,7 @@ var parseMetadata = metadata => {
                     useHTML: true,
                     style: {
                         whiteSpace: 'normal',
-                        width: 'auto'
+                        width: `${containerWidth}px`
                     },
                     formatter: function () {
                         const index = series[0].data.indexOf(this.y);
