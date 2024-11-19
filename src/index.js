@@ -229,8 +229,10 @@ var parseMetadata = metadata => {
                   dataLabels: {
                     enabled: this.showDataLabels || false,
                     allowOverlap: this.allowLabelOverlap || false,
+                    useHTML: true,
                     style: {
-                        textOverflow: 'clip'
+                        whiteSpace: 'normal',
+                        width: 'auto'
                     },
                     formatter: function () {
                         const index = series[0].data.indexOf(this.y);
