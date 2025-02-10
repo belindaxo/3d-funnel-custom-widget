@@ -134,21 +134,6 @@
                 </td>
             </tr>
         </table>
-        <legend style="font-weight: bold;font-size: 18px;">Data Point</legend>
-        <table>
-            <tr>
-                <td>
-                    <input id="showDataLabels" type="checkbox">
-                    <label for="showDataLabels">Show data labels</label>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <input id="allowLabelOverlap" type="checkbox">
-                    <label for="allowLabelOverlap">Allow data label overlap</label>
-                </td>
-            </tr>
-        </table>
         <input type="submit" style="display:none;">
         </form>
     `;
@@ -169,8 +154,8 @@
             this._shadowRoot.getElementById('subtitleColor').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('scaleFormat').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('decimalPlaces').addEventListener('change', this._submit.bind(this));
-            this._shadowRoot.getElementById('showDataLabels').addEventListener('change', this._submit.bind(this));
-            this._shadowRoot.getElementById('allowLabelOverlap').addEventListener('change', this._submit.bind(this));
+            // this._shadowRoot.getElementById('showDataLabels').addEventListener('change', this._submit.bind(this));
+            // this._shadowRoot.getElementById('allowLabelOverlap').addEventListener('change', this._submit.bind(this));
         }
 
         _submit(e) {
@@ -190,8 +175,8 @@
                         subtitleColor: this.subtitleColor,
                         scaleFormat: this.scaleFormat,
                         decimalPlaces: this.decimalPlaces,
-                        showDataLabels: this.showDataLabels,
-                        allowLabelOverlap: this.allowLabelOverlap,
+                        // showDataLabels: this.showDataLabels,
+                        // allowLabelOverlap: this.allowLabelOverlap,
                     }
                 }
             }));
@@ -295,21 +280,21 @@
             return this._shadowRoot.getElementById('decimalPlaces').value;
         }
 
-        set showDataLabels(value) {
-            this._shadowRoot.getElementById('showDataLabels').checked = value;
-        }
+        // set showDataLabels(value) {
+        //     this._shadowRoot.getElementById('showDataLabels').checked = value;
+        // }
 
-        get showDataLabels() {
-            return this._shadowRoot.getElementById('showDataLabels').checked;
-        }
+        // get showDataLabels() {
+        //     return this._shadowRoot.getElementById('showDataLabels').checked;
+        // }
 
-        set allowLabelOverlap(value) {
-            this._shadowRoot.getElementById('allowLabelOverlap').checked = value;
-        }
+        // set allowLabelOverlap(value) {
+        //     this._shadowRoot.getElementById('allowLabelOverlap').checked = value;
+        // }
 
-        get allowLabelOverlap() {
-            return this._shadowRoot.getElementById('allowLabelOverlap').checked;
-        }
+        // get allowLabelOverlap() {
+        //     return this._shadowRoot.getElementById('allowLabelOverlap').checked;
+        // }
     }
 
     customElements.define('com-sap-sample-funnel3d-aps', Funnel3DAps);
