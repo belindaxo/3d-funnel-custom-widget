@@ -203,14 +203,8 @@ var parseMetadata = metadata => {
               legend: {
                 enabled: true,
                 labelFormatter: function () { 
-                    const index = series[0].data.indexOf(this.y);
-                    if (index !== -1 && categoryData && categoryData[0].data[index]) {
-                        const category = categoryData[0].data[index];
-                        const value = scaleFormat(this.y);
-                        return `${category.name} - ${value}`;
-                    } else {
-                         return 'undefined';
-                    }
+                    console.log(this);
+                    return this.name;
                 }
               },
               title: {
