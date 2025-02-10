@@ -202,8 +202,16 @@ var parseMetadata = metadata => {
               },
               legend: {
                 enabled: true,
-                layout: "proximate",
-                align: "right"
+                labelFormatter: function () { 
+                    const index = series[0].data.indexOf(this.y);
+                    if (index !== -1 && categoryData && categoryData[0].data[index]) {
+                        const category = categoryData[0].data[index];
+                        const value = scaleFormat(this.y);
+                        return `${category.name} - ${value}`;
+                    } else {
+                         return 'undefined';
+                    }
+                }
               },
               title: {
                 text: this.chartTitle || "",
@@ -233,9 +241,7 @@ var parseMetadata = metadata => {
                       unselect: this._handlePointClick,
                     },
                   },
-                  funnel3d: {
-                    showInLegend: true,
-                  },
+                  showInLegend: true,
                   dataLabels: {
                     enabled: false,
                   },
