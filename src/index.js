@@ -233,8 +233,11 @@ var parseMetadata = metadata => {
                       unselect: this._handlePointClick,
                     },
                   },
+                  funnel3d: {
+                    showInLegend: true,
+                  },
                   dataLabels: {
-                    enabled: false
+                    enabled: false,
                   },
                 //   dataLabels: {
                 //     enabled: this.showDataLabels || false,
