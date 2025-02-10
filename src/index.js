@@ -91,6 +91,7 @@ var parseMetadata = metadata => {
             }
         }
 
+
         _renderChart() {
             const dataBinding = this.dataBinding;
             if (!dataBinding || dataBinding.state !== 'success' || !dataBinding.data || dataBinding.data.length === 0) {
@@ -178,7 +179,10 @@ var parseMetadata = metadata => {
                 return scaledValue.toFixed(this.decimalPlaces);
             }
 
+
             const subtitleText = this._updateSubtitle();
+
+            const labelFormat = this.labelFormat;
 
             Highcharts.setOptions({
                 lang: {
@@ -253,17 +257,17 @@ var parseMetadata = metadata => {
                         if (index !== -1 && categoryData && categoryData[0].data[index]) {
                             const category = categoryData[0].data[index];
                             const value = scaleFormat(this.y);
-                            if (this.labelFormat === 'labelAndValue') {
+                            if (labelFormat === 'labelAndValue') {
                                 return `${category.name} - ${value}`;
-                            } else if (this.labelFormat === 'valueOnly') {
+                            } else if (labelFormat === 'valueOnly') {
                                 return `${value}`;
-                            } else if (this.labelFormat === 'labelOnly') {
+                            } else if (labelFormat === 'labelOnly') {
                                 return `${category.name}`;
                             } else {
-                                return '';
+                                return `${category.name} - ${value}`;
                             }
                         } else {
-                            return '';
+                            return 'error with data';
                         }
                     }
                   },

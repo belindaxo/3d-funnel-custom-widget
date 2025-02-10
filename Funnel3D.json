@@ -106,7 +106,7 @@
         "labelFormat": {
             "type": "string",
             "description": "The format of the data labels",
-            "default": "labelAndValue"
+            "default": "`${category.name} - ${value}`"
         }
     },
     "methods": {
