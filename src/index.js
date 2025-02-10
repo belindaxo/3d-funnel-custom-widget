@@ -56,8 +56,8 @@ var parseMetadata = metadata => {
             return [
                 'chartTitle', 'titleSize', 'titleFontStyle', 'titleAlignment', 'titleColor',                // Title properties
                 'chartSubtitle', 'subtitleSize', 'subtitleFontStyle', 'subtitleAlignment', 'subtitleColor', // Subtitle properties
-                'scaleFormat', 'decimalPlaces'                                                              // Number formatting properties
-                // 'showDataLabels', 'allowLabelOverlap'                                                       // Data label properties            
+                'scaleFormat', 'decimalPlaces',                                                             // Number formatting properties
+                'showDataLabels', 'allowLabelOverlap'                                                       // Data label properties            
             ];
         }
 
@@ -198,13 +198,22 @@ var parseMetadata = metadata => {
                   alpha: 10,
                   depth: 50,
                   viewDistance: 50,
-                }
-              },
-              legend: {
-                enabled: true,
-                labelFormatter: function () { 
-                    console.log(this);
-                    return this.name;
+                },
+                events: {
+                    load: function() {
+                        var chart = this,
+                        points = chart.series[0].points,
+                        offset
+                        points.forEach(function(point, index) {
+                            if ((point.dataLabel.attr('x') + point.dataLabel.attr('width')) > chart.plotWidth) {
+                                offset = (point.dataLabel.attr('x') + point.dataLabel.attr('width')) - chart.plotWidth;
+
+                                point.dataLabel.attr({
+                                    x: point.dataLabel.attr('x') - offset
+                                });
+                            }
+                        });
+                    }
                 }
               },
               title: {
@@ -235,32 +244,21 @@ var parseMetadata = metadata => {
                       unselect: this._handlePointClick,
                     },
                   },
-                  showInLegend: true,
                   dataLabels: {
-                    enabled: false,
+                    enabled: this.showDataLabels || false,
+                    allowOverlap: this.allowLabelOverlap || false,
+                    padding: 0,
+                    formatter: function () {
+                        const index = series[0].data.indexOf(this.y);
+                        if (index !== -1 && categoryData && categoryData[0].data[index]) {
+                            const category = categoryData[0].data[index];
+                            const value = scaleFormat(this.y);
+                            return `${category.name} - ${value}`;
+                        } else {
+                            return '';
+                        }
+                    }
                   },
-                //   dataLabels: {
-                //     enabled: this.showDataLabels || false,
-                //     allowOverlap: this.allowLabelOverlap || false,
-                //     crop: false,
-                //     overflow: 'allow',
-                //     useHTML: true,
-                //     style: {
-                //         whiteSpace: 'normal',
-                //         width: `${containerWidth}px`
-                //     },
-                //     formatter: function () {
-                //         const index = series[0].data.indexOf(this.y);
-                //         if (index !== -1 && categoryData && categoryData[0].data[index]) {
-                //             const category = categoryData[0].data[index];
-                //             const value = scaleFormat(this.y);
-                //             return `${category.name} - ${value}`;
-                //         } else {
-                //             return '';
-                //         }
-                //     },
-                //     y: 10,
-                //   },
                   neckWidth: (20 / 50) * 0.7 * 100 + "%",
                   neckHeight: ((20 + 5) / (50 + 20 + 5)) * 100 + "%",
                   width: "70%",

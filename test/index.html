@@ -138,24 +138,22 @@
                 </td>
             </tr>
         </table>
-        <legend style="font-weight: bold;font-size: 18px;">Legend</legend>
+        <legend style="font-weight: bold;font-size: 18px;">Data Point</legend>
         <table>
             <tr>
-                <td>Label Format</td>
+                <td>
+                    <input id="showDataLabels" type="checkbox">
+                    <label for="showDataLabels">Show data labels</label>
+                </td>
             </tr>
             <tr>
                 <td>
-                    <select id="labelFormat">
-                        <option value="nameAndValue" selected>Show name and value</option>
-                        <option value="nameOnly">Show name only</option>
-                        <option value="valueOnly">Show value only</option>
-                    </select>
+                    <input id="allowLabelOverlap" type="checkbox">
+                    <label for="allowLabelOverlap">Allow data label overlap</label>
                 </td>
+            </tr>
         </table>
-                    
-                        
         <input type="submit" style="display:none;">
         </form>
-
 </body>
 </html>

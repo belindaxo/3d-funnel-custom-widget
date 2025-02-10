@@ -92,6 +92,16 @@
             "type": "integer",
             "description": "The number of decimal places to display",
             "default": 2
+        },
+        "showDataLabels": {
+            "type": "boolean",
+            "description": "Show the data labels",
+            "default": false
+        },
+        "allowLabelOverlap": {
+            "type": "boolean",
+            "description": "Allow data label overlap",
+            "default": false
         }
     },
     "methods": {
