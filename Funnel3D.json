@@ -102,6 +102,11 @@
             "type": "boolean",
             "description": "Allow data label overlap",
             "default": false
+        },
+        "labelFormat": {
+            "type": "string",
+            "description": "The format of the data labels",
+            "default": "labelAndValue"
         }
     },
     "methods": {

@@ -148,6 +148,17 @@
                     <label for="allowLabelOverlap">Allow data label overlap</label>
                 </td>
             </tr>
+            <tr>
+                <td>Label Display Options</td>
+            <tr>
+                <td>
+                    <select id="labelFormat">
+                        <option value="labelAndValue" selected>Label and Value</option>
+                        <option value="labelOnly">Label only</option>
+                        <option value="valueOnly">Value only</option>
+                    </select>
+                </td>
+            </tr>
         </table>
         <input type="submit" style="display:none;">
         </form>
@@ -171,6 +182,7 @@
             this._shadowRoot.getElementById('decimalPlaces').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('showDataLabels').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('allowLabelOverlap').addEventListener('change', this._submit.bind(this));
+            this._shadowRoot.getElementById('labelFormat').addEventListener('change', this._submit.bind(this));
         }
 
         _submit(e) {
@@ -192,6 +204,7 @@
                         decimalPlaces: this.decimalPlaces,
                         showDataLabels: this.showDataLabels,
                         allowLabelOverlap: this.allowLabelOverlap,
+                        labelFormat: this.labelFormat
                     }
                 }
             }));
@@ -310,6 +323,15 @@
         get allowLabelOverlap() {
             return this._shadowRoot.getElementById('allowLabelOverlap').checked;
         }
+
+        set labelFormat(value) {
+            this._shadowRoot.getElementById('labelFormat').value = value;
+        }
+
+        get labelFormat() {
+            return this._shadowRoot.getElementById('labelFormat').value;
+        }
+        
     }
 
     customElements.define('com-sap-sample-funnel3d-aps', Funnel3DAps);
