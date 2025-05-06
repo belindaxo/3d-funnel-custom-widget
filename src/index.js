@@ -32,26 +32,27 @@ var parseMetadata = metadata => {
 
             const fontFace = `
                 @font-face {
-                    font-family: '72W05';
-                    src: url('https://belindaxo.github.io/3d-funnel-custom-widget/fonts/72W05-Bold.woff2') format('woff2');
-                    font-weight: bold;
+                    font-family: "72";
+                    src: url("./fonts/72-Bold.woff2") format("woff2"),
+                         url("./fonts/72-Bold.woff") format("woff");
+                    font-weight: 700;
                     font-style: normal;
                     font-display: swap;
                 }
-
                 @font-face {
-                    font-family: '72W05';
-                    src: url('https://belindaxo.github.io/3d-funnel-custom-widget/fonts/72W05-Italic.woff2') format('woff2');
-                    font-weight: normal;
+                    font-family: "72";
+                    src: url("./fonts/72-Regular.woff2") format("woff2"),
+                         url("./fonts/72-Regular.woff") format("woff");
+                    font-weight: 400;
+                    font-style: normal;
+                    font-display: swap;
+                }
+                @font-face {
+                    font-family: "72";
+                    src: url("./fonts/72-Italic.woff2") format("woff2"),
+                         url("./fonts/72-Italic.woff") format("woff");
+                    font-weight: 400;
                     font-style: italic;
-                    font-display: swap;
-                }
-
-                @font-face {
-                    font-family: '72W05';
-                    src: url('https://belindaxo.github.io/3d-funnel-custom-widget/fonts/72W05-Regular.woff2') format('woff2');
-                    font-weight: normal;
-                    font-style: normal;
                     font-display: swap;
                 }
             `;
@@ -60,8 +61,9 @@ var parseMetadata = metadata => {
                 <style>
                     ${fontFace}
                 </style>
-                <div id="container" style="width: 100%; height: 100%;"></div>    
+                <div id="container" style="width: 100%; height: 100%; font-family: '72', sans-serif;"></div>    
             `;
+
             this._selectedPoint = null;
 
             this._handlePointClick = this._handlePointClick.bind(this);
@@ -239,7 +241,7 @@ var parseMetadata = metadata => {
                   viewDistance: 50,
                 },
                 style: {
-                    fontFamily: "72W05",
+                    fontFamily: "72, sans-serif",
                 },
                 events: {
                     load: function() {
@@ -262,7 +264,7 @@ var parseMetadata = metadata => {
                 text: this.chartTitle || "",
                 align: this.titleAlignment || "left",
                 style: {
-                  fontFamily: "72W05",
+                  fontFamily: "72, sans-serif",
                   fontSize: this.titleSize || "20px",
                   fontWeight: this.titleFontStyle || "bold",
                   color: this.titleColor || "#333333",
@@ -272,7 +274,7 @@ var parseMetadata = metadata => {
                 text: subtitleText,
                 align: this.subtitleAlignment || "left",
                 style: {
-                  fontFamily: "72W05",
+                  fontFamily: "72, sans-serif",
                   fontSize: this.subtitleSize || "12px",
                   fontStyle: this.subtitleFontStyle || "normal",
                   color: this.subtitleColor || "#666666",
@@ -293,7 +295,7 @@ var parseMetadata = metadata => {
                     allowOverlap: this.allowLabelOverlap || false,
                     padding: 0,
                     style: {
-                        fontFamily: "72W05",
+                        fontFamily: "72, sans-serif",
                     },
                     formatter: function () {
                         const index = series[0].data.indexOf(this.y);
@@ -326,7 +328,7 @@ var parseMetadata = metadata => {
               tooltip: {
                 valueDecimals: 0,
                 style: {
-                    fontFamily: "72W05",
+                    fontFamily: "72, sans-serif",
                 },
               },
               series,
