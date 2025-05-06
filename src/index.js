@@ -7,6 +7,7 @@ import HighchartsCylinder from 'highcharts/modules/cylinder';
 HighchartsCylinder(Highcharts);
 import HighchartsFunnel3D from 'highcharts/modules/funnel3d';
 HighchartsFunnel3D(Highcharts);
+import './fonts.css';
 
 var parseMetadata = metadata => {
     const { dimensions: dimensionsMap, mainStructureMembers: measuresMap } = metadata;
@@ -30,38 +31,8 @@ var parseMetadata = metadata => {
             super();
             this.attachShadow({ mode: 'open' });
 
-            const fontFace = `
-                @font-face {
-                    font-family: "72";
-                    src: url("https://belindaxo.github.io/3d-funnel-custom-widget/fonts/72-Regular.woff2") format("woff2"),
-                         url("https://belindaxo.github.io/3d-funnel-custom-widget/fonts/72-Regular.woff") format("woff");
-                    font-weight: 700;
-                    font-style: normal;
-                    font-display: swap;
-                }
-                @font-face {
-                    font-family: "72";
-                    src: url("https://belindaxo.github.io/3d-funnel-custom-widget/fonts/72-Bold.woff2") format("woff2"),
-                         url("https://belindaxo.github.io/3d-funnel-custom-widget/fonts/72-Bold.woff") format("woff");
-                    font-weight: 400;
-                    font-style: normal;
-                    font-display: swap;
-                }
-                @font-face {
-                    font-family: "72";
-                    src: url("https://belindaxo.github.io/3d-funnel-custom-widget/fonts/72-Italic.woff2") format("woff2"),
-                         url("https://belindaxo.github.io/3d-funnel-custom-widget/fonts/72-Italic.woff") format("woff");
-                    font-weight: 400;
-                    font-style: italic;
-                    font-display: swap;
-                }
-            `;
-
             this.shadowRoot.innerHTML = `
-                <style>
-                    ${fontFace}
-                </style>
-                <div id="container" style="width: 100%; height: 100%; font-family: '72', sans-serif;"></div>    
+                <div id="container" style="width: 100%; height: 100%;"></div>    
             `;
 
             this._selectedPoint = null;
