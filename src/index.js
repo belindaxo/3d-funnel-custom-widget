@@ -50,6 +50,7 @@ var parseMetadata = metadata => {
                 this._chart.destroy();
                 this._chart = null;
             }
+            this._selectedPoint = null; // Reset selection when chart is destroyed
         }
 
         static get observedAttributes() {
@@ -98,6 +99,7 @@ var parseMetadata = metadata => {
                 if (this._chart) {
                     this._chart.destroy();
                     this._chart = null;
+                    this._selectedPoint = null; // Reset selection when chart is destroyed
                 }
                 return;
             }
@@ -109,8 +111,9 @@ var parseMetadata = metadata => {
                 if (this._chart) {
                     this._chart.destroy();
                     this._chart = null;
+                    this._selectedPoint = null; // Reset selection when chart is destroyed
                 }
-                return
+                return;
             }
 
             this.categoryData = dimensions.map(dimension => {
@@ -193,6 +196,8 @@ var parseMetadata = metadata => {
             const categoryData = this.categoryData;
 
             const containerWidth = this.shadowRoot.getElementById('container').offsetWidth;
+
+            this._selectedPoint = null; // Reset the selected point reference before rendering the chart
             
             const chartOptions = {
               chart: {
