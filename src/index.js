@@ -29,6 +29,33 @@ var parseMetadata = metadata => {
         constructor() {
             super();
             this.attachShadow({ mode: 'open' });
+
+            const FONT_CSS = `
+                @font-face {
+                    font-family: '72W05';
+                    src: url('https://belindaxo.github.io/3d-funnel-custom-widget/data/72W05-Bold.woff2') format('woff2');
+                    font-weight: bold;
+                    font-style: normal;
+                    font-display: swap;
+                }
+
+                @font-face {
+                    font-family: '72W05';
+                    src: url('https://belindaxo.github.io/3d-funnel-custom-widget/data/72W05-Italic.woff2') format('woff2');
+                    font-weight: normal;
+                    font-style: italic;
+                    font-display: swap;
+                }
+
+                @font-face {
+                    font-family: '72W05';
+                    src: url('https://belindaxo.github.io/3d-funnel-custom-widget/data/72W05-Regular.woff2') format('woff2');
+                    font-weight: normal;
+                    font-style: normal;
+                    font-display: swap;
+                }
+            `;
+
             this.shadowRoot.innerHTML = `
                 <div id="container" style="width: 100%; height: 100%;"></div>    
             `;
