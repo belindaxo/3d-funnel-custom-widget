@@ -17,11 +17,6 @@ module.exports = {
                     },
                 },
             },
-            {
-                test: /\.css$/i,
-                resourceQuery: /raw/,
-                use: 'raw-loader',
-            },
         ],
     },
 }
