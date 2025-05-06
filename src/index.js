@@ -7,7 +7,7 @@ import HighchartsCylinder from 'highcharts/modules/cylinder';
 HighchartsCylinder(Highcharts);
 import HighchartsFunnel3D from 'highcharts/modules/funnel3d';
 HighchartsFunnel3D(Highcharts);
-import './fonts.css';
+import fontCss from './fonts.css?raw';
 
 var parseMetadata = metadata => {
     const { dimensions: dimensionsMap, mainStructureMembers: measuresMap } = metadata;
@@ -31,9 +31,20 @@ var parseMetadata = metadata => {
             super();
             this.attachShadow({ mode: 'open' });
 
-            this.shadowRoot.innerHTML = `
-                <div id="container" style="width: 100%; height: 100%;"></div>    
-            `;
+            // this.shadowRoot.innerHTML = `
+            //     <div id="container" style="width: 100%; height: 100%;"></div>    
+            // `;
+
+            const styleElement = document.createElement('style');
+            styleElement.textContent = fontCss;
+            this.shadowRoot.appendChild(styleElement); // injects @font-face into shadow DOM
+
+            const containerElement = document.createElement('div');
+            containerElement.id = 'container';
+            containerElement.style.width = '100%';
+            containerElement.style.height = '100%';
+            containerElement.style.fontFamily = '72, sans-serif';
+            this.shadowRoot.appendChild(containerElement); // adds chart container
 
             this._selectedPoint = null;
 

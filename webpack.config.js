@@ -7,10 +7,6 @@ module.exports = {
     },
     module: {
         rules: [
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader'],
-            },
             { 
                 test: /\.js$/, 
                 exclude: /node_modules/, 
@@ -20,6 +16,11 @@ module.exports = {
                         presets: ['@babel/preset-env'],
                     },
                 },
+            },
+            {
+                test: /\.css$/i,
+                resourceQuery: /raw/,
+                use: 'raw-loader',
             },
         ],
     },
