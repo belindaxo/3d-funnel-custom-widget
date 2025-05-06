@@ -262,6 +262,7 @@ var parseMetadata = metadata => {
                 text: this.chartTitle || "",
                 align: this.titleAlignment || "left",
                 style: {
+                  fontFamily: "72W05",
                   fontSize: this.titleSize || "20px",
                   fontWeight: this.titleFontStyle || "bold",
                   color: this.titleColor || "#333333",
@@ -271,6 +272,7 @@ var parseMetadata = metadata => {
                 text: subtitleText,
                 align: this.subtitleAlignment || "left",
                 style: {
+                  fontFamily: "72W05",
                   fontSize: this.subtitleSize || "12px",
                   fontStyle: this.subtitleFontStyle || "normal",
                   color: this.subtitleColor || "#666666",
@@ -290,6 +292,9 @@ var parseMetadata = metadata => {
                     enabled: this.showDataLabels || false,
                     allowOverlap: this.allowLabelOverlap || false,
                     padding: 0,
+                    style: {
+                        fontFamily: "72W05",
+                    },
                     formatter: function () {
                         const index = series[0].data.indexOf(this.y);
                         if (index !== -1 && categoryData && categoryData[0].data[index]) {
@@ -320,6 +325,9 @@ var parseMetadata = metadata => {
               },
               tooltip: {
                 valueDecimals: 0,
+                style: {
+                    fontFamily: "72W05",
+                },
               },
               series,
             };
