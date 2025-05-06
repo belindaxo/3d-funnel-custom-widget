@@ -33,24 +33,24 @@ var parseMetadata = metadata => {
             const fontFace = `
                 @font-face {
                     font-family: "72";
-                    src: url("./fonts/72-Bold.woff2") format("woff2"),
-                         url("./fonts/72-Bold.woff") format("woff");
+                    src: url("https://belindaxo.github.io/3d-funnel-custom-widget/fonts/72-Regular.woff2") format("woff2"),
+                         url("https://belindaxo.github.io/3d-funnel-custom-widget/fonts/72-Regular.woff") format("woff");
                     font-weight: 700;
                     font-style: normal;
                     font-display: swap;
                 }
                 @font-face {
                     font-family: "72";
-                    src: url("./fonts/72-Regular.woff2") format("woff2"),
-                         url("./fonts/72-Regular.woff") format("woff");
+                    src: url("https://belindaxo.github.io/3d-funnel-custom-widget/fonts/72-Bold.woff2") format("woff2"),
+                         url("https://belindaxo.github.io/3d-funnel-custom-widget/fonts/72-Bold.woff") format("woff");
                     font-weight: 400;
                     font-style: normal;
                     font-display: swap;
                 }
                 @font-face {
                     font-family: "72";
-                    src: url("./fonts/72-Italic.woff2") format("woff2"),
-                         url("./fonts/72-Italic.woff") format("woff");
+                    src: url("https://belindaxo.github.io/3d-funnel-custom-widget/fonts/72-Italic.woff2") format("woff2"),
+                         url("https://belindaxo.github.io/3d-funnel-custom-widget/fonts/72-Italic.woff") format("woff");
                     font-weight: 400;
                     font-style: italic;
                     font-display: swap;
