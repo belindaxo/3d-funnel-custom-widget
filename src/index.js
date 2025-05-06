@@ -30,7 +30,7 @@ var parseMetadata = metadata => {
             super();
             this.attachShadow({ mode: 'open' });
 
-            const FONT_CSS = `
+            const fontFace = `
                 @font-face {
                     font-family: '72W05';
                     src: url('https://belindaxo.github.io/3d-funnel-custom-widget/fonts/72W05-Bold.woff2') format('woff2');
@@ -57,6 +57,9 @@ var parseMetadata = metadata => {
             `;
 
             this.shadowRoot.innerHTML = `
+                <style>
+                    ${fontFace}
+                </style>
                 <div id="container" style="width: 100%; height: 100%;"></div>    
             `;
             this._selectedPoint = null;
@@ -234,6 +237,9 @@ var parseMetadata = metadata => {
                   alpha: 10,
                   depth: 50,
                   viewDistance: 50,
+                },
+                style: {
+                    fontFamily: "72W05",
                 },
                 events: {
                     load: function() {
