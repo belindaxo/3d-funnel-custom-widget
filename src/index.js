@@ -325,12 +325,15 @@ var parseMetadata = metadata => {
                 useHTML: true,
                 formatter: function () {
                     console.log(this);
-                    const { scaledValue, valueSuffix } = scaleFormat(this.y);
-                    const value = scaledValue;
-                    const valueWithSuffix = `${value} ${valueSuffix}`;
-                    const pointIndex = this.index;
-                    const label = categoryData[0].data[pointIndex].name;
-                    return `
+                    // Find index of current point in the series data
+                    const index = this.series.data.indexOf(this.point);
+                    if (index !== -1 && categoryData && categoryData[0].data[index]) {
+                        // Retrieve the category data using the index
+                        const category = categoryData[0].data[index];
+                        const { scaledValue, valueSuffix } = scaleFormat(this.y);
+                        const value = scaledValue;
+                        const valueWithSuffix = `${value} ${valueSuffix}`;
+                        return `
                         <div style="text-align: left; font-family: '72', sans-serif; font-size: 14px;">
                             <div style="font-size: 14px; font-weight: normal; color: #666666;">${this.series.name}</div>
                             <div style="font-size: 18px; font-weight: normal; color: #000000;">${valueWithSuffix}</div>
@@ -340,11 +343,15 @@ var parseMetadata = metadata => {
                                     <td style="text-align: left; padding-right: 10px;">
                                         <span style="color:${this.color}">\u25CF</span> ${this.series.options.categoryName}
                                     </td>
-                                    <td style="text-align: right; padding-left: 10px;">${label}</td>
+                                    <td style="text-align: right; padding-left: 10px;">${category.name}</td>
                                 </tr>
                             </table>
                         </div>
-                    `;
+                        `;
+
+                    } else {
+                        return 'error with data';
+                    }
                 }
               },
               series,
