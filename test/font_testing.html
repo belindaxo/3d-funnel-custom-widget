@@ -80,7 +80,7 @@
                         tooltip: {
                             valueDecimals: 0,
                             followPointer: true,
-                            headerFormat: `{category}<br/>`,
+                            headerFormat: `{series.options.customProperty}<br/>`,
                         },
                         series: [{
                             name: 'Funnel Series',
@@ -90,7 +90,8 @@
                                 ['Step 3', 60],
                                 ['Step 4', 40],
                                 ['Step 5', 20]
-                            ]
+                            ],
+                            customProperty: 'Custom Value'
                         }]
                     });
                 }

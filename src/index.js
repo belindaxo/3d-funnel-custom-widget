@@ -150,7 +150,8 @@ var parseMetadata = metadata => {
                     name: measure.label,
                     data: [],
                     key: measure.key,
-                    type: 'funnel3d'
+                    type: 'funnel3d',
+                    categoryName: this.categoryData[0].name // The category name
                 }
             });
 
@@ -312,7 +313,7 @@ var parseMetadata = metadata => {
               tooltip: {
                 valueDecimals: 0,
                 followPointer: true,
-                headerFormat: `{category}<br/>`
+                headerFormat: `{series.options.categoryName}<br/>`
               },
               series,
             };
