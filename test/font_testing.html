@@ -4,6 +4,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Font Testing</title>
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+        <script src="https://code.highcharts.com/modules/cylinder.js"></script>
+        <script src="https://code.highcharts.com/modules/funnel3d.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
     </head>
     <body>
         <script>
@@ -18,21 +23,74 @@
                             font-family: '72';
                             src: url('../fonts/72-Regular.woff2') format('woff2');
                         }
-                        span {
-                            color: red;
-                            border: 2px solid black;
+                        #container {
+                            width: 500px;
+                            height: 500px;
                             font-family: '72';
                         }
                     `);
+                
+                    this.shadowRoot.adoptedStyleSheets = [sheet];
 
-                    const host = document.querySelector("#host");
+                    this.shadowRoot.innerHTML = `
+                        <div id="container"></div>
+                    `;
 
-                    const shadow = this.shadowRoot;
-                    shadow.adoptedStyleSheets = [sheet];
+                    this._renderChart();
+                }
 
-                    const span = document.createElement('span');
-                    span.textContent = "Hello from Shadow DOM! good";
-                    shadow.appendChild(span);
+                _renderChart() {
+                    const container = this.shadowRoot.querySelector('#container');
+                    Highcharts.chart(container,{
+                        chart: {
+                            type: 'funnel3d',
+                            options3d: {
+                                enabled: true,
+                                alpha: 10,
+                                depth: 50,
+                                viewDistance: 50
+                            },
+                            style: {
+                                fontFamily: "'72', sans-serif"
+                            }
+                        },
+                        title: {
+                            text: 'Funnel 3D Chart'
+                        },
+                        subtitle: {
+                            text: 'Using custom font in shadow DOM'
+                        },
+                        plotOptions: {
+                            series: {
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.name}: {point.y}',
+                                    allowOverlap: false,
+                                    padding: 0,
+                                },
+                                neckWidth: (20 / 50) * 0.7 * 100 + "%",
+                                neckHeight: ((20 + 5) / (50 + 20 + 5)) * 100 + "%",
+                                width: "70%",
+                                height: "80%"
+                            }
+                        },
+                        exporting: {
+                            enabled: true,
+                        },
+                        tooltip: {
+                            valueDecimals: 0,
+                        },
+                        series: [{
+                            name: 'Funnel Series',
+                            data: [
+                                ['Step 1', 100],
+                                ['Step 2', 80],
+                                ['Step 3', 60],
+                                ['Step 4', 40],
+                                ['Step 5', 20]
+                            ]
+                        }]
+                    });
                 }
             }
             customElements.define('my-custom-element', MyCustomElement);  
