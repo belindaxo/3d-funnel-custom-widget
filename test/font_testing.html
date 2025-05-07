@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Font Testing</title>
+    </head>
+    <body>
+        <script>
+            class MyCustomElement extends HTMLElement {
+                constructor() {
+                    super();
+                    this.attachShadow({ mode: 'open'});
+                    
+                    const sheet = new CSSStyleSheet();
+                    sheet.replaceSync(`
+                        @font-face {
+                            font-family: '72';
+                            src: url('../fonts/72-Regular.woff2') format('woff2');
+                        }
+                        span {
+                            color: red;
+                            border: 2px solid black;
+                            font-family: '72';
+                        }
+                    `);
+
+                    const host = document.querySelector("#host");
+
+                    const shadow = this.shadowRoot;
+                    shadow.adoptedStyleSheets = [sheet];
+
+                    const span = document.createElement('span');
+                    span.textContent = "Hello from Shadow DOM! good";
+                    shadow.appendChild(span);
+                }
+            }
+            customElements.define('my-custom-element', MyCustomElement);  
+        </script>
+        <my-custom-element></my-custom-element>
+        <span>I'm not in the shadow DOM</span>
+    </body>
+</html>
