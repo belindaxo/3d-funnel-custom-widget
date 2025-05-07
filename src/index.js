@@ -289,7 +289,7 @@ var parseMetadata = metadata => {
                   dataLabels: {
                     enabled: this.showDataLabels || false,
                     allowOverlap: this.allowLabelOverlap || false,
-                    padding: 0,
+                    padding: 2,
                     backgroundColor: '#eeeeeeaa',
                     borderWidth: 1,
                     borderRadius: 1,
