@@ -163,7 +163,10 @@ var parseMetadata = metadata => {
                     })
                 })
                 series.forEach(series => {
-                    series.data.push(row[series.key].raw);
+                    series.data.push({
+                        y: row[series.key].raw,
+                        name: row[this.categoryData[0].key].label
+                    });
                 });
             });
 
@@ -338,7 +341,7 @@ var parseMetadata = metadata => {
                                     <td style="text-align: left; padding-right: 10px;">
                                         <span style="color:${this.color}">\u25CF</span> ${this.series.options.categoryName}
                                     </td>
-                                    <td style="text-align: right; padding-left: 10px;">${this.category}</td>
+                                    <td style="text-align: right; padding-left: 10px;">${this.name}</td>
                                 </tr>
                             </table>
                         </div>
