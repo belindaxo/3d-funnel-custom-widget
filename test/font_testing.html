@@ -23,9 +23,17 @@
                             font-family: '72';
                             src: url('../fonts/72-Regular.woff2') format('woff2');
                         }
-                        #container {
+                        #parent-container {
                             width: 500px;
                             height: 500px;
+                            margin: 0 auto;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                        #container {
+                            width: 100%;
+                            height: 100%;
                             font-family: '72';
                         }
                     `);
@@ -33,7 +41,9 @@
                     this.shadowRoot.adoptedStyleSheets = [sheet];
 
                     this.shadowRoot.innerHTML = `
-                        <div id="container"></div>
+                        <div id="parent-container">
+                            <div id="container"></div>
+                        </div>
                     `;
 
                     this._renderChart();
@@ -52,21 +62,51 @@
                             },
                             style: {
                                 fontFamily: "'72', sans-serif"
+                            },
+                            events: {
+                                load: function() {
+                                    var chart = this,
+                                    points = chart.series[0].points,
+                                    offset
+                                    points.forEach(function(point, index) {
+                                        if ((point.dataLabel.attr('x') + point.dataLabel.attr('width')) > chart.plotWidth) {
+                                            offset = (point.dataLabel.attr('x') + point.dataLabel.attr('width')) - chart.plotWidth;
+
+                                            point.dataLabel.attr({
+                                                x: point.dataLabel.attr('x') - offset
+                                            });
+                                        }
+                                    });
+                                }
                             }
                         },
                         title: {
-                            text: 'Funnel 3D Chart'
+                            text: 'Funnel 3D Chart',
+                            align: 'left',
+                            fontSize: '20px',
                         },
                         subtitle: {
-                            text: 'Using custom font in shadow DOM'
+                            text: 'Using custom font in shadow DOM',
+                            fontSize: '12px'
                         },
                         plotOptions: {
                             series: {
                                 dataLabels: {
                                     enabled: true,
-                                    format: '{point.name}: {point.y}',
+                                    formatter: function () {
+                                        return `${this.point.name} - ${this.y}`;
+                                    },
                                     allowOverlap: false,
-                                    padding: 0,
+                                    padding: 3,
+                                    backgroundColor: '#eeeeeeaa',
+                                    borderRadius: 5,
+                                    borderWidth: 1,
+                                    style: {
+                                        fontWeight: 'normal',
+                                        textOutline: 'none',
+                                        color: '#000000',
+                                        fontSize: '13px',
+                                    }
                                 },
                                 neckWidth: (20 / 50) * 0.7 * 100 + "%",
                                 neckHeight: ((20 + 5) / (50 + 20 + 5)) * 100 + "%",
@@ -103,13 +143,12 @@
                         series: [{
                             name: 'Weighted Value',
                             data: [
-                                ['Step 1', 100],
-                                ['Isolation', 534],
-                                ['Step 3', 60],
-                                ['Step 4', 40],
-                                ['Step 5', 20]
+                                ['Pre-Feed', 262.5],
+                                ['Feed', 722.5],
+                                ['Detailed Engineering', 135.8],
+                                ['Funded', 225.0]
                             ],
-                            customProperty: 'Business Unit'
+                            customProperty: 'Cust Buying Phase'
                         }]
                     });
                 }
