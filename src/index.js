@@ -309,6 +309,8 @@ var parseMetadata = metadata => {
               },
               tooltip: {
                 valueDecimals: 0,
+                followPointer: true,
+                headerFormat: `{series.name}<br/>`, 
               },
               series,
             };
