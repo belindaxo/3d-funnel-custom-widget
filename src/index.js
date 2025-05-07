@@ -182,6 +182,8 @@ var parseMetadata = metadata => {
             console.log(this.categoryData);
             console.log("Series (After Sorting):");
             console.log(series);
+            console.log("Data:");
+            console.log(data);
 
             const scaleFormat = (value) =>{
                 let scaledValue = value;
@@ -310,7 +312,7 @@ var parseMetadata = metadata => {
               tooltip: {
                 valueDecimals: 0,
                 followPointer: true,
-                headerFormat: `{point.key}<br/>`
+                headerFormat: `{category}<br/>`
               },
               series,
             };
