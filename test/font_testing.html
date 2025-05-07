@@ -80,18 +80,35 @@
                         tooltip: {
                             valueDecimals: 0,
                             followPointer: true,
-                            headerFormat: `{series.options.customProperty}<br/>`,
+                            useHTML: true, // Enable HTML for custom styling
+                            formatter: function () {
+                                return `
+                                    <div style="text-align: left; font-family: '72', sans-serif; font-size: 14px;">
+                                        <div style="font-size: 14px; font-weight: normal; color: #666666;">${this.series.name}</div>
+                                        <div style="font-size: 18px; font-weight: normal; color: #000000;">${this.y} k</div>
+                                        <hr style="border: none; border-top: 1px solid #eee; margin: 5px 0;">
+                                        <table style="width: 100%; font-size: 14px; color: #000000;">
+                                            <tr>
+                                                <td style="text-align: left; padding-right: 10px;">
+                                                    <span style="color:${this.color}">\u25CF</span> ${this.series.options.customProperty}
+                                                </td>
+                                                <td style="text-align: right;padding-left: 10px;">${this.point.name}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                `;
+                            }
                         },
                         series: [{
-                            name: 'Funnel Series',
+                            name: 'Weighted Value',
                             data: [
                                 ['Step 1', 100],
-                                ['Step 2', 80],
+                                ['Isolation', 534],
                                 ['Step 3', 60],
                                 ['Step 4', 40],
                                 ['Step 5', 20]
                             ],
-                            customProperty: 'Custom Value'
+                            customProperty: 'Business Unit'
                         }]
                     });
                 }

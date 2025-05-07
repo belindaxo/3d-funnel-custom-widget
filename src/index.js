@@ -188,21 +188,29 @@ var parseMetadata = metadata => {
 
             const scaleFormat = (value) =>{
                 let scaledValue = value;
+                let valueSuffix = '';
+
                 switch (this.scaleFormat) {
                     case 'k':
                         scaledValue = value / 1000;
+                        valueSuffix = 'k';
                         break;
                     case 'm':
                         scaledValue = value / 1000000;
+                        valueSuffix = 'm';
                         break;
                     case 'b':
                         scaledValue = value / 1000000000;
+                        valueSuffix = 'b';
                         break;
                     default:
                         break;
                 }
-                return scaledValue.toFixed(this.decimalPlaces);
-            }
+                return {
+                    scaledValue: scaledValue.toFixed(this.decimalPlaces),
+                    valueSuffix
+                };
+            };
 
 
             const subtitleText = this._updateSubtitle();
@@ -286,7 +294,8 @@ var parseMetadata = metadata => {
                         const index = series[0].data.indexOf(this.y);
                         if (index !== -1 && categoryData && categoryData[0].data[index]) {
                             const category = categoryData[0].data[index];
-                            const value = scaleFormat(this.y);
+                            const { scaledValue, valueSuffix } = scaleFormat(this.y);
+                            const value = scaledValue;
                             if (labelFormat === 'labelAndValue') {
                                 return `${category.name} - ${value}`;
                             } else if (labelFormat === 'valueOnly') {
