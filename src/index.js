@@ -338,7 +338,7 @@ var parseMetadata = metadata => {
                                     <td style="text-align: left; padding-right: 10px;">
                                         <span style="color:${this.color}">\u25CF</span> ${this.series.options.categoryName}
                                     </td>
-                                    <td style="text-align: right; padding-left: 10px;">${this.key}</td>
+                                    <td style="text-align: right; padding-left: 10px;">${this.category}</td>
                                 </tr>
                             </table>
                         </div>
