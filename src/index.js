@@ -163,10 +163,7 @@ var parseMetadata = metadata => {
                     })
                 })
                 series.forEach(series => {
-                    series.data.push({
-                        y: row[series.key].raw,
-                        name: row[this.categoryData[0].key].label
-                    });
+                    series.data.push(row[series.key].raw);
                 });
             });
 
@@ -331,6 +328,8 @@ var parseMetadata = metadata => {
                     const { scaledValue, valueSuffix } = scaleFormat(this.y);
                     const value = scaledValue;
                     const valueWithSuffix = `${value} ${valueSuffix}`;
+                    const pointIndex = this.index;
+                    const label = categoryData[0].data[pointIndex].name;
                     return `
                         <div style="text-align: left; font-family: '72', sans-serif; font-size: 14px;">
                             <div style="font-size: 14px; font-weight: normal; color: #666666;">${this.series.name}</div>
@@ -341,7 +340,7 @@ var parseMetadata = metadata => {
                                     <td style="text-align: left; padding-right: 10px;">
                                         <span style="color:${this.color}">\u25CF</span> ${this.series.options.categoryName}
                                     </td>
-                                    <td style="text-align: right; padding-left: 10px;">${this.name}</td>
+                                    <td style="text-align: right; padding-left: 10px;">${label}</td>
                                 </tr>
                             </table>
                         </div>
