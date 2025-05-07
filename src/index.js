@@ -322,6 +322,7 @@ var parseMetadata = metadata => {
               tooltip: {
                 valueDecimals: 0,
                 followPointer: true,
+                hideDelay: 0,
                 useHTML: true,
                 formatter: function () {
                     console.log(this);
