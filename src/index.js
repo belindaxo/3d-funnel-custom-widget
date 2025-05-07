@@ -290,6 +290,16 @@ var parseMetadata = metadata => {
                     enabled: this.showDataLabels || false,
                     allowOverlap: this.allowLabelOverlap || false,
                     padding: 0,
+                    backgroundColor: '#eeeeeeaa',
+                    borderWidth: 1,
+                    borderRadius: 1,
+                    shadow: true,
+                    style: {
+                        fontWeight: 'normal',
+                        textOutline: 'none',
+                        color: '#000000',
+                        fontSize: '13px',
+                    },
                     formatter: function () {
                         const index = series[0].data.indexOf(this.y);
                         if (index !== -1 && categoryData && categoryData[0].data[index]) {
