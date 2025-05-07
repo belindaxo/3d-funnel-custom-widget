@@ -330,14 +330,14 @@ var parseMetadata = metadata => {
                     return `
                         <div style="text-align: left; font-family: '72', sans-serif; font-size: 14px;">
                             <div style="font-size: 14px; font-weight: normal; color: #666666;">${this.series.name}</div>
-                            <div style="font-size: 18px; font-weight: normal; color: #000000;">${valueWithSuffix} k</div>
+                            <div style="font-size: 18px; font-weight: normal; color: #000000;">${valueWithSuffix}</div>
                             <hr style="border: none; border-top: 1px solid #eee; margin: 5px 0;">
                             <table style="width: 100%; font-size: 14px; color: #000000;">
                                 <tr>
                                     <td style="text-align: left; padding-right: 10px;">
                                         <span style="color:${this.color}">\u25CF</span> ${this.series.options.categoryName}
                                     </td>
-                                    <td style="text-align: right;padding-left: 10px;">${this.point.name}</td>
+                                    <td style="text-align: right;padding-left: 10px;">${this.name}</td>
                                 </tr>
                             </table>
                         </div>
