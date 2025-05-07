@@ -324,6 +324,7 @@ var parseMetadata = metadata => {
                 followPointer: true,
                 useHTML: true,
                 formatter: function () {
+                    console.log(this);
                     const { scaledValue, valueSuffix } = scaleFormat(this.y);
                     const value = scaledValue;
                     const valueWithSuffix = `${value} ${valueSuffix}`;
@@ -337,7 +338,7 @@ var parseMetadata = metadata => {
                                     <td style="text-align: left; padding-right: 10px;">
                                         <span style="color:${this.color}">\u25CF</span> ${this.series.options.categoryName}
                                     </td>
-                                    <td style="text-align: right;padding-left: 10px;">${this.name}</td>
+                                    <td style="text-align: right; padding-left: 10px;">${this.key}</td>
                                 </tr>
                             </table>
                         </div>
