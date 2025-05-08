@@ -154,6 +154,106 @@ var parseMetadata = metadata => {
         }
 
         /**
+         * Scales a value based on the selected scale format (k, m, b).
+         * @param {number} value 
+         * @returns {Object} - An object containing the scaled value and its suffix.
+         */
+        _scaleFormat(value) {
+            let scaledValue = value;
+            let valueSuffix = '';
+
+            switch (this.scaleFormat) {
+                case 'k':
+                    scaledValue = value / 1000;
+                    valueSuffix = 'k';
+                    break;
+                case 'm':
+                    scaledValue = value / 1000000;
+                    valueSuffix = 'm';
+                    break;
+                case 'b':
+                    scaledValue = value / 1000000000;
+                    valueSuffix = 'b';
+                    break;
+                default:
+                    break;
+            }
+            return {
+                scaledValue: scaledValue.toFixed(this.decimalPlaces),
+                valueSuffix
+            };
+        }
+
+        /**
+         * Processes dimensions into category data.
+         * @param {Array} dimensions - The dimensions from metadata.
+         * @returns {Array} - Processed category data.
+         */
+        _processCategoryData(dimensions) {
+            return dimensions.map(dimension => ({
+                id: dimension.id,
+                name: dimension.description,
+                data: [],
+                key: dimension.key
+            }));
+        }
+
+        /**
+         * Processes measures into series data.
+         * @param {Array} measures - The measures from metadata.
+         * @returns {Array} - Processed series data.
+         */
+        _processSeriesData(measures) {
+            return measures.map(measure => ({
+                id: measure.id,
+                name: measure.label,
+                data: [],
+                key: measure.key,
+                type: 'funnel3d',
+                categoryName: this.categoryData[0]?.name || '' // The category name
+            }));
+        }
+
+        /**
+         * Populates data arrays for categories and series.
+         * @param {Array} data - The data from the data binding.
+         * @param {Array} categoryData - The category data to populate.
+         * @param {Array} series - The series data to populate.
+         */
+        _populateDataArrays(data, categoryData, series) {
+            data.forEach(row => {
+                this.categoryData.forEach(category => {
+                    category.data.push({
+                        id: row[category.key].id,
+                        name: row[category.key].label
+                    });
+                });
+                series.forEach(seriesItem => {
+                    seriesItem.data.push(row[seriesItem.key].raw);
+                });
+            });
+        }
+
+        /**
+         * Sorts data arrays by ID.
+         * @param {Array} categoryData - The category data to sort. 
+         * @param {Array} series - The series data to sort.
+         */
+        _sortDataById(categoryData, series) {
+            const sortedIndices = [...Array(categoryData[0].data.length).keys()].sort((a, b) => {
+                return categoryData[0].data[a].id - categoryData[0].data[b].id;
+            });
+
+            categoryData.forEach(category => {
+                category.data = sortedIndices.map(i => category.data[i]);
+            });
+
+            series.forEach(series => {
+                series.data = sortedIndices.map(i => series.data[i]);
+            });
+        }
+
+        /**
          * Renders the 3D funnel chart using Highcharts.
          */
         _renderChart() {
@@ -182,88 +282,19 @@ var parseMetadata = metadata => {
             }
 
             // Process categories and series data
-            this.categoryData = dimensions.map(dimension => {
-                return {
-                    id: dimension.id,
-                    name: dimension.description,
-                    data: [],
-                    key: dimension.key
-                }
-            })
+            this.categoryData = this._processCategoryData(dimensions);
+            const series = this._processSeriesData(measures);
 
-            const series = measures.map(measure => {
-                return {
-                    id: measure.id,
-                    name: measure.label,
-                    data: [],
-                    key: measure.key,
-                    type: 'funnel3d',
-                    categoryName: this.categoryData[0].name // The category name
-                }
-            });
+            // Populate and sort data arrays
+            this._populateDataArrays(data, this.categoryData, series);
+            this._sortDataById(this.categoryData, series);
 
-            // Populate data arrays
-            data.forEach(row => {
-                this.categoryData.forEach(category => {
-                    category.data.push({
-                        id: row[category.key].id,
-                        name: row[category.key].label
-                    })
-                })
-                series.forEach(series => {
-                    series.data.push(row[series.key].raw);
-                });
-            });
+            console.log("Category Data (After Sorting):", this.categoryData);
+            console.log("Series (After Sorting):", series);
+            console.log("Data:", data);
 
-            // Sort by ID
-            let sortedIndices = [...Array(this.categoryData[0].data.length).keys()].sort((a, b) => {
-                return this.categoryData[0].data[a].id - this.categoryData[0].data[b].id;
-            });
-
-            this.categoryData.forEach(category => {
-                category.data = sortedIndices.map(i => category.data[i]);
-            });
-
-            series.forEach(series => {
-                series.data = sortedIndices.map(i => series.data[i]);
-            });
-
-            console.log("Category Data (After Sorting):");
-            console.log(this.categoryData);
-            console.log("Series (After Sorting):");
-            console.log(series);
-            console.log("Data:");
-            console.log(data);
-
-            const scaleFormat = (value) => {
-                let scaledValue = value;
-                let valueSuffix = '';
-
-                switch (this.scaleFormat) {
-                    case 'k':
-                        scaledValue = value / 1000;
-                        valueSuffix = 'k';
-                        break;
-                    case 'm':
-                        scaledValue = value / 1000000;
-                        valueSuffix = 'm';
-                        break;
-                    case 'b':
-                        scaledValue = value / 1000000000;
-                        valueSuffix = 'b';
-                        break;
-                    default:
-                        break;
-                }
-                return {
-                    scaledValue: scaledValue.toFixed(this.decimalPlaces),
-                    valueSuffix
-                };
-            };
-
-
+            const scaleFormat = (value) => this._scaleFormat(value);
             const subtitleText = this._updateSubtitle();
-
             const labelFormat = this.labelFormat;
 
             Highcharts.setOptions({
@@ -273,8 +304,6 @@ var parseMetadata = metadata => {
             });
 
             const categoryData = this.categoryData;
-
-            const containerWidth = this.shadowRoot.getElementById('container').offsetWidth;
 
             // Reset the selected point reference before rendering the chart
             this._selectedPoint = null; 
