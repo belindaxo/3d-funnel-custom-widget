@@ -14,7 +14,7 @@ HighchartsFunnel3D(Highcharts);
 /**
  * Parses metadata into structured dimensions and measures.
  * @param {Object} metadata - The metadata object from SAC data binding.
- * @returns {Object} - An object containing parsed dimensions, measures, and their maps.
+ * @returns {Object} An object containing parsed dimensions, measures, and their maps.
  */
 var parseMetadata = metadata => {
     const { dimensions: dimensionsMap, mainStructureMembers: measuresMap } = metadata;
@@ -102,7 +102,7 @@ var parseMetadata = metadata => {
 
         /**
          * Specifies which attributes should trigger re-rendering on change.
-         * @returns {string[]} - An array of observed attribute names.
+         * @returns {string[]} An array of observed attribute names.
          */
         static get observedAttributes() {
             return [
@@ -128,7 +128,7 @@ var parseMetadata = metadata => {
 
         /**
          * Determines subtitle text based on scale format or user input.
-         * @returns {string} - The subtitle text.
+         * @returns {string} The subtitle text.
          */
         _updateSubtitle() {
             if (!this.chartSubtitle || this.chartSubtitle.trim() === '') {
@@ -156,7 +156,7 @@ var parseMetadata = metadata => {
         /**
          * Scales a value based on the selected scale format (k, m, b).
          * @param {number} value 
-         * @returns {Object} - An object containing the scaled value and its suffix.
+         * @returns {Object} An object containing the scaled value and its suffix.
          */
         _scaleFormat(value) {
             let scaledValue = value;
@@ -187,7 +187,7 @@ var parseMetadata = metadata => {
         /**
          * Processes dimensions into category data.
          * @param {Array} dimensions - The dimensions from metadata.
-         * @returns {Array} - Processed category data.
+         * @returns {Array} Processed category data.
          */
         _processCategoryData(dimensions) {
             return dimensions.map(dimension => ({
@@ -201,7 +201,7 @@ var parseMetadata = metadata => {
         /**
          * Processes measures into series data.
          * @param {Array} measures - The measures from metadata.
-         * @returns {Array} - Processed series data.
+         * @returns {Array} Processed series data.
          */
         _processSeriesData(measures) {
             return measures.map(measure => ({
@@ -321,20 +321,7 @@ var parseMetadata = metadata => {
                         fontFamily: "'72', sans-serif",
                     },
                     events: {
-                        load: function () {
-                            var chart = this,
-                                points = chart.series[0].points,
-                                offset
-                            points.forEach(function (point) {
-                                if ((point.dataLabel.attr('x') + point.dataLabel.attr('width')) > chart.plotWidth) {
-                                    offset = (point.dataLabel.attr('x') + point.dataLabel.attr('width')) - chart.plotWidth;
-
-                                    point.dataLabel.attr({
-                                        x: point.dataLabel.attr('x') - offset
-                                    });
-                                }
-                            });
-                        }
+                        load: this._alignDataLabels()
                     }
                 },
                 title: {
@@ -379,25 +366,7 @@ var parseMetadata = metadata => {
                                 color: '#000000',
                                 fontSize: '13px',
                             },
-                            formatter: function () {
-                                const index = series[0].data.indexOf(this.y);
-                                if (index !== -1 && categoryData && categoryData[0].data[index]) {
-                                    const category = categoryData[0].data[index];
-                                    const { scaledValue, valueSuffix } = scaleFormat(this.y);
-                                    const value = scaledValue;
-                                    if (labelFormat === 'labelAndValue') {
-                                        return `${category.name} - ${value}`;
-                                    } else if (labelFormat === 'valueOnly') {
-                                        return `${value}`;
-                                    } else if (labelFormat === 'labelOnly') {
-                                        return `${category.name}`;
-                                    } else {
-                                        return `${category.name} - ${value}`;
-                                    }
-                                } else {
-                                    return 'error with data';
-                                }
-                            }
+                            formatter: this._formatDataLabel(series, categoryData, scaleFormat, labelFormat)
                         },
                         neckWidth: (20 / 50) * 0.7 * 100 + "%",
                         neckHeight: ((20 + 5) / (50 + 20 + 5)) * 100 + "%",
@@ -413,17 +382,40 @@ var parseMetadata = metadata => {
                     followPointer: true,
                     hideDelay: 0,
                     useHTML: true,
-                    formatter: function () {
-                        console.log(this);
-                        // Find index of current point in the series data
-                        const index = this.series.data.indexOf(this.point);
-                        if (index !== -1 && categoryData && categoryData[0].data[index]) {
-                            // Retrieve the category data using the index
-                            const category = categoryData[0].data[index];
-                            const { scaledValue, valueSuffix } = scaleFormat(this.y);
-                            const value = scaledValue;
-                            const valueWithSuffix = `${value} ${valueSuffix}`;
-                            return `
+                    formatter: this._formatTooltip(categoryData, scaleFormat)
+                },
+                series,
+            };
+            this._chart = Highcharts.chart(this.shadowRoot.getElementById('container'), chartOptions);
+        }
+
+        _alignDataLabels() {
+            return function () {
+                var chart = this, points = chart.series[0].points, offset;
+                points.forEach(function (point) {
+                    if ((point.dataLabel.attr('x') + point.dataLabel.attr('width')) > chart.plotWidth) {
+                        offset = (point.dataLabel.attr('x') + point.dataLabel.attr('width')) - chart.plotWidth;
+
+                        point.dataLabel.attr({
+                            x: point.dataLabel.attr('x') - offset
+                        });
+                    }
+                });
+            };
+        }
+
+        _formatTooltip(categoryData, scaleFormat) {
+            return function () {
+                console.log(this);
+                // Find index of current point in the series data
+                const index = this.series.data.indexOf(this.point);
+                if (index !== -1 && categoryData && categoryData[0].data[index]) {
+                    // Retrieve the category data using the index
+                    const category = categoryData[0].data[index];
+                    const { scaledValue, valueSuffix } = scaleFormat(this.y);
+                    const value = scaledValue;
+                    const valueWithSuffix = `${value} ${valueSuffix}`;
+                    return `
                         <div style="text-align: left; font-family: '72', sans-serif; font-size: 14px;">
                             <div style="font-size: 14px; font-weight: normal; color: #666666;">${this.series.name}</div>
                             <div style="font-size: 18px; font-weight: normal; color: #000000;">${valueWithSuffix}</div>
@@ -439,14 +431,32 @@ var parseMetadata = metadata => {
                         </div>
                         `;
 
-                        } else {
-                            return 'error with data';
-                        }
-                    }
-                },
-                series,
+                } else {
+                    return 'error with data';
+                }
             };
-            this._chart = Highcharts.chart(this.shadowRoot.getElementById('container'), chartOptions);
+        }
+
+        _formatDataLabel(series, categoryData, scaleFormat, labelFormat) {
+            return function () {
+                const index = series[0].data.indexOf(this.y);
+                if (index !== -1 && categoryData && categoryData[0].data[index]) {
+                    const category = categoryData[0].data[index];
+                    const { scaledValue, valueSuffix } = scaleFormat(this.y);
+                    const value = scaledValue;
+                    if (labelFormat === 'labelAndValue') {
+                        return `${category.name} - ${value}`;
+                    } else if (labelFormat === 'valueOnly') {
+                        return `${value}`;
+                    } else if (labelFormat === 'labelOnly') {
+                        return `${category.name}`;
+                    } else {
+                        return `${category.name} - ${value}`;
+                    }
+                } else {
+                    return 'error with data';
+                }
+            };
         }
 
         /**
