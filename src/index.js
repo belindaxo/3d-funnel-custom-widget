@@ -389,6 +389,10 @@ var parseMetadata = metadata => {
             this._chart = Highcharts.chart(this.shadowRoot.getElementById('container'), chartOptions);
         }
 
+        /**
+         * Aligns data labels to ensure they do not overflow the chart's plot area.
+         * @returns {Function} A function that adjusts the position of data labels.
+         */
         _alignDataLabels() {
             return function () {
                 var chart = this, points = chart.series[0].points, offset;
@@ -404,6 +408,12 @@ var parseMetadata = metadata => {
             };
         }
 
+        /**
+         * Formats the tooltip content for the chart.
+         * @param {Array} categoryData - The category data used to retrieve labels.
+         * @param {Function} scaleFormat - A function to scale and format the value.
+         * @returns {Function} A function that formats the tooltip content.
+         */
         _formatTooltip(categoryData, scaleFormat) {
             return function () {
                 console.log(this);
@@ -437,6 +447,14 @@ var parseMetadata = metadata => {
             };
         }
 
+        /**
+         * Formats the data labels displayed on the chart.
+         * @param {Array} series - The series data used to retrieve values.
+         * @param {Array} categoryData - The category data used to retrieve labels.
+         * @param {Function} scaleFormat - A function to scale and format the value.
+         * @param {string} labelFormat - The format of the label ['labelAndValue', 'valueOnly', 'labelOnly'].
+         * @returns {Function} A function that formats the data label content.
+         */
         _formatDataLabel(series, categoryData, scaleFormat, labelFormat) {
             return function () {
                 const index = series[0].data.indexOf(this.y);
