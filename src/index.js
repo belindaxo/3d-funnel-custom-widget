@@ -1,3 +1,6 @@
+/**
+ * Module dependencies for Highcharts 3D Funnel chart.
+ */
 import Highcharts from 'highcharts';
 import Highcharts3D from 'highcharts/highcharts-3d';
 Highcharts3D(Highcharts);
@@ -8,6 +11,11 @@ HighchartsCylinder(Highcharts);
 import HighchartsFunnel3D from 'highcharts/modules/funnel3d';
 HighchartsFunnel3D(Highcharts);
 
+/**
+ * Parses metadata into structured dimensions and measures.
+ * @param {Object} metadata - The metadata object from SAC data binding.
+ * @returns {Object} - An object containing parsed dimensions, measures, and their maps.
+ */
 var parseMetadata = metadata => {
     const { dimensions: dimensionsMap, mainStructureMembers: measuresMap } = metadata;
     const dimensions = [];
@@ -24,8 +32,15 @@ var parseMetadata = metadata => {
     return { dimensions, measures, dimensionsMap, measuresMap };
 }
 
-(function() {
+(function () {
+    /**
+     * Custom Web Component for rendering a 3D Funnel Chart in SAP Analytics Cloud.
+     * @extends HTMLElement
+     */
     class Funnel3D extends HTMLElement {
+        /**
+         * Initializes the shadow DOM, styles, and chart container.
+         */
         constructor() {
             super();
             this.attachShadow({ mode: 'open' });
@@ -43,7 +58,7 @@ var parseMetadata = metadata => {
                     font-family: '72';
                 }
             `);
-            
+
             // Apply the stylesheet to the shadow DOM
             this.shadowRoot.adoptedStyleSheets = [sheet];
 
@@ -57,15 +72,27 @@ var parseMetadata = metadata => {
             this._handlePointClick = this._handlePointClick.bind(this);
         }
 
+        /**
+         * Called when the widget is resized.
+         * @param {number} width - New width of the widget.
+         * @param {number} height - New height of the widget.
+         */
         onCustomWidgetResize(width, height) {
             this._renderChart();
         }
 
+        /**
+         * Called after widget properties are updated.
+         * @param {Object} changedProperties - Object containing changed attributes.
+         */
         onCustomWidgetAfterUpdate(changedProperties) {
             this._renderChart();
         }
 
-        onCustomWidgetDestroy(){
+        /**
+         * Called when the widget is destroyed. Cleans up chart instance.
+         */
+        onCustomWidgetDestroy() {
             if (this._chart) {
                 this._chart.destroy();
                 this._chart = null;
@@ -73,6 +100,10 @@ var parseMetadata = metadata => {
             this._selectedPoint = null; // Reset selection when chart is destroyed
         }
 
+        /**
+         * Specifies which attributes should trigger re-rendering on change.
+         * @returns {string[]} - An array of observed attribute names.
+         */
         static get observedAttributes() {
             return [
                 'chartTitle', 'titleSize', 'titleFontStyle', 'titleAlignment', 'titleColor',                // Title properties
@@ -82,6 +113,12 @@ var parseMetadata = metadata => {
             ];
         }
 
+        /**
+         * Called when an observed attribute changes.
+         * @param {string} name - The name of the changed attribute.
+         * @param {string} oldValue - The old value of the attribute.
+         * @param {string} newValue - The new value of the attribute.
+         */
         attributeChangedCallback(name, oldValue, newValue) {
             if (oldValue !== newValue) {
                 this[name] = newValue;
@@ -89,6 +126,10 @@ var parseMetadata = metadata => {
             }
         }
 
+        /**
+         * Determines subtitle text based on scale format or user input.
+         * @returns {string} - The subtitle text.
+         */
         _updateSubtitle() {
             if (!this.chartSubtitle || this.chartSubtitle.trim() === '') {
                 let subtitleText = '';
@@ -112,13 +153,17 @@ var parseMetadata = metadata => {
             }
         }
 
+        /**
+         * Renders the 3D funnel chart using Highcharts.
+         */
         _renderChart() {
             const dataBinding = this.dataBinding;
             if (!dataBinding || dataBinding.state !== 'success' || !dataBinding.data || dataBinding.data.length === 0) {
                 if (this._chart) {
                     this._chart.destroy();
                     this._chart = null;
-                    this._selectedPoint = null; // Reset selection when chart is destroyed
+                    // Reset selection when chart is destroyed
+                    this._selectedPoint = null; 
                 }
                 return;
             }
@@ -130,14 +175,16 @@ var parseMetadata = metadata => {
                 if (this._chart) {
                     this._chart.destroy();
                     this._chart = null;
-                    this._selectedPoint = null; // Reset selection when chart is destroyed
+                    // Reset selection when chart is destroyed
+                    this._selectedPoint = null; 
                 }
                 return;
             }
 
+            // Process categories and series data
             this.categoryData = dimensions.map(dimension => {
                 return {
-                    id: dimension.id,   
+                    id: dimension.id,
                     name: dimension.description,
                     data: [],
                     key: dimension.key
@@ -155,6 +202,7 @@ var parseMetadata = metadata => {
                 }
             });
 
+            // Populate data arrays
             data.forEach(row => {
                 this.categoryData.forEach(category => {
                     category.data.push({
@@ -167,6 +215,7 @@ var parseMetadata = metadata => {
                 });
             });
 
+            // Sort by ID
             let sortedIndices = [...Array(this.categoryData[0].data.length).keys()].sort((a, b) => {
                 return this.categoryData[0].data[a].id - this.categoryData[0].data[b].id;
             });
@@ -186,7 +235,7 @@ var parseMetadata = metadata => {
             console.log("Data:");
             console.log(data);
 
-            const scaleFormat = (value) =>{
+            const scaleFormat = (value) => {
                 let scaledValue = value;
                 let valueSuffix = '';
 
@@ -227,124 +276,125 @@ var parseMetadata = metadata => {
 
             const containerWidth = this.shadowRoot.getElementById('container').offsetWidth;
 
-            this._selectedPoint = null; // Reset the selected point reference before rendering the chart
-            
-            const chartOptions = {
-              chart: {
-                type: "funnel3d",
-                options3d: {
-                  enabled: true,
-                  alpha: 10,
-                  depth: 50,
-                  viewDistance: 50,
-                },
-                style: {
-                    fontFamily: "'72', sans-serif",
-                },
-                events: {
-                    load: function() {
-                        var chart = this,
-                        points = chart.series[0].points,
-                        offset
-                        points.forEach(function(point, index) {
-                            if ((point.dataLabel.attr('x') + point.dataLabel.attr('width')) > chart.plotWidth) {
-                                offset = (point.dataLabel.attr('x') + point.dataLabel.attr('width')) - chart.plotWidth;
+            // Reset the selected point reference before rendering the chart
+            this._selectedPoint = null; 
 
-                                point.dataLabel.attr({
-                                    x: point.dataLabel.attr('x') - offset
-                                });
-                            }
-                        });
-                    }
-                }
-              },
-              title: {
-                text: this.chartTitle || "",
-                align: this.titleAlignment || "left",
-                style: {
-                  fontSize: this.titleSize || "20px",
-                  fontWeight: this.titleFontStyle || "bold",
-                  color: this.titleColor || "#333333",
-                },
-              },
-              subtitle: {
-                text: subtitleText,
-                align: this.subtitleAlignment || "left",
-                style: {
-                  fontSize: this.subtitleSize || "12px",
-                  fontStyle: this.subtitleFontStyle || "normal",
-                  color: this.subtitleColor || "#666666",
-                },
-              },
-              plotOptions: {
-                series: {
-                  allowPointSelect: true,
-                  cursor: "pointer",
-                  point: {
-                    events: {
-                      select: this._handlePointClick,
-                      unselect: this._handlePointClick,
+            const chartOptions = {
+                chart: {
+                    type: "funnel3d",
+                    options3d: {
+                        enabled: true,
+                        alpha: 10,
+                        depth: 50,
+                        viewDistance: 50,
                     },
-                  },
-                  dataLabels: {
-                    enabled: this.showDataLabels || false,
-                    allowOverlap: this.allowLabelOverlap || false,
-                    padding: 2,
-                    backgroundColor: '#eeeeeeaa',
-                    borderWidth: 1,
-                    borderRadius: 1,
-                    shadow: true,
                     style: {
-                        fontWeight: 'normal',
-                        textOutline: 'none',
-                        color: '#000000',
-                        fontSize: '13px',
+                        fontFamily: "'72', sans-serif",
                     },
+                    events: {
+                        load: function () {
+                            var chart = this,
+                                points = chart.series[0].points,
+                                offset
+                            points.forEach(function (point) {
+                                if ((point.dataLabel.attr('x') + point.dataLabel.attr('width')) > chart.plotWidth) {
+                                    offset = (point.dataLabel.attr('x') + point.dataLabel.attr('width')) - chart.plotWidth;
+
+                                    point.dataLabel.attr({
+                                        x: point.dataLabel.attr('x') - offset
+                                    });
+                                }
+                            });
+                        }
+                    }
+                },
+                title: {
+                    text: this.chartTitle || "",
+                    align: this.titleAlignment || "left",
+                    style: {
+                        fontSize: this.titleSize || "20px",
+                        fontWeight: this.titleFontStyle || "bold",
+                        color: this.titleColor || "#333333",
+                    },
+                },
+                subtitle: {
+                    text: subtitleText,
+                    align: this.subtitleAlignment || "left",
+                    style: {
+                        fontSize: this.subtitleSize || "12px",
+                        fontStyle: this.subtitleFontStyle || "normal",
+                        color: this.subtitleColor || "#666666",
+                    },
+                },
+                plotOptions: {
+                    series: {
+                        allowPointSelect: true,
+                        cursor: "pointer",
+                        point: {
+                            events: {
+                                select: this._handlePointClick,
+                                unselect: this._handlePointClick,
+                            },
+                        },
+                        dataLabels: {
+                            enabled: this.showDataLabels || false,
+                            allowOverlap: this.allowLabelOverlap || false,
+                            padding: 2,
+                            backgroundColor: '#eeeeeeaa',
+                            borderWidth: 1,
+                            borderRadius: 1,
+                            shadow: true,
+                            style: {
+                                fontWeight: 'normal',
+                                textOutline: 'none',
+                                color: '#000000',
+                                fontSize: '13px',
+                            },
+                            formatter: function () {
+                                const index = series[0].data.indexOf(this.y);
+                                if (index !== -1 && categoryData && categoryData[0].data[index]) {
+                                    const category = categoryData[0].data[index];
+                                    const { scaledValue, valueSuffix } = scaleFormat(this.y);
+                                    const value = scaledValue;
+                                    if (labelFormat === 'labelAndValue') {
+                                        return `${category.name} - ${value}`;
+                                    } else if (labelFormat === 'valueOnly') {
+                                        return `${value}`;
+                                    } else if (labelFormat === 'labelOnly') {
+                                        return `${category.name}`;
+                                    } else {
+                                        return `${category.name} - ${value}`;
+                                    }
+                                } else {
+                                    return 'error with data';
+                                }
+                            }
+                        },
+                        neckWidth: (20 / 50) * 0.7 * 100 + "%",
+                        neckHeight: ((20 + 5) / (50 + 20 + 5)) * 100 + "%",
+                        width: "70%",
+                        height: "80%",
+                    },
+                },
+                exporting: {
+                    enabled: true,
+                },
+                tooltip: {
+                    valueDecimals: 0,
+                    followPointer: true,
+                    hideDelay: 0,
+                    useHTML: true,
                     formatter: function () {
-                        const index = series[0].data.indexOf(this.y);
+                        console.log(this);
+                        // Find index of current point in the series data
+                        const index = this.series.data.indexOf(this.point);
                         if (index !== -1 && categoryData && categoryData[0].data[index]) {
+                            // Retrieve the category data using the index
                             const category = categoryData[0].data[index];
                             const { scaledValue, valueSuffix } = scaleFormat(this.y);
                             const value = scaledValue;
-                            if (labelFormat === 'labelAndValue') {
-                                return `${category.name} - ${value}`;
-                            } else if (labelFormat === 'valueOnly') {
-                                return `${value}`;
-                            } else if (labelFormat === 'labelOnly') {
-                                return `${category.name}`;
-                            } else {
-                                return `${category.name} - ${value}`;
-                            }
-                        } else {
-                            return 'error with data';
-                        }
-                    }
-                  },
-                  neckWidth: (20 / 50) * 0.7 * 100 + "%",
-                  neckHeight: ((20 + 5) / (50 + 20 + 5)) * 100 + "%",
-                  width: "70%",
-                  height: "80%",
-                },
-              },
-              exporting: {
-                enabled: true,
-              },
-              tooltip: {
-                valueDecimals: 0,
-                followPointer: true,
-                hideDelay: 0,
-                useHTML: true,
-                formatter: function () {
-                    console.log(this);
-                    // Find index of current point in the series data
-                    const index = this.series.data.indexOf(this.point);
-                    if (index !== -1 && categoryData && categoryData[0].data[index]) {
-                        // Retrieve the category data using the index
-                        const category = categoryData[0].data[index];
-                        const { scaledValue, valueSuffix } = scaleFormat(this.y);
-                        const value = scaledValue;
-                        const valueWithSuffix = `${value} ${valueSuffix}`;
-                        return `
+                            const valueWithSuffix = `${value} ${valueSuffix}`;
+                            return `
                         <div style="text-align: left; font-family: '72', sans-serif; font-size: 14px;">
                             <div style="font-size: 14px; font-weight: normal; color: #666666;">${this.series.name}</div>
                             <div style="font-size: 18px; font-weight: normal; color: #000000;">${valueWithSuffix}</div>
@@ -360,57 +410,61 @@ var parseMetadata = metadata => {
                         </div>
                         `;
 
-                    } else {
-                        return 'error with data';
+                        } else {
+                            return 'error with data';
+                        }
                     }
-                }
-              },
-              series,
+                },
+                series,
             };
             this._chart = Highcharts.chart(this.shadowRoot.getElementById('container'), chartOptions);
         }
 
+        /**
+         * Handles point selection/unselection and manages linked analysis filtering.
+         * @param {Object} event - Highcharts point event. 
+         */
         _handlePointClick(event) {
-          const point = event.target;
-          if (!point) {
-            console.error("Point is undefined");
-            return;
-          }
-
-          const dataBinding = this.dataBinding;
-
-          const pointIndex = point.index;
-          // Retrieve the correct label based on the index from the categoryData
-          const label = this.categoryData[0].data[pointIndex].name;
-          // Use the dimension key to find the corresponding item in dataBinding.data
-          const selectedItem = dataBinding.data.find(
-            (item) => item[this.categoryData[0].key].label === label
-          );
-          const linkedAnalysis = this.dataBindings
-            .getDataBinding("dataBinding")
-            .getLinkedAnalysis();
-
-          // If there was a previously selected point, remove its filter before applying the new one
-          if (this._selectedPoint && this._selectedPoint !== point) {
-            linkedAnalysis.removeFilters(); // Clear any previous filters
-            this._selectedPoint.select(false, false); // Deselect the previous point
-            this._selectedPoint = null; // Clear the reference to the previous point
-          }
-
-          if (event.type === "select") {
-            if (selectedItem) {
-              const selection = {};
-              selection[this.categoryData[0].id] =
-                selectedItem[this.categoryData[0].key].id;
-              console.log("Setting filter with selection:", selection);
-
-              linkedAnalysis.setFilters(selection);
-              this._selectedPoint = point;
+            const point = event.target;
+            if (!point) {
+                console.error("Point is undefined");
+                return;
             }
-          } else if (event.type === "unselect") {
-            linkedAnalysis.removeFilters();
-            this._selectedPoint = null;
-          }
+
+            const dataBinding = this.dataBinding;
+
+            const pointIndex = point.index;
+            // Retrieve the correct label based on the index from the categoryData
+            const label = this.categoryData[0].data[pointIndex].name;
+            // Use the dimension key to find the corresponding item in dataBinding.data
+            const selectedItem = dataBinding.data.find(
+                (item) => item[this.categoryData[0].key].label === label
+            );
+            const linkedAnalysis = this.dataBindings
+                .getDataBinding("dataBinding")
+                .getLinkedAnalysis();
+
+            // If there was a previously selected point, remove its filter before applying the new one
+            if (this._selectedPoint && this._selectedPoint !== point) {
+                linkedAnalysis.removeFilters(); // Clear any previous filters
+                this._selectedPoint.select(false, false); // Deselect the previous point
+                this._selectedPoint = null; // Clear the reference to the previous point
+            }
+
+            if (event.type === "select") {
+                if (selectedItem) {
+                    const selection = {};
+                    selection[this.categoryData[0].id] =
+                        selectedItem[this.categoryData[0].key].id;
+                    console.log("Setting filter with selection:", selection);
+
+                    linkedAnalysis.setFilters(selection);
+                    this._selectedPoint = point;
+                }
+            } else if (event.type === "unselect") {
+                linkedAnalysis.removeFilters();
+                this._selectedPoint = null;
+            }
         }
     }
     customElements.define('com-sap-sample-funnel3d', Funnel3D);

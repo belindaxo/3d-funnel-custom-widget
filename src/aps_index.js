@@ -1,4 +1,7 @@
-(function() {
+(function () {
+    /**
+     * Template for the Styling Panel (APS) of the Funnel3D widget.
+     */
     let template = document.createElement('template');
     template.innerHTML = `
         <form id="form">
@@ -164,7 +167,14 @@
         </form>
     `;
 
+    /**
+     * Custom Web Component for the Styling Panel (APS) of the Funnel3D widget.
+     * @extends HTMLElement
+     */
     class Funnel3DAps extends HTMLElement {
+        /**
+         * Initializes the shadow DOM and sets up event listeners for form inputs.
+         */
         constructor() {
             super();
             this._shadowRoot = this.attachShadow({ mode: 'open' });
@@ -184,7 +194,11 @@
             this._shadowRoot.getElementById('allowLabelOverlap').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('labelFormat').addEventListener('change', this._submit.bind(this));
         }
-
+        
+        /**
+         * Handles the form submissions and dispatches a 'propertiesChanged' event.
+         * @param {Event} e - The form submission event.
+         */
         _submit(e) {
             e.preventDefault();
             this.dispatchEvent(new CustomEvent('propertiesChanged', {
@@ -210,8 +224,8 @@
             }));
         }
 
+        // Getters and setters for each property
         
-
         set chartTitle(value) {
             this._shadowRoot.getElementById('chartTitle').value = value;
         }
@@ -331,7 +345,7 @@
         get labelFormat() {
             return this._shadowRoot.getElementById('labelFormat').value;
         }
-        
+
     }
 
     customElements.define('com-sap-sample-funnel3d-aps', Funnel3DAps);
