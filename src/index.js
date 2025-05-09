@@ -356,13 +356,9 @@ var parseMetadata = metadata => {
                             enabled: this.showDataLabels || false,
                             allowOverlap: this.allowLabelOverlap || false,
                             padding: 2,
-                            backgroundColor: '#eeeeeeaa',
                             borderWidth: 1,
                             borderRadius: 1,
-                            shadow: true,
                             style: {
-                                fontWeight: 'normal',
-                                textOutline: 'none',
                                 color: '#000000',
                                 fontSize: '13px',
                             },
