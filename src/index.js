@@ -359,7 +359,7 @@ var parseMetadata = metadata => {
                             borderWidth: 1,
                             borderRadius: 1,
                             style: {
-                                fontStyle: 'normal',
+                                fontWeight: 'normal',
                                 color: '#000000',
                                 fontSize: '13px',
                             },
