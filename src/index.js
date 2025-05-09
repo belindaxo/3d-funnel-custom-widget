@@ -359,6 +359,7 @@ var parseMetadata = metadata => {
                             borderWidth: 1,
                             borderRadius: 1,
                             style: {
+                                fontStyle: 'normal',
                                 color: '#000000',
                                 fontSize: '13px',
                             },
@@ -371,7 +372,7 @@ var parseMetadata = metadata => {
                     },
                 },
                 exporting: {
-                    enabled: true,
+                    enabled: false,
                 },
                 tooltip: {
                     valueDecimals: 0,
