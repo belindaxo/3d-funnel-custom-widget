@@ -424,7 +424,7 @@ var parseMetadata = metadata => {
                     // Retrieve the category data using the index
                     const category = categoryData[0].data[index];
                     const { scaledValue, valueSuffix } = scaleFormat(this.y);
-                    const value = Highcharts.numberFormat(scaledValue, this.decimalPlaces, '.', ',');
+                    const value = Highcharts.numberFormat(scaledValue, -1, '.', ',');
                     const valueWithSuffix = `${value} ${valueSuffix}`;
                     return `
                         <div style="text-align: left; font-family: '72', sans-serif; font-size: 14px;">
@@ -462,7 +462,7 @@ var parseMetadata = metadata => {
                 if (index !== -1 && categoryData && categoryData[0].data[index]) {
                     const category = categoryData[0].data[index];
                     const { scaledValue, valueSuffix } = scaleFormat(this.y);
-                    const value = Highcharts.numberFormat(scaledValue, this.decimalPlaces, '.', ',');
+                    const value = Highcharts.numberFormat(scaledValue, -1, '.', ',');
                     if (labelFormat === 'labelAndValue') {
                         return `${category.name} - ${value}`;
                     } else if (labelFormat === 'valueOnly') {
