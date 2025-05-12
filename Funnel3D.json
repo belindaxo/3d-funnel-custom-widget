@@ -107,6 +107,11 @@
             "type": "string",
             "description": "The format of the data labels",
             "default": "`${category.name} - ${value}`"
+        },
+        "labelSize": {
+            "type": "string",
+            "description": "The font size of the data labels",
+            "default": "12px"
         }
     },
     "methods": {

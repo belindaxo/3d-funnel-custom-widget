@@ -162,6 +162,22 @@
                     </select>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <select id="labelSize">
+                        <option value="10px">10</option>
+                        <option value="12px" selected>12</option>
+                        <option value="14px">14</option>
+                        <option value="16px">16</option>
+                        <option value="18px">18</option>
+                        <option value="20px">20</option>
+                        <option value="22px">22</option>
+                        <option value="24px">24</option>
+                        <option value="32px">32</option>
+                        <option value="48px">48</option>
+                    </select>
+                </td>
+            </tr>
         </table>
         <input type="submit" style="display:none;">
         </form>
@@ -193,6 +209,7 @@
             this._shadowRoot.getElementById('showDataLabels').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('allowLabelOverlap').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('labelFormat').addEventListener('change', this._submit.bind(this));
+            this._shadowRoot.getElementById('labelSize').addEventListener('change', this._submit.bind(this));
         }
         
         /**
@@ -218,7 +235,8 @@
                         decimalPlaces: this.decimalPlaces,
                         showDataLabels: this.showDataLabels,
                         allowLabelOverlap: this.allowLabelOverlap,
-                        labelFormat: this.labelFormat
+                        labelFormat: this.labelFormat,
+                        labelSize: this.labelSize
                     }
                 }
             }));
@@ -345,6 +363,14 @@
         get labelFormat() {
             return this._shadowRoot.getElementById('labelFormat').value;
         }
+
+        set labelSize(value) {
+            this._shadowRoot.getElementById('labelSize').value = value;
+        }
+
+        get labelSize() {
+            return this._shadowRoot.getElementById('labelSize').value;
+        }   
 
     }
 

@@ -109,7 +109,7 @@ var parseMetadata = metadata => {
                 'chartTitle', 'titleSize', 'titleFontStyle', 'titleAlignment', 'titleColor',                // Title properties
                 'chartSubtitle', 'subtitleSize', 'subtitleFontStyle', 'subtitleAlignment', 'subtitleColor', // Subtitle properties
                 'scaleFormat', 'decimalPlaces',                                                             // Number formatting properties
-                'showDataLabels', 'allowLabelOverlap', 'labelFormat'                                        // Data label properties            
+                'showDataLabels', 'allowLabelOverlap', 'labelFormat', 'labelSize'                           // Data label properties            
             ];
         }
 
@@ -360,7 +360,8 @@ var parseMetadata = metadata => {
                             borderRadius: 1,
                             style: {
                                 fontWeight: 'normal',
-                                color: '#000000'
+                                color: '#000000',
+                                fontSize: this.labelSize || '12px'
                             },
                             formatter: this._formatDataLabel(series, categoryData, scaleFormat, labelFormat)
                         },
