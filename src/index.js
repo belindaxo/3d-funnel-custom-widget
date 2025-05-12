@@ -297,11 +297,11 @@ var parseMetadata = metadata => {
             const subtitleText = this._updateSubtitle();
             const labelFormat = this.labelFormat;
 
-            // Highcharts.setOptions({
-            //     lang: {
-            //         thousandsSep: ','
-            //     }
-            // });
+            Highcharts.setOptions({
+                lang: {
+                    thousandsSep: ','
+                }
+            });
 
             const categoryData = this.categoryData;
 
@@ -323,9 +323,6 @@ var parseMetadata = metadata => {
                     events: {
                         load: this._alignDataLabels()
                     }
-                },
-                lang: {
-                    thousandsSep: ",",
                 },
                 title: {
                     text: this.chartTitle || "",
@@ -427,7 +424,7 @@ var parseMetadata = metadata => {
                     // Retrieve the category data using the index
                     const category = categoryData[0].data[index];
                     const { scaledValue, valueSuffix } = scaleFormat(this.y);
-                    const value = scaledValue;
+                    const value = Highcharts.numberFormat(scaledValue, this.decimalPlaces, '.', ',');
                     const valueWithSuffix = `${value} ${valueSuffix}`;
                     return `
                         <div style="text-align: left; font-family: '72', sans-serif; font-size: 14px;">
@@ -465,7 +462,7 @@ var parseMetadata = metadata => {
                 if (index !== -1 && categoryData && categoryData[0].data[index]) {
                     const category = categoryData[0].data[index];
                     const { scaledValue, valueSuffix } = scaleFormat(this.y);
-                    const value = scaledValue;
+                    const value = Highcharts.numberFormat(scaledValue, this.decimalPlaces, '.', ',');
                     if (labelFormat === 'labelAndValue') {
                         return `${category.name} - ${value}`;
                     } else if (labelFormat === 'valueOnly') {
