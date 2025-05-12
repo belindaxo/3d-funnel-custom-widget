@@ -392,6 +392,7 @@ var parseMetadata = metadata => {
          */
         _alignDataLabels() {
             return function () {
+                console.log("Series object structure:", this.series);
                 // Check if showDataLabels is enabled
                 if (!this.options.plotOptions.series.dataLabels.enabled) {
                     return;
@@ -488,6 +489,8 @@ var parseMetadata = metadata => {
                 console.error("Point is undefined");
                 return;
             }
+
+            console.log("Point object structure:", point);
 
             const dataBinding = this.dataBinding;
 
