@@ -468,17 +468,17 @@ var parseMetadata = metadata => {
             return function () {
                 const index = series[0].data.indexOf(this.y);
                 if (index !== -1 && categoryData && categoryData[0].data[index]) {
-                    const category = categoryData[0].data[index];
+                    const category = this.name;
                     const { scaledValue, valueSuffix } = scaleFormat(this.y);
                     const value = Highcharts.numberFormat(scaledValue, -1, '.', ',');
                     if (labelFormat === 'labelAndValue') {
-                        return `${category.name} - ${value}`;
+                        return `${category} - ${value}`;
                     } else if (labelFormat === 'valueOnly') {
                         return `${value}`;
                     } else if (labelFormat === 'labelOnly') {
-                        return `${category.name}`;
+                        return `${category}`;
                     } else {
-                        return `${category.name} - ${value}`;
+                        return `${category} - ${value}`;
                     }
                 } else {
                     return 'error with data';
