@@ -466,8 +466,8 @@ var parseMetadata = metadata => {
          */
         _formatDataLabel(series, categoryData, scaleFormat, labelFormat) {
             return function () {
-                if (this && this.name && this.y !== undefined) {
-                    const name = this.name;
+                if (this.point) {
+                    const name = this.point.name;
                     const { scaledValue, valueSuffix } = scaleFormat(this.y);
                     const value = Highcharts.numberFormat(scaledValue, -1, '.', ',');
                     if (labelFormat === 'labelAndValue') {
