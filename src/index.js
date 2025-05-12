@@ -419,7 +419,6 @@ var parseMetadata = metadata => {
 
         /**
          * Formats the tooltip content for the chart.
-         * @param {Array} categoryData - The category data used to retrieve labels.
          * @param {Function} scaleFormat - A function to scale and format the value.
          * @returns {Function} A function that formats the tooltip content.
          */
