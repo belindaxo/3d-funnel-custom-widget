@@ -371,7 +371,7 @@ var parseMetadata = metadata => {
                                 color: '#000000',
                                 fontSize: this.labelSize || '12px'
                             },
-                            formatter: this._formatDataLabel(series, categoryData, scaleFormat, labelFormat)
+                            formatter: this._formatDataLabel(scaleFormat, labelFormat)
                         },
                         neckWidth: (20 / 50) * 0.7 * 100 + "%",
                         neckHeight: ((20 + 5) / (50 + 20 + 5)) * 100 + "%",
@@ -387,7 +387,7 @@ var parseMetadata = metadata => {
                     followPointer: true,
                     hideDelay: 0,
                     useHTML: true,
-                    formatter: this._formatTooltip(categoryData, scaleFormat)
+                    formatter: this._formatTooltip(scaleFormat)
                 },
                 series,
             };
@@ -423,14 +423,12 @@ var parseMetadata = metadata => {
          * @param {Function} scaleFormat - A function to scale and format the value.
          * @returns {Function} A function that formats the tooltip content.
          */
-        _formatTooltip(categoryData, scaleFormat) {
+        _formatTooltip(scaleFormat) {
             return function () {
                 console.log(this);
-                // Find index of current point in the series data
-                const index = this.series.data.indexOf(this.point);
-                if (index !== -1 && categoryData && categoryData[0].data[index]) {
+                if (this.point) {
                     // Retrieve the category data using the index
-                    const category = categoryData[0].data[index];
+                    const name = this.point.name;
                     const { scaledValue, valueSuffix } = scaleFormat(this.y);
                     const value = Highcharts.numberFormat(scaledValue, -1, '.', ',');
                     const valueWithSuffix = `${value} ${valueSuffix}`;
@@ -444,7 +442,7 @@ var parseMetadata = metadata => {
                                     <td style="text-align: left; padding-right: 10px;">
                                         <span style="color:${this.color}">\u25CF</span> ${this.series.options.categoryName}
                                     </td>
-                                    <td style="text-align: right; padding-left: 10px;">${category.name}</td>
+                                    <td style="text-align: right; padding-left: 10px;">${name}</td>
                                 </tr>
                             </table>
                         </div>
@@ -458,13 +456,11 @@ var parseMetadata = metadata => {
 
         /**
          * Formats the data labels displayed on the chart.
-         * @param {Array} series - The series data used to retrieve values.
-         * @param {Array} categoryData - The category data used to retrieve labels.
          * @param {Function} scaleFormat - A function to scale and format the value.
          * @param {string} labelFormat - The format of the label ['labelAndValue', 'valueOnly', 'labelOnly'].
          * @returns {Function} A function that formats the data label content.
          */
-        _formatDataLabel(series, categoryData, scaleFormat, labelFormat) {
+        _formatDataLabel(scaleFormat, labelFormat) {
             return function () {
                 if (this.point) {
                     const name = this.point.name;
