@@ -154,6 +154,7 @@
             <tr>
                 <td>Size</td>
                 <td>Label Display Options</td>
+            </tr>
             <tr>
                 <td>
                     <select id="labelSize">
