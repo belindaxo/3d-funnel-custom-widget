@@ -56,15 +56,19 @@ class ModuleChunkFormatPlugin {
 								"HMR is not implemented for module chunk format yet"
 							);
 						} else {
-							source.add(`export const id = ${JSON.stringify(chunk.id)};\n`);
-							source.add(`export const ids = ${JSON.stringify(chunk.ids)};\n`);
-							source.add(`export const modules = `);
+							source.add(
+								`export const __webpack_id__ = ${JSON.stringify(chunk.id)};\n`
+							);
+							source.add(
+								`export const __webpack_ids__ = ${JSON.stringify(chunk.ids)};\n`
+							);
+							source.add("export const __webpack_modules__ = ");
 							source.add(modules);
-							source.add(`;\n`);
+							source.add(";\n");
 							const runtimeModules =
 								chunkGraph.getChunkRuntimeModulesInOrder(chunk);
 							if (runtimeModules.length > 0) {
-								source.add("export const runtime =\n");
+								source.add("export const __webpack_runtime__ =\n");
 								source.add(
 									Template.renderChunkRuntimeModules(
 										runtimeModules,
@@ -103,7 +107,7 @@ class ModuleChunkFormatPlugin {
 												compilation.outputOptions
 											),
 											{
-												chunk: chunk,
+												chunk,
 												contentHashType: "javascript"
 											}
 										)
@@ -147,6 +151,11 @@ class ModuleChunkFormatPlugin {
 								let index = 0;
 								for (let i = 0; i < entries.length; i++) {
 									const [module, entrypoint] = entries[i];
+									if (
+										!chunkGraph.getModuleSourceTypes(module).has("javascript")
+									) {
+										continue;
+									}
 									const final = i + 1 === entries.length;
 									const moduleId = chunkGraph.getModuleId(module);
 									const chunks = getAllChunks(
