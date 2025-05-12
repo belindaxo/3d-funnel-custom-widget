@@ -229,7 +229,9 @@ var parseMetadata = metadata => {
                     });
                 });
                 series.forEach(seriesItem => {
-                    seriesItem.data.push(row[seriesItem.key].raw);
+                    const categoryName = row[this.categoryData[0].key]?.label;
+                    const rawValue = row[seriesItem.key].raw;
+                    seriesItem.data.push([categoryName, rawValue]);
                 });
             });
         }
