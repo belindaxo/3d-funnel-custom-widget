@@ -466,18 +466,18 @@ var parseMetadata = metadata => {
          */
         _formatDataLabel(series, categoryData, scaleFormat, labelFormat) {
             return function () {
-                if (this && this.category && this.y !== undefined) {
-                    const category = this.name;
+                if (this && this.name && this.y !== undefined) {
+                    const name = this.name;
                     const { scaledValue, valueSuffix } = scaleFormat(this.y);
                     const value = Highcharts.numberFormat(scaledValue, -1, '.', ',');
                     if (labelFormat === 'labelAndValue') {
-                        return `${category} - ${value}`;
+                        return `${name} - ${value}`;
                     } else if (labelFormat === 'valueOnly') {
                         return `${value}`;
                     } else if (labelFormat === 'labelOnly') {
-                        return `${category}`;
+                        return `${name}`;
                     } else {
-                        return `${category} - ${value}`;
+                        return `${name} - ${value}`;
                     }
                 } else {
                     return 'error with data';
