@@ -297,11 +297,11 @@ var parseMetadata = metadata => {
             const subtitleText = this._updateSubtitle();
             const labelFormat = this.labelFormat;
 
-            Highcharts.setOptions({
-                lang: {
-                    thousandsSep: ','
-                }
-            });
+            // Highcharts.setOptions({
+            //     lang: {
+            //         thousandsSep: ','
+            //     }
+            // });
 
             const categoryData = this.categoryData;
 
@@ -323,6 +323,9 @@ var parseMetadata = metadata => {
                     events: {
                         load: this._alignDataLabels()
                     }
+                },
+                lang: {
+                    thousandsSep: ",",
                 },
                 title: {
                     text: this.chartTitle || "",
