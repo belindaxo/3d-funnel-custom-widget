@@ -267,9 +267,15 @@ var parseMetadata = metadata => {
                 }
                 return;
             }
+            console.log("Data Binding:", dataBinding);
 
             const { data, metadata } = dataBinding;
             const { dimensions, measures } = parseMetadata(metadata);
+            console.log("Data:", data);
+            console.log("Metadata:", metadata);
+            console.log("Databinding after parsing:", dataBinding.data);
+            console.log("Dimensions:", dimensions);
+            console.log("Measures:", measures);
 
             if (dimensions.length === 0 || measures.length === 0) {
                 if (this._chart) {
@@ -392,7 +398,6 @@ var parseMetadata = metadata => {
          */
         _alignDataLabels() {
             return function () {
-                console.log("Series object structure:", this.series);
                 // Check if showDataLabels is enabled
                 if (!this.options.plotOptions.series.dataLabels.enabled) {
                     return;
