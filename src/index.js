@@ -360,8 +360,7 @@ var parseMetadata = metadata => {
                             borderRadius: 1,
                             style: {
                                 fontWeight: 'normal',
-                                color: '#000000',
-                                fontSize: '13px',
+                                color: '#000000'
                             },
                             formatter: this._formatDataLabel(series, categoryData, scaleFormat, labelFormat)
                         },
