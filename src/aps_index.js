@@ -152,16 +152,9 @@
                 </td>
             </tr>
             <tr>
-                <td>Label Display Options</td>
                 <td>Size</td>
+                <td>Label Display Options</td>
             <tr>
-                <td>
-                    <select id="labelFormat">
-                        <option value="labelAndValue" selected>Label and Value</option>
-                        <option value="labelOnly">Label only</option>
-                        <option value="valueOnly">Value only</option>
-                    </select>
-                </td>
                 <td>
                     <select id="labelSize">
                         <option value="10px">10</option>
@@ -174,6 +167,13 @@
                         <option value="24px">24</option>
                         <option value="32px">32</option>
                         <option value="48px">48</option>
+                    </select>
+                </td>
+                <td>
+                    <select id="labelFormat">
+                        <option value="labelAndValue" selected>Label and Value</option>
+                        <option value="labelOnly">Label only</option>
+                        <option value="valueOnly">Value only</option>
                     </select>
                 </td>
             </tr>
