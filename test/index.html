@@ -155,29 +155,37 @@
             <tr>
                 <td>Label Display Options</td>
                 <td>Size</td>
-            <tr>
-                <td>
-                    <select id="labelFormat">
-                        <option value="labelAndValue" selected>Label and Value</option>
-                        <option value="label">Label only</option>
-                        <option value="value">Value only</option>
-                    </select>
-                </td>
-                <td>
-                    <select id="labelSize">
-                        <option value="10px">10</option>
-                        <option value="12px" selected>12</option>
-                        <option value="14px">14</option>
-                        <option value="16px">16</option>
-                        <option value="18px">18</option>
-                        <option value="20px">20</option>
-                        <option value="22px">22</option>
-                        <option value="24px">24</option>
-                        <option value="32px">32</option>
-                        <option value="48px">48</option>
-                    </select>
-                </td>
             </tr>
+            <tr>
+                <table>
+                    <tr>
+                        <td>Size</td>
+                        <td>Label Display Options</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="labelSize">
+                                <option value="10px">10</option>
+                                <option value="12px" selected>12</option>
+                                <option value="14px">14</option>
+                                <option value="16px">16</option>
+                                <option value="18px">18</option>
+                                <option value="20px">20</option>
+                                <option value="22px">22</option>
+                                <option value="24px">24</option>
+                                <option value="32px">32</option>
+                                <option value="48px">48</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select id="labelFormat">
+                                <option value="labelAndValue" selected>Label and Value</option>
+                                <option value="labelOnly">Label only</option>
+                                <option value="valueOnly">Value only</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
         </table>
         <input type="submit" style="display:none;">
         </form>

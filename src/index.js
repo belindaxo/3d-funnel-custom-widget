@@ -321,7 +321,11 @@ var parseMetadata = metadata => {
                         fontFamily: "'72', sans-serif",
                     },
                     events: {
-                        load: this._alignDataLabels()
+                        load: () => {
+                            if (this.showDataLabels) {
+                                this._alignDataLabels()
+                            }
+                        } 
                     }
                 },
                 title: {
