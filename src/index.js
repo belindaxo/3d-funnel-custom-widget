@@ -321,11 +321,7 @@ var parseMetadata = metadata => {
                         fontFamily: "'72', sans-serif",
                     },
                     events: {
-                        load: () => {
-                            if (this.showDataLabels) {
-                                this._alignDataLabels()
-                            }
-                        } 
+                        load: this._alignDataLabels()
                     }
                 },
                 title: {
@@ -396,6 +392,10 @@ var parseMetadata = metadata => {
          */
         _alignDataLabels() {
             return function () {
+                // Check if showDataLabels is enabled
+                if (!this.options.plotOptions.series.dataLabels.enabled) {
+                    return;
+                }
                 var chart = this, points = chart.series[0].points, offset;
                 points.forEach(function (point) {
                     if ((point.dataLabel.attr('x') + point.dataLabel.attr('width')) > chart.plotWidth) {
