@@ -112,6 +112,11 @@
             "type": "string",
             "description": "The font size of the data labels",
             "default": "12px"
+        },
+        "customColors": {
+            "type": "CustomColor[]",
+            "description": "List of category-color mappings",
+            "default": []
         }
     },
     "methods": {
@@ -119,6 +124,21 @@
     },
     "events": {
 
+    },
+    "types": {
+        "CustomColor": {
+            "description": "Represents a custom color in the customColors array.",
+            "properties": [
+                {
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "name": "color",
+                    "type": "string"
+                }
+            ]
+        }
     },
     "dataBindings": {
         "dataBinding": {

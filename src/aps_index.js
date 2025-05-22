@@ -182,9 +182,25 @@
                         </td>
                     </tr>
                 </table>
+            </tr>
+            <legend style="font-weight: bold;font-size: 18px;">Color Settings</legend>
+            <table>
                 <tr>
-                    <button id="resetDefaults" type="button" style="margin-top: 20px;">Reset to Default</button>
+                    <td>Category Name</td>
+                    <td>Color</td>
                 </tr>
+                <tr>
+                    <td><input id="categoryName" type="text"></td>
+                    <td><input id="categoryColor" type="color" value="#ffffff"></td>
+                </tr>
+                <tr>
+                    <td><button type="button" id="addColor">Add Color</button></td>
+                </tr>
+            </table>
+            <div id="colorList" style="margin-top: 10px;"></div>
+            <tr>
+                <button id="resetDefaults" type="button" style="margin-top: 20px;">Reset to Default</button>
+            </tr>
         </table>
         <input type="submit" style="display:none;">
         </form>
@@ -222,6 +238,69 @@
 
             this._shadowRoot = this.attachShadow({ mode: 'open' });
             this._shadowRoot.appendChild(template.content.cloneNode(true));
+
+            // Initialize internal state
+            this.customColors = [];
+
+            const addButton = this._shadowRoot.getElementById('addColor');
+            const nameInput = this._shadowRoot.getElementById('categoryName');
+            const colorInput = this._shadowRoot.getElementById('categoryColor');
+            const listContainer = this._shadowRoot.getElementById('colorList');
+
+            const renderColorList = () => {
+                listContainer.innerHTML = '';
+                this.customColors.forEach((entry, index) => {
+                    const item = document.createElement('div');
+                    item.style.display = 'flex';
+                    item.style.justifyContent = 'space-between';
+                    item.style.alignItems = 'center';
+                    item.style.marginBottom = '4px';
+
+                    const label = document.createElement('span');
+                    label.textContent = `${entry.category}: `;
+                    label.style.marginRight = '8px';
+                    label.style.flex = '1';
+
+                    const colorBox = document.createElement('span');
+                    colorBox.style.backgroundColor = entry.color;
+                    colorBox.style.width = '20px';
+                    colorBox.style.height = '20px';
+                    colorBox.style.border = '1px solid #ccc';
+                    colorBox.style.display = 'inline-block';
+                    colorBox.style.marginRight = '8px';
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = '✖';
+                    deleteButton.style.cursor = 'pointer';
+                    deleteButton.style.background = 'none';
+                    deleteButton.style.border = 'none';
+                    deleteButton.style.color = 'red';
+                    deleteButton.addEventListener('click', () => {
+                        this.customColors.splice(index, 1);
+                        renderColorList();
+                        this._submit(new Event('submit'));
+                    });
+
+                    item.appendChild(label);
+                    item.appendChild(colorBox);
+                    item.appendChild(deleteButton); 
+
+                    listContainer.appendChild(item);
+                });
+            };
+
+            addButton.addEventListener('click', () => {
+                const name = nameInput.value.trim();
+                const color = colorInput.value;
+                if (name && color) {
+                    this.customColors.push({ category: name, color: color });
+                    renderColorList();
+                    this._submit(new Event('submit'));
+                    nameInput.value = ''; // Clear the input field after adding
+                    colorInput.value = '#ffffff'; // Reset color input to default
+                }
+            });
+
             this._shadowRoot.getElementById('form').addEventListener('submit', this._submit.bind(this));
             this._shadowRoot.getElementById('titleSize').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('titleFontStyle').addEventListener('change', this._submit.bind(this));
@@ -238,13 +317,14 @@
             this._shadowRoot.getElementById('labelFormat').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('labelSize').addEventListener('change', this._submit.bind(this));
 
+
             // Reset button logic
             this._shadowRoot.getElementById('resetDefaults').addEventListener('click', () => {
                 for (const key in DEFAULTS) {
                     if (key === 'chartTitle' || key === 'chartSubtitle') {
                         continue; // Skip these fields
                     }
-                    
+
                     const element = this._shadowRoot.getElementById(key);
                     if (!element) continue; // Skip if element not found
                     
@@ -283,7 +363,8 @@
                         showDataLabels: this.showDataLabels,
                         allowLabelOverlap: this.allowLabelOverlap,
                         labelFormat: this.labelFormat,
-                        labelSize: this.labelSize
+                        labelSize: this.labelSize,
+                        customColors: this.customColors
                     }
                 }
             }));
@@ -417,7 +498,15 @@
 
         get labelSize() {
             return this._shadowRoot.getElementById('labelSize').value;
-        }   
+        }
+        
+        get customColors() {
+            return this.customColors || [];
+        }
+
+        set customColors(value) {
+            this.customColors = value || [];
+        }
 
     }
 

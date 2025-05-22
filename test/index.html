@@ -31,8 +31,8 @@
                                 <option value="10px">10</option>
                                 <option value="12px">12</option>
                                 <option value="14px">14</option>
-                                <option value="16px">16</option>
-                                <option value="18px" selected>18</option>
+                                <option value="16px" selected>16</option>
+                                <option value="18px">18</option>
                                 <option value="20px">20</option>
                                 <option value="22px">22</option>
                                 <option value="24px">24</option>
@@ -54,7 +54,7 @@
                             </select>
                         </td>
                         <td>
-                            <input id="titleColor" type="color" value="#333333">
+                            <input id="titleColor" type="color" value="#004B8D">
                         </td>
                     </tr>
                 </table>
@@ -79,7 +79,8 @@
                         <td>
                             <select id="subtitleSize">
                                 <option value="10px">10</option>
-                                <option value="12px" selected>12</option>
+                                <option value="11px" selected>11</option>
+                                <option value="12px">12</option>
                                 <option value="14px">14</option>
                                 <option value="16px">16</option>
                                 <option value="18px">18</option>
@@ -104,7 +105,7 @@
                             </select>
                         </td>
                         <td>
-                            <input id="subtitleColor" type="color" value="#666666">
+                            <input id="subtitleColor" type="color" value="#000000">
                         </td>
                     </tr>
                 </table>
@@ -141,7 +142,7 @@
                 </td>
             </tr>
         </table>
-        <legend style="font-weight: bold;font-size: 18px;">Data Labels</legend>
+        <legend style="font-weight: bold;font-size: 18px;">Data Point</legend>
         <table>
             <tr>
                 <td>
@@ -154,10 +155,6 @@
                     <input id="allowLabelOverlap" type="checkbox">
                     <label for="allowLabelOverlap">Allow data label overlap</label>
                 </td>
-            </tr>
-            <tr>
-                <td>Label Display Options</td>
-                <td>Size</td>
             </tr>
             <tr>
                 <table>
@@ -189,42 +186,27 @@
                         </td>
                     </tr>
                 </table>
-
+            </tr>
+            <legend style="font-weight: bold;font-size: 18px;">Color Settings</legend>
+            <table>
+                <tr>
+                    <td>Category Name</td>
+                    <td>Color</td>
+                </tr>
+                <tr>
+                    <td><input id="categoryName" type="text"></td>
+                    <td><input id="categoryColor" type="color" value="#ffffff"></td>
+                </tr>
+                <tr>
+                    <td><button type="button" id="setCategoryColor">Confirm</button></td>
+                </tr>
+            </table>
+            <div id="customColorList" style="margin-top: 10px;"></div>
+            <tr>
+                <button id="resetDefaults" type="button" style="margin-top: 20px;">Reset all formatting</button>
+            </tr>
         </table>
         <input type="submit" style="display:none;">
-        <style>
-            .sap-icon {
-                font-family: "SAP-icons";
-                font-size: 16px;
-                color: #004B8D;
-                padding-right: 6px;
-            }
-
-            .fiori-button {
-                background-color: #f7f7f7;
-                border: 1px solid #bfbfbf;
-                border-radius: 3px;
-                padding: 6px 10px;
-                font-size: 13px;
-                font-family: "72", Arial, sans-serif;
-                color: #000;
-                cursor: pointer;
-                margin-top: 20px;
-                display: inline-flex;
-                align-items: center;
-                gap: 6px;
-                transition: background-color 0.2s ease;
-            }
-
-            .fiori-button:hover {
-                background-color: #e0e0e0;
-            }
-        </style>
-
-        <button id="resetDefaults" type="button" class="fiori-button">
-            <span class="sap-icon">&#xe249;</span>
-            Reset to Default
-        </button>
     </form>
 </body>
 

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SAC Styling Panel Clone</title>
+    <link rel="stylesheet" href="https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/SAP-icons.css">
+    <style>
+        fieldset {
+            border: none;
+            margin-bottom: 24px;
+            padding: 0;
+        }
+
+        .section-title {
+            font-weight: normal;
+            font-size: 18px;
+            margin: 16px 0 8px;
+            padding-bottom: 4px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 8px 12px;
+            align-items: center;
+        }
+
+        select,
+        input[type="text"],
+        input[type="color"] {
+            height: 28px;
+            font-size: 14px;
+            padding: 2px 6px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        label {
+            font-weight: normal;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        button {
+            margin-top: 16px;
+            padding: 6px 12px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+            margin-top: 12px;
+        }
+
+        .form-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="form">
+        <fieldset>
+            <div class="section-title">Font</div>
+
+            <label for="chartTitle">Chart Title</label>
+            <input type="text" id="chartTitle" value="Sales Phase">
+            <div class="form-row">
+                <div class="form-item">
+                    <label for="titleSize">Size</label>
+                    <select id="titleSize">
+                        <option value="10px">10</option>
+                        <option value="12px">12</option>
+                        <option value="14px">14</option>
+                        <option value="16px" selected>16</option>
+                        <option value="18px">18</option>
+                        <option value="20px">20</option>
+                        <option value="22px">22</option>
+                        <option value="24px">24</option>
+                        <option value="32px">32</option>
+                        <option value="48px">48</option>
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label for="titleFontStyle">Font Style</label>
+                    <select id="titleFontStyle">
+                        <option value="normal">Normal</option>
+                        <option value="bold" selected>Bold</option>
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label for="titleAlignment">Alignment</label>
+                    <select id="titleAlignment">
+                        <option value="left" selected>Left</option>
+                        <option value="center">Center</option>
+                        <option value="right">Right</option>
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label for="titleColor">Color</label>
+                    <input type="color" id="titleColor" value="#004B8D">
+                </div>
+            </div>
+
+            <label for="chartSubtitle">Chart Subtitle</label>
+            <input type="text" id="chartSubtitle">
+            <div class="form-row">
+                <div class="form-item">
+                    <label for="subtitleSize">Size</label>
+                    <select id="subtitleSize">
+                        <option value="10px">10</option>
+                        <option value="11px" selected>11</option>
+                        <option value="12px">12</option>
+                        <option value="14px">14</option>
+                        <option value="16px">16</option>
+                        <option value="18px">18</option>
+                        <option value="20px">20</option>
+                        <option value="22px">22</option>
+                        <option value="24px">24</option>
+                        <option value="32px">32</option>
+                        <option value="48px">48</option>
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label for="subtitleFontStyle">Font Style</label>
+                    <select id="subtitleFontStyle">
+                        <option value="normal" selected>Normal</option>
+                        <option value="italic">Italic</option>
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label for="subtitleAlignment">Alignment</label>
+                    <select id="subtitleAlignment">
+                        <option value="left" selected>Left</option>
+                        <option value="center">Center</option>
+                        <option value="right">Right</option>
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label for="subtitleColor">Color</label>
+                    <input type="color" id="subtitleColor" value="#000000">
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <div class="section-title">Number Formatting</div>
+            <div class="form-row">
+                <div class="form-item">
+                    <label for="scaleFormat">Scale Format</label>
+                    <select id="scaleFormat">
+                        <option value="unformatted" selected>Unformatted</option>
+                        <option value="k">Thousands (k)</option>
+                        <option value="m">Millions (m)</option>
+                        <option value="b">Billions (b)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-item">
+                    <label for="decimalPlaces">Decimal Places</label>
+                    <select id="decimalPlaces">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2" selected>2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <div class="section-title">Data Point</div>
+            <div class="checkbox-group">
+                <label><input type="checkbox" id="showDataLabels" checked> Show data labels</label>
+                <label><input type="checkbox" id="allowLabelOverlap"> Allow data label overlap</label>
+            </div>
+            <div class="form-row">
+                <div clas="form-item">
+                    <label for="labelSize">Size</label>
+                    <select id="labelSize">
+                        <option value="10px">10</option>
+                        <option value="12px" selected>12</option>
+                        <option value="14px">14</option>
+                        <option value="16px">16</option>
+                        <option value="18px">18</option>
+                        <option value="20px">20</option>
+                        <option value="22px">22</option>
+                        <option value="24px">24</option>
+                        <option value="32px">32</option>
+                        <option value="48px">48</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-item">
+                    <label for="labelFormat">Label Display Options</label>
+                    <select id="labelFormat">
+                        <option value="labelAndValue" selected>Label and Value</option>
+                        <option value="labelOnly">Label only</option>
+                        <option value="valueOnly">Value only</option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+        <button id="resetDefaults" type="button">Reset to Default</button>
+    </form>
+</body>
+</html>

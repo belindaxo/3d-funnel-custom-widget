@@ -304,6 +304,18 @@ var parseMetadata = metadata => {
             const scaleFormat = (value) => this._scaleFormat(value);
             const subtitleText = this._updateSubtitle();
             const labelFormat = this.labelFormat;
+            const customColors = this.customColors || [];
+
+            series.forEach(seriesItem => {
+                seriesItem.data = seriesItem.data.map(([categoryName, rawValue]) => {
+                    const match = customColors.find(c = c.category === categoryName);
+                    return {
+                        name: categoryName,
+                        y: rawValue,
+                        color: match ? match.color : undefined // Use custom color if available
+                    };
+                });
+            });
 
             Highcharts.setOptions({
                 lang: {
