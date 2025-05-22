@@ -284,7 +284,7 @@
             const resetColorsButton = this._shadowRoot.getElementById('resetColors');
             resetColorsButton.addEventListener('click', () => {
                 this.customColors = []; // Clear the array
-                renderColorList(); // Update the UI
+                renderCategoryColorGrid(); // Update the UI
                 this._submit(new Event('submit')); // Push to SAC to re-render chart
                 console.log("Custom colors reset.");
             });
