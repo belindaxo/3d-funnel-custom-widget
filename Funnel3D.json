@@ -117,6 +117,11 @@
             "type": "CustomColor[]",
             "description": "List of category-color mappings",
             "default": []
+        },
+        "validCategoryNames": {
+            "type": "string[]",
+            "description": "List of valid dimension labels to allow category color selection",
+            "default": []
         }
     },
     "methods": {

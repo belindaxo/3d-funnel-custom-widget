@@ -189,18 +189,11 @@
                     <td>Category Name</td>
                     <td>Color</td>
                 </tr>
-                <tr>
-                    <td><input id="categoryName" type="text"></td>
-                    <td><input id="categoryColor" type="color" value="#ffffff"></td>
-                </tr>
-                <tr>
-                    <td><button type="button" id="addColor">Add Color</button></td>
-                </tr>
+                <div id="categoryColorGrid" style="margin-top: 8px;"></div>
                 <tr>
                     <td><button type="button" id="resetColors">Reset Colors</button></td>
                 </tr>
             </table>
-            <div id="colorList" style="margin-top: 10px;"></div>
             <tr>
                 <button id="resetDefaults" type="button" style="margin-top: 20px;">Reset to Default</button>
             </tr>
@@ -245,68 +238,52 @@
             // Initialize internal state
             this.customColors = [];
 
-            const addButton = this._shadowRoot.getElementById('addColor');
-            const nameInput = this._shadowRoot.getElementById('categoryName');
-            const colorInput = this._shadowRoot.getElementById('categoryColor');
-            const listContainer = this._shadowRoot.getElementById('colorList');
+            // Dynamic list container for category color controls
+            const colorGridContainer = this._shadowRoot.getElementById('categoryColorGrid');
 
-            const renderColorList = () => {
-                listContainer.innerHTML = '';
-                this.customColors.forEach((entry, index) => {
-                    const item = document.createElement('div');
-                    item.style.display = 'flex';
-                    item.style.justifyContent = 'space-between';
-                    item.style.alignItems = 'center';
-                    item.style.marginBottom = '4px';
+            // Function to render category-based color pickers
+            const renderCategoryColorGrid = () => {
+                colorGridContainer.innerHTML = '';
+                this.validCategoryNames.forEach(categoryName => {
+                    const wrapper = document.createElement('div');
+                    wrapper.style.display = 'flex';
+                    wrapper.style.alignItems = 'center';
+                    wrapper.style.marginBottom = '6px';
 
                     const label = document.createElement('span');
-                    label.textContent = `${entry.category}: `;
-                    label.style.marginRight = '8px';
-                    label.style.flex = '1';
+                    label.textContent = categoryName;
+                    label.style.width = '140px';
 
-                    const colorBox = document.createElement('span');
-                    colorBox.style.backgroundColor = entry.color;
-                    colorBox.style.width = '20px';
-                    colorBox.style.height = '20px';
-                    colorBox.style.border = '1px solid #ccc';
-                    colorBox.style.display = 'inline-block';
-                    colorBox.style.marginRight = '8px';
+                    const input = document.createElement('input');
+                    input.type = 'color';
+                    input.style.marginLeft = '8px';
 
-                    const deleteButton = document.createElement('button');
-                    deleteButton.textContent = '✖';
-                    deleteButton.style.cursor = 'pointer';
-                    deleteButton.style.background = 'none';
-                    deleteButton.style.border = 'none';
-                    deleteButton.style.color = 'red';
-                    deleteButton.addEventListener('click', () => {
-                        const newColors = [...this.customColors]; // clone
-                        newColors.splice(index, 1);
-                        this.customColors = newColors; // assign a new reference
-                        renderColorList();
+                    const currentColor = this.customColors.find(c => c.category === categoryName)?.color;
+                    input.value = currentColor || '#ffffff';
+
+                    input.addEventListener('input', () => {
+                        const existing = this.customColors.find(c => c.category === categoryName);
+                        const updatedColor = input.value;
+
+                        if (existing) {
+                            if (updatedColor === '#ffffff') {
+                                this.customColors = this.customColors.filter(c => c.category !== categoryName);
+                            } else {
+                                existing.color = updatedColor;
+                                this.customColors = [...this.customColors]; // force reactivity
+                            }
+                        } else if (updatedColor !== '#ffffff') {
+                            this.customColors = [...this.customColors, { category: categoryName, color: updatedColor }];
+                        }
+
                         this._submit(new Event('submit'));
-                        console.log('Custom colors after delete button clicked:', this.customColors);
                     });
 
-                    item.appendChild(label);
-                    item.appendChild(colorBox);
-                    item.appendChild(deleteButton);
-
-                    listContainer.appendChild(item);
+                    wrapper.appendChild(label);
+                    wrapper.appendChild(input);
+                    colorGridContainer.appendChild(wrapper);
                 });
             };
-
-            addButton.addEventListener('click', () => {
-                const name = nameInput.value.trim();
-                const color = colorInput.value;
-                if (name && color) {
-                    this.customColors = [...this.customColors, { category: name, color }];
-                    renderColorList();
-                    this._submit(new Event('submit'));
-                    nameInput.value = ''; // Clear the input field after adding
-                    colorInput.value = '#ffffff'; // Reset color input to default
-                }
-                console.log('Custom colors after add button clicked:', this.customColors);
-            });
 
             const resetColorsButton = this._shadowRoot.getElementById('resetColors');
             resetColorsButton.addEventListener('click', () => {
@@ -352,6 +329,9 @@
                 }
                 this._submit(new Event('submit')); // Trigger submit event to update properties
             });
+
+            this._renderCategoryColorGrid = renderCategoryColorGrid; // Store the function for later use
+            renderCategoryColorGrid(); // Initial render of the category color grid
         }
 
 
@@ -380,7 +360,8 @@
                         allowLabelOverlap: this.allowLabelOverlap,
                         labelFormat: this.labelFormat,
                         labelSize: this.labelSize,
-                        customColors: this.customColors
+                        customColors: this.customColors,
+                        validCategoryNames: this.validCategoryNames
                     }
                 }
             }));
@@ -523,6 +504,16 @@
         set customColors(value) {
             this._customColors = value || [];
         }
+
+        set validCategoryNames(value) {
+            this._validCategoryNames = value || [];
+            renderCategoryColorGrid(); // rebuild UI on update
+        }
+
+        get validCategoryNames() {
+            return this._validCategoryNames || [];
+        }
+
 
     }
 

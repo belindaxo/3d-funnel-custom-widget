@@ -70,6 +70,8 @@ var parseMetadata = metadata => {
             this._selectedPoint = null;
 
             this._handlePointClick = this._handlePointClick.bind(this);
+
+            this._lastSentCategories = [];
         }
 
         /**
@@ -110,7 +112,7 @@ var parseMetadata = metadata => {
                 'chartSubtitle', 'subtitleSize', 'subtitleFontStyle', 'subtitleAlignment', 'subtitleColor', // Subtitle properties
                 'scaleFormat', 'decimalPlaces',                                                             // Number formatting properties
                 'showDataLabels', 'allowLabelOverlap', 'labelFormat', 'labelSize',                           // Data label properties
-                'customColors'            
+                'customColors'
             ];
         }
 
@@ -266,7 +268,7 @@ var parseMetadata = metadata => {
                     this._chart.destroy();
                     this._chart = null;
                     // Reset selection when chart is destroyed
-                    this._selectedPoint = null; 
+                    this._selectedPoint = null;
                 }
                 return;
             }
@@ -285,7 +287,7 @@ var parseMetadata = metadata => {
                     this._chart.destroy();
                     this._chart = null;
                     // Reset selection when chart is destroyed
-                    this._selectedPoint = null; 
+                    this._selectedPoint = null;
                 }
                 return;
             }
@@ -297,6 +299,21 @@ var parseMetadata = metadata => {
             // Populate and sort data arrays
             this._populateDataArrays(data, this.categoryData, series);
             this._sortDataById(this.categoryData, series);
+
+            const validCategoryNames = this.categoryData[0]?.data.map(d => d.name) || [];
+
+            if (JSON.stringify(this._lastSentCategories) !== JSON.stringify(validCategoryNames)) {
+                this._lastSentCategories = validCategoryNames;
+                this.dispatchEvent(new CustomEvent("propertiesChanged", {
+                    detail: {
+                        properties: {
+                            validCategoryNames
+                        }
+                    }
+                }));
+            }
+
+
 
             console.log("Category Data (After Sorting):", this.categoryData);
             console.log("Series (After Sorting):", series);
@@ -328,7 +345,7 @@ var parseMetadata = metadata => {
             const categoryData = this.categoryData;
 
             // Reset the selected point reference before rendering the chart
-            this._selectedPoint = null; 
+            this._selectedPoint = null;
 
             const chartOptions = {
                 chart: {
