@@ -309,7 +309,7 @@ var parseMetadata = metadata => {
 
             series.forEach(seriesItem => {
                 seriesItem.data = seriesItem.data.map(([categoryName, rawValue]) => {
-                    const match = customColors.find(c = c.category === categoryName);
+                    const match = customColors.find(c => c.category === categoryName);
                     return {
                         name: categoryName,
                         y: rawValue,
