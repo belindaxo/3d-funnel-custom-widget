@@ -317,6 +317,7 @@ var parseMetadata = metadata => {
                     };
                 });
             });
+            console.log("Series with Custom Colors:", series);
 
             Highcharts.setOptions({
                 lang: {

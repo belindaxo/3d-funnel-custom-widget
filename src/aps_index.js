@@ -278,6 +278,7 @@
                     deleteButton.addEventListener('click', () => {
                         this.customColors.splice(index, 1);
                         renderColorList();
+                        console.log('Custom colors after delete button clicked:', this.customColors);
                         this._submit(new Event('submit'));
                     });
 
@@ -299,6 +300,7 @@
                     nameInput.value = ''; // Clear the input field after adding
                     colorInput.value = '#ffffff'; // Reset color input to default
                 }
+                console.log('Custom colors after add button clicked:', this.customColors);
             });
 
             this._shadowRoot.getElementById('form').addEventListener('submit', this._submit.bind(this));
