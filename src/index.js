@@ -319,6 +319,7 @@ var parseMetadata = metadata => {
             const chartOptions = {
                 chart: {
                     type: "funnel3d",
+                    backgroundColor: '#ffffff',
                     options3d: {
                         enabled: true,
                         alpha: 10,
@@ -336,18 +337,18 @@ var parseMetadata = metadata => {
                     text: this.chartTitle || "",
                     align: this.titleAlignment || "left",
                     style: {
-                        fontSize: this.titleSize || "20px",
+                        fontSize: this.titleSize || "16px",
                         fontWeight: this.titleFontStyle || "bold",
-                        color: this.titleColor || "#333333",
+                        color: this.titleColor || "#004B8D",
                     },
                 },
                 subtitle: {
                     text: subtitleText,
                     align: this.subtitleAlignment || "left",
                     style: {
-                        fontSize: this.subtitleSize || "12px",
+                        fontSize: this.subtitleSize || "11px",
                         fontStyle: this.subtitleFontStyle || "normal",
-                        color: this.subtitleColor || "#666666",
+                        color: this.subtitleColor || "#000000",
                     },
                 },
                 plotOptions: {

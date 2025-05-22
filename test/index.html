@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Styling pane</title>
+    <link rel="stylesheet" href="https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/SAP-icons.css">
 </head>
+
 <body>
     <form id="form">
         <legend style="font-weight: bold;font-size: 18px;"> Font </legend>
@@ -142,7 +145,7 @@
         <table>
             <tr>
                 <td>
-                    <input id="showDataLabels" type="checkbox">
+                    <input id="showDataLabels" type="checkbox" checked>
                     <label for="showDataLabels">Show data labels</label>
                 </td>
             </tr>
@@ -186,8 +189,43 @@
                         </td>
                     </tr>
                 </table>
+
         </table>
         <input type="submit" style="display:none;">
-        </form>
+        <style>
+            .sap-icon {
+                font-family: "SAP-icons";
+                font-size: 16px;
+                color: #004B8D;
+                padding-right: 6px;
+            }
+
+            .fiori-button {
+                background-color: #f7f7f7;
+                border: 1px solid #bfbfbf;
+                border-radius: 3px;
+                padding: 6px 10px;
+                font-size: 13px;
+                font-family: "72", Arial, sans-serif;
+                color: #000;
+                cursor: pointer;
+                margin-top: 20px;
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                transition: background-color 0.2s ease;
+            }
+
+            .fiori-button:hover {
+                background-color: #e0e0e0;
+            }
+        </style>
+
+        <button id="resetDefaults" type="button" class="fiori-button">
+            <span class="sap-icon">&#xe249;</span>
+            Reset to Default
+        </button>
+    </form>
 </body>
+
 </html>
