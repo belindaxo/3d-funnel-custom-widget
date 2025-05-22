@@ -313,7 +313,7 @@ var parseMetadata = metadata => {
                     return {
                         name: categoryName,
                         y: rawValue,
-                        color: match ? match.color : undefined // Use custom color if available
+                        ...(match?.color && { color: match.color }), // Use custom color if available
                     };
                 });
             });

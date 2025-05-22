@@ -501,11 +501,11 @@
         }
         
         get customColors() {
-            return this.customColors || [];
+            return this._customColors || [];
         }
 
         set customColors(value) {
-            this.customColors = value || [];
+            this._customColors = value || [];
         }
 
     }
