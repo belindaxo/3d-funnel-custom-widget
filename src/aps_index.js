@@ -276,10 +276,12 @@
                     deleteButton.style.border = 'none';
                     deleteButton.style.color = 'red';
                     deleteButton.addEventListener('click', () => {
+                        const newColors = [...this.customColors]; // clone
                         this.customColors.splice(index, 1);
+                        this.customColors = newColors; // assign a new reference
                         renderColorList();
-                        console.log('Custom colors after delete button clicked:', this.customColors);
                         this._submit(new Event('submit'));
+                        console.log('Custom colors after delete button clicked:', this.customColors);
                     });
 
                     item.appendChild(label);
@@ -294,7 +296,7 @@
                 const name = nameInput.value.trim();
                 const color = colorInput.value;
                 if (name && color) {
-                    this.customColors.push({ category: name, color: color });
+                    this.customColors = [...this.customColors, { category: name, color }];
                     renderColorList();
                     this._submit(new Event('submit'));
                     nameInput.value = ''; // Clear the input field after adding
