@@ -277,7 +277,7 @@
                     deleteButton.style.color = 'red';
                     deleteButton.addEventListener('click', () => {
                         const newColors = [...this.customColors]; // clone
-                        this.customColors.splice(index, 1);
+                        newColors.splice(index, 1);
                         this.customColors = newColors; // assign a new reference
                         renderColorList();
                         this._submit(new Event('submit'));
