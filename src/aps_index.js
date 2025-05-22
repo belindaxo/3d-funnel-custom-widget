@@ -196,6 +196,9 @@
                 <tr>
                     <td><button type="button" id="addColor">Add Color</button></td>
                 </tr>
+                <tr>
+                    <td><button type="button" id="resetColors">Reset Colors</button></td>
+                </tr>
             </table>
             <div id="colorList" style="margin-top: 10px;"></div>
             <tr>
@@ -214,26 +217,26 @@
         /**
          * Initializes the shadow DOM and sets up event listeners for form inputs.
          */
-        constructor() { 
+        constructor() {
             super();
 
             const DEFAULTS = {
-            chartTitle: '',
-            titleSize: '16px',
-            titleFontStyle: 'bold',
-            titleAlignment: 'left',
-            titleColor: '#004B8D',
-            chartSubtitle: '',
-            subtitleSize: '11px',
-            subtitleFontStyle: 'normal',
-            subtitleAlignment: 'left',
-            subtitleColor: '#000000',
-            scaleFormat: 'unformatted',
-            decimalPlaces: '2',
-            showDataLabels: true,
-            allowLabelOverlap: false,
-            labelFormat: 'labelAndValue',
-            labelSize: '12px'
+                chartTitle: '',
+                titleSize: '16px',
+                titleFontStyle: 'bold',
+                titleAlignment: 'left',
+                titleColor: '#004B8D',
+                chartSubtitle: '',
+                subtitleSize: '11px',
+                subtitleFontStyle: 'normal',
+                subtitleAlignment: 'left',
+                subtitleColor: '#000000',
+                scaleFormat: 'unformatted',
+                decimalPlaces: '2',
+                showDataLabels: true,
+                allowLabelOverlap: false,
+                labelFormat: 'labelAndValue',
+                labelSize: '12px'
             };
 
             this._shadowRoot = this.attachShadow({ mode: 'open' });
@@ -286,7 +289,7 @@
 
                     item.appendChild(label);
                     item.appendChild(colorBox);
-                    item.appendChild(deleteButton); 
+                    item.appendChild(deleteButton);
 
                     listContainer.appendChild(item);
                 });
@@ -304,6 +307,15 @@
                 }
                 console.log('Custom colors after add button clicked:', this.customColors);
             });
+
+            const resetColorsButton = this._shadowRoot.getElementById('resetColors');
+            resetColorsButton.addEventListener('click', () => {
+                this.customColors = []; // Clear the array
+                renderColorList(); // Update the UI
+                this._submit(new Event('submit')); // Push to SAC to re-render chart
+                console.log("Custom colors reset.");
+            });
+
 
             this._shadowRoot.getElementById('form').addEventListener('submit', this._submit.bind(this));
             this._shadowRoot.getElementById('titleSize').addEventListener('change', this._submit.bind(this));
@@ -331,7 +343,7 @@
 
                     const element = this._shadowRoot.getElementById(key);
                     if (!element) continue; // Skip if element not found
-                    
+
                     if (typeof DEFAULTS[key] === 'boolean') {
                         element.checked = DEFAULTS[key];
                     } else {
@@ -341,8 +353,8 @@
                 this._submit(new Event('submit')); // Trigger submit event to update properties
             });
         }
-        
-        
+
+
         /**
          * Handles the form submissions and dispatches a 'propertiesChanged' event.
          * @param {Event} e - The form submission event.
@@ -375,7 +387,7 @@
         }
 
         // Getters and setters for each property
-        
+
         set chartTitle(value) {
             this._shadowRoot.getElementById('chartTitle').value = value;
         }
@@ -503,7 +515,7 @@
         get labelSize() {
             return this._shadowRoot.getElementById('labelSize').value;
         }
-        
+
         get customColors() {
             return this._customColors || [];
         }
