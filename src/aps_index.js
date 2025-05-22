@@ -184,7 +184,7 @@
                 </table>
             </tr>
             <tr>
-                <button id="resetDefaults" type="button" style="margin-top: 20px;">Reset to Default</button>
+                <button id="resetDefaults" type="button" style="margin-top: 10px; margin-bottom: 10px;">Reset to Default</button>
             </tr>
             <legend style="font-weight: bold;font-size: 18px;">Color Settings</legend>
             <table>
