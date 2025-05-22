@@ -183,20 +183,16 @@
                     </tr>
                 </table>
             </tr>
+            <tr>
+                <button id="resetDefaults" type="button" style="margin-top: 20px;">Reset to Default</button>
+            </tr>
             <legend style="font-weight: bold;font-size: 18px;">Color Settings</legend>
             <table>
-                <tr>
-                    <td>Category Name</td>
-                    <td>Color</td>
-                </tr>
                 <div id="categoryColorGrid" style="margin-top: 8px;"></div>
                 <tr>
                     <td><button type="button" id="resetColors">Reset Colors</button></td>
                 </tr>
             </table>
-            <tr>
-                <button id="resetDefaults" type="button" style="margin-top: 20px;">Reset to Default</button>
-            </tr>
         </table>
         <input type="submit" style="display:none;">
         </form>
@@ -507,7 +503,7 @@
 
         set validCategoryNames(value) {
             this._validCategoryNames = value || [];
-            renderCategoryColorGrid(); // rebuild UI on update
+            this._renderCategoryColorGrid(); // rebuild UI on update
         }
 
         get validCategoryNames() {
