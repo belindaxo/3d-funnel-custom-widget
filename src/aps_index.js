@@ -241,8 +241,13 @@
             // Reset button logic
             this._shadowRoot.getElementById('resetDefaults').addEventListener('click', () => {
                 for (const key in DEFAULTS) {
+                    if (key === 'chartTitle' || key === 'chartSubtitle') {
+                        continue; // Skip these fields
+                    }
+                    
                     const element = this._shadowRoot.getElementById(key);
                     if (!element) continue; // Skip if element not found
+                    
                     if (typeof DEFAULTS[key] === 'boolean') {
                         element.checked = DEFAULTS[key];
                     } else {
