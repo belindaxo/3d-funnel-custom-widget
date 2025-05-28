@@ -1,15 +1,12 @@
 /**
  * Module dependencies for Highcharts 3D Funnel chart.
  */
-import Highcharts from 'highcharts';
-import Highcharts3D from 'highcharts/highcharts-3d';
-Highcharts3D(Highcharts);
-import Exporting from 'highcharts/modules/exporting';
-Exporting(Highcharts);
-import HighchartsCylinder from 'highcharts/modules/cylinder';
-HighchartsCylinder(Highcharts);
-import HighchartsFunnel3D from 'highcharts/modules/funnel3d';
-HighchartsFunnel3D(Highcharts);
+import * as Highcharts from 'highcharts';
+import 'highcharts/highcharts-3d';
+import 'highcharts/modules/exporting';
+import 'highcharts/modules/cylinder';
+import 'highcharts/modules/funnel3d';
+
 
 /**
  * Parses metadata into structured dimensions and measures.
