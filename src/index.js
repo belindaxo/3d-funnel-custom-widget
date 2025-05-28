@@ -364,6 +364,7 @@ var parseMetadata = metadata => {
                         load: this._alignDataLabels()
                     }
                 },
+                colors: ['004b8d', 'faa834', '00aa7e', '47a5dc', '006ac7', 'bf8028', '00e4a7'],
                 title: {
                     text: this.chartTitle || "",
                     align: this.titleAlignment || "left",
