@@ -6,21 +6,21 @@
     "license": "",
     "id": "com.sap.sample.funnel3d",
     "newInstancePrefix": "Funnel3D",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "supportsLinkedAnalysisFilterOnSelection": true,
     "webcomponents": [
         {
             "kind": "main",
             "tag": "com-sap-sample-funnel3d",
             "url": "https://belindaxo.github.io/3d-funnel-custom-widget/dist/bundle.js",
-            "integrity": "sha256-lE0hbin17GnXIp6NGnHA2uUI1Ua7s9CgiBlmjnn4zD8=",
+            "integrity": "",
             "ignoreIntegrity": false
         },
         {
             "kind": "styling",
             "tag": "com-sap-sample-funnel3d-aps",
             "url": "https://belindaxo.github.io/3d-funnel-custom-widget/dist/bundle.js",
-            "integrity": "sha256-lE0hbin17GnXIp6NGnHA2uUI1Ua7s9CgiBlmjnn4zD8=",
+            "integrity": "",
             "ignoreIntegrity": false
         }
     ],
