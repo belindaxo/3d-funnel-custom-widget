@@ -362,6 +362,9 @@ var parseMetadata = metadata => {
                         load: this._alignDataLabels()
                     }
                 },
+                credits: {
+                    enabled: false
+                },
                 title: {
                     text: this.chartTitle || "",
                     align: this.titleAlignment || "left",
