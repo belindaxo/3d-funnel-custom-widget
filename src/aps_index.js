@@ -1,3 +1,4 @@
+const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#006ac7', '#ccced2', '#bf8028', '#00e4a7'];
 (function () {
     /**
      * Template for the Styling Panel (APS) of the Funnel3D widget.
@@ -255,20 +256,21 @@
                     input.style.marginLeft = '8px';
 
                     const currentColor = this.customColors.find(c => c.category === categoryName)?.color;
-                    input.value = currentColor || '#ffffff';
+                    const defaultIndex = this.validCategoryNames.indexOf(categoryName) % defaultColors.length;
+                    input.value = currentColor || defaultColors[defaultIndex];
 
                     input.addEventListener('input', () => {
                         const existing = this.customColors.find(c => c.category === categoryName);
                         const updatedColor = input.value;
 
                         if (existing) {
-                            if (updatedColor === '#ffffff') {
+                            if (updatedColor === defaultColors[defaultIndex]) {
                                 this.customColors = this.customColors.filter(c => c.category !== categoryName);
                             } else {
                                 existing.color = updatedColor;
                                 this.customColors = [...this.customColors]; // force reactivity
                             }
-                        } else if (updatedColor !== '#ffffff') {
+                        } else if (updatedColor !== defaultColors[defaultIndex]) {
                             this.customColors = [...this.customColors, { category: categoryName, color: updatedColor }];
                         }
 
@@ -499,11 +501,16 @@
 
         set customColors(value) {
             this._customColors = value || [];
+            if (this._renderCategoryColorGrid && this._validCategoryNames) {
+                this._renderCategoryColorGrid(); // rebuild UI on update
+            }
         }
 
         set validCategoryNames(value) {
             this._validCategoryNames = value || [];
-            this._renderCategoryColorGrid(); // rebuild UI on update
+            if (this._renderCategoryColorGrid && this._customColors) {
+                this._renderCategoryColorGrid(); // rebuild UI on update
+            }
         }
 
         get validCategoryNames() {

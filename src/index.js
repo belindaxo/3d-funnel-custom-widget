@@ -323,6 +323,7 @@ var parseMetadata = metadata => {
             const scaleFormat = (value) => this._scaleFormat(value);
             const subtitleText = this._updateSubtitle();
             const labelFormat = this.labelFormat;
+            
             const customColors = this.customColors || [];
 
             series.forEach(seriesItem => {
