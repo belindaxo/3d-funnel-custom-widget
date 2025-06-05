@@ -528,6 +528,8 @@ var parseMetadata = metadata => {
                     false, 
                     false
                 );
+
+                setTimeout(() => this._alignDataLabels().call(this._chart), 0);
             });
         }
 
