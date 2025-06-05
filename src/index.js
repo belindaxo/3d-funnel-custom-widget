@@ -69,6 +69,10 @@ var parseMetadata = metadata => {
             this._handlePointClick = this._handlePointClick.bind(this);
 
             this._lastSentCategories = [];
+
+            this._onMouseEnter = null;
+            this._onMouseLeave = null;
+
         }
 
         /**
@@ -492,7 +496,11 @@ var parseMetadata = metadata => {
 
             const container = this.shadowRoot.getElementById('container');
 
-            container.addEventListener("mouseenter", () => {
+            if (this._onMouseEnter) container.removeEventListener('mouseenter', this._onMouseEnter);
+            if (this._onMouseLeave) container.removeEventListener('mouseleave', this._onMouseLeave);
+
+            this._onMouseEnter = () => {
+                if (!this._chart) return;
                 this._chart.update(
                     {
                         exporting: {
@@ -510,10 +518,11 @@ var parseMetadata = metadata => {
                     false
                 );
                 
-                setTimeout(() => this._alignDataLabels().call(this._chart), 100);
-            });
+                this._alignDataLabels().call(this._chart);
+            };
 
-            container.addEventListener("mouseleave", () => {
+            this.onMouseLeave = () => {
+                if (!this._chart) return;
                 this._chart.update(
                     {
                         exporting: {
@@ -529,8 +538,11 @@ var parseMetadata = metadata => {
                     false
                 );
 
-                setTimeout(() => this._alignDataLabels().call(this._chart), 100);
-            });
+                this._alignDataLabels().call(this._chart);
+            };
+
+            container.addEventListener('mouseenter', this._onMouseEnter);
+            container.addEventListener('mouseleave', this._onMouseLeave);
         }
 
         /**
