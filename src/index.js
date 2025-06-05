@@ -438,6 +438,7 @@ var parseMetadata = metadata => {
                         dataLabels: {
                             enabled: this.showDataLabels || false,
                             allowOverlap: this.allowLabelOverlap || false,
+                            animation: false,
                             padding: 2,
                             borderWidth: 1,
                             borderRadius: 1,
