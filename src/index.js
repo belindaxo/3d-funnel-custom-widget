@@ -522,7 +522,8 @@ var parseMetadata = metadata => {
                 this._alignDataLabels().call(this._chart);
             };
 
-            this.onMouseLeave = () => {
+            this._onMouseLeave = () => {
+                console.log('Mouse left chart area');
                 if (!this._chart) return;
                 this._chart.update(
                     {
