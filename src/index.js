@@ -505,8 +505,10 @@ var parseMetadata = metadata => {
                             },
                         },
                     },
-                    true
-                ); // true = redraw
+                    true,
+                    false,
+                    false
+                ); 
             });
 
             container.addEventListener("mouseleave", () => {
@@ -520,7 +522,9 @@ var parseMetadata = metadata => {
                             },
                         },
                     },
-                    true
+                    true, 
+                    false, 
+                    false
                 );
             });
         }
