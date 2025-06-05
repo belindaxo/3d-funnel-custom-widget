@@ -510,7 +510,7 @@ var parseMetadata = metadata => {
                     false
                 );
                 
-                setTimeout(() => this._alignDataLabels().call(this._chart), 0);
+                setTimeout(() => this._alignDataLabels().call(this._chart), 100);
             });
 
             container.addEventListener("mouseleave", () => {
@@ -529,7 +529,7 @@ var parseMetadata = metadata => {
                     false
                 );
 
-                setTimeout(() => this._alignDataLabels().call(this._chart), 0);
+                setTimeout(() => this._alignDataLabels().call(this._chart), 100);
             });
         }
 
