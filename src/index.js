@@ -503,12 +503,14 @@ var parseMetadata = metadata => {
                                     menuItems: ['resetFilters']
                                 },
                             },
-                        },
+                        }
                     },
                     true,
                     false,
                     false
-                ); 
+                );
+                
+                setTimeout(() => this._alignDataLabels().call(this._chart), 0);
             });
 
             container.addEventListener("mouseleave", () => {
