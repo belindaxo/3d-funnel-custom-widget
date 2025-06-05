@@ -500,6 +500,7 @@ var parseMetadata = metadata => {
             if (this._onMouseLeave) container.removeEventListener('mouseleave', this._onMouseLeave);
 
             this._onMouseEnter = () => {
+                console.log('Mouse entered chart area')
                 if (!this._chart) return;
                 this._chart.update(
                     {
