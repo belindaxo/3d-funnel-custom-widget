@@ -345,6 +345,29 @@ var parseMetadata = metadata => {
             // Reset the selected point reference before rendering the chart
             this._selectedPoint = null;
 
+            Highcharts.SVGRenderer.prototype.symbols.contextButton = function (x, y, w, h) {
+                const radius = w * 0.11;
+                const spacing = w * 0.4;
+
+                const offsetY = 2;    // moves dots slightly down
+                const offsetX = 1;  // moves dots slightly to the right
+
+                const centerY = y + h / 2 + offsetY;
+                const startX = x + (w - spacing * 2) / 2 + offsetX;
+
+                const makeCirclePath = (cx, cy, r) => [
+                    'M', cx - r, cy,
+                    'A', r, r, 0, 1, 0, cx + r, cy,
+                    'A', r, r, 0, 1, 0, cx - r, cy
+                ];
+
+                return [].concat(
+                    makeCirclePath(startX, centerY, radius),
+                    makeCirclePath(startX + spacing, centerY, radius),
+                    makeCirclePath(startX + spacing * 2, centerY, radius)
+                );
+            };
+
             const chartOptions = {
                 chart: {
                     type: "funnel3d",
@@ -413,7 +436,28 @@ var parseMetadata = metadata => {
                     },
                 },
                 exporting: {
-                    enabled: false,
+                    enabled: true,
+                    buttons: {
+                        contextButton: {
+                            enabled: false,
+                        }
+                    },
+                    menuItemDefinitions: {
+                        resetFilters: {
+                            text: 'Reset Filters',
+                            onclick: () => {
+                                const linkedAnalysis = this.dataBindings.getDataBinding('dataBinding').getLinkedAnalysis();
+                                if (linkedAnalysis) {
+                                    linkedAnalysis.removeFilters();
+                                    if (this._selectedPoint) {
+                                        this._selectedPoint.select(false, false);
+                                        this._selectedPoint = null;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
                 },
                 tooltip: {
                     valueDecimals: 0,
@@ -425,6 +469,40 @@ var parseMetadata = metadata => {
                 series,
             };
             this._chart = Highcharts.chart(this.shadowRoot.getElementById('container'), chartOptions);
+
+            const container = this.shadowRoot.getElementById('container');
+
+            container.addEventListener("mouseenter", () => {
+                this._chart.update(
+                    {
+                        exporting: {
+                            buttons: {
+                                contextButton: {
+                                    enabled: true,
+                                    symbol: 'contextButton',
+                                    menuItems: ['resetFilters']
+                                },
+                            },
+                        },
+                    },
+                    true
+                ); // true = redraw
+            });
+
+            container.addEventListener("mouseleave", () => {
+                this._chart.update(
+                    {
+                        exporting: {
+                            buttons: {
+                                contextButton: {
+                                    enabled: false,
+                                },
+                            },
+                        },
+                    },
+                    true
+                );
+            });
         }
 
         /**
