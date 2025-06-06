@@ -112,7 +112,7 @@ var parseMetadata = metadata => {
                 'chartTitle', 'titleSize', 'titleFontStyle', 'titleAlignment', 'titleColor',                // Title properties
                 'chartSubtitle', 'subtitleSize', 'subtitleFontStyle', 'subtitleAlignment', 'subtitleColor', // Subtitle properties
                 'scaleFormat', 'decimalPlaces',                                                             // Number formatting properties
-                'showDataLabels', 'allowLabelOverlap', 'labelFormat', 'labelSize',                           // Data label properties
+                'showDataLabels', 'allowLabelOverlap', 'labelFormat', 'labelSize',                          // Data label properties
                 'customColors'
             ];
         }

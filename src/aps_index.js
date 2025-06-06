@@ -259,7 +259,7 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
                     const defaultIndex = this.validCategoryNames.indexOf(categoryName) % defaultColors.length;
                     input.value = currentColor || defaultColors[defaultIndex];
 
-                    input.addEventListener('input', () => {
+                    input.addEventListener('change', () => {
                         const existing = this.customColors.find(c => c.category === categoryName);
                         const updatedColor = input.value;
 
