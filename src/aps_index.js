@@ -184,16 +184,16 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
                     </tr>
                 </table>
             </tr>
+        </table>
+        <tr>
+            <button id="resetDefaults" type="button" style="margin-top: 10px; margin-bottom: 10px;">Reset to Default</button>
+        </tr>
+        <legend style="font-weight: bold;font-size: 18px;">Color Settings</legend>
+        <table>
+            <div id="categoryColorGrid" style="margin-top: 8px;"></div>
             <tr>
-                <button id="resetDefaults" type="button" style="margin-top: 10px; margin-bottom: 10px;">Reset to Default</button>
+                <td><button type="button" id="resetColors">Reset Colors</button></td>
             </tr>
-            <legend style="font-weight: bold;font-size: 18px;">Color Settings</legend>
-            <table>
-                <div id="categoryColorGrid" style="margin-top: 8px;"></div>
-                <tr>
-                    <td><button type="button" id="resetColors">Reset Colors</button></td>
-                </tr>
-            </table>
         </table>
         <input type="submit" style="display:none;">
         </form>
