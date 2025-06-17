@@ -273,15 +273,9 @@ var parseMetadata = metadata => {
                 }
                 return;
             }
-            console.log("Data Binding:", dataBinding);
 
             const { data, metadata } = dataBinding;
             const { dimensions, measures } = parseMetadata(metadata);
-            console.log("Data:", data);
-            console.log("Metadata:", metadata);
-            console.log("Databinding after parsing:", dataBinding.data);
-            console.log("Dimensions:", dimensions);
-            console.log("Measures:", measures);
 
             if (dimensions.length === 0 || measures.length === 0) {
                 if (this._chart) {
@@ -314,12 +308,6 @@ var parseMetadata = metadata => {
                 }));
             }
 
-
-
-            console.log("Category Data (After Sorting):", this.categoryData);
-            console.log("Series (After Sorting):", series);
-            console.log("Data:", data);
-
             const scaleFormat = (value) => this._scaleFormat(value);
             const subtitleText = this._updateSubtitle();
             const labelFormat = this.labelFormat;
@@ -336,7 +324,6 @@ var parseMetadata = metadata => {
                     };
                 });
             });
-            console.log("Series with Custom Colors:", series);
 
             const categoryData = this.categoryData;
 
@@ -501,7 +488,6 @@ var parseMetadata = metadata => {
             if (this._onMouseLeave) container.removeEventListener('mouseleave', this._onMouseLeave);
 
             this._onMouseEnter = () => {
-                console.log('Mouse entered chart area')
                 if (!this._chart) return;
                 this._chart.update(
                     {
@@ -524,7 +510,6 @@ var parseMetadata = metadata => {
             };
 
             this._onMouseLeave = () => {
-                console.log('Mouse left chart area');
                 if (!this._chart) return;
                 this._chart.update(
                     {
@@ -578,7 +563,6 @@ var parseMetadata = metadata => {
          */
         _formatTooltip(scaleFormat) {
             return function () {
-                console.log(this);
                 if (this.point) {
                     // Retrieve the category data using the index
                     const name = this.point.name;
@@ -645,8 +629,6 @@ var parseMetadata = metadata => {
                 return;
             }
 
-            console.log("Point object structure:", point);
-
             const dataBinding = this.dataBinding;
 
             const pointIndex = point.index;
@@ -672,8 +654,6 @@ var parseMetadata = metadata => {
                     const selection = {};
                     selection[this.categoryData[0].id] =
                         selectedItem[this.categoryData[0].key].id;
-                    console.log("Setting filter with selection:", selection);
-
                     linkedAnalysis.setFilters(selection);
                     this._selectedPoint = point;
                 }

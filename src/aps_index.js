@@ -288,7 +288,6 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
                 this.customColors = []; // Clear the array
                 renderCategoryColorGrid(); // Update the UI
                 this._submit(new Event('submit')); // Push to SAC to re-render chart
-                console.log("Custom colors reset.");
             });
 
 
