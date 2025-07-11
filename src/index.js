@@ -273,6 +273,7 @@ var parseMetadata = metadata => {
                 }
                 return;
             }
+            console.log('dataBinding: ', dataBinding);
 
             const { data, metadata } = dataBinding;
             const { dimensions, measures } = parseMetadata(metadata);
