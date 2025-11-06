@@ -313,6 +313,7 @@ var parseMetadata = metadata => {
             const scaleFormat = (value) => this._scaleFormat(value);
             const subtitleText = this._updateSubtitle();
             const labelFormat = this.labelFormat;
+            const cursorStyle = this.allowPointSelection ? 'pointer' : undefined;
             
             const customColors = this.customColors || [];
 
@@ -483,8 +484,6 @@ var parseMetadata = metadata => {
                 series,
             };
             this._chart = Highcharts.chart(this.shadowRoot.getElementById('container'), chartOptions);
-
-            const cursorStyle = this.allowPointSelection ? 'pointer' : undefined;
 
             const container = this.shadowRoot.getElementById('container');
 
