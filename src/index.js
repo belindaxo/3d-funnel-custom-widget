@@ -113,6 +113,7 @@ var parseMetadata = metadata => {
                 'chartSubtitle', 'subtitleSize', 'subtitleFontStyle', 'subtitleAlignment', 'subtitleColor', // Subtitle properties
                 'scaleFormat', 'decimalPlaces',                                                             // Number formatting properties
                 'showDataLabels', 'allowLabelOverlap', 'labelFormat', 'labelSize',                          // Data label properties
+                'allowPointSelection',                                                                      // Linked analysis property
                 'customColors'
             ];
         }
@@ -420,8 +421,8 @@ var parseMetadata = metadata => {
                 },
                 plotOptions: {
                     series: {
-                        allowPointSelect: true,
-                        cursor: "pointer",
+                        allowPointSelect: this.allowPointSelection,
+                        cursor: cursorStyle,
                         point: {
                             events: {
                                 select: this._handlePointClick,
@@ -482,6 +483,8 @@ var parseMetadata = metadata => {
                 series,
             };
             this._chart = Highcharts.chart(this.shadowRoot.getElementById('container'), chartOptions);
+
+            const cursorStyle = this.allowPointSelection ? 'pointer' : undefined;
 
             const container = this.shadowRoot.getElementById('container');
 

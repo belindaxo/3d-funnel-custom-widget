@@ -185,6 +185,15 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
                 </table>
             </tr>
         </table>
+        <legend style="font-weight: bold;font-size: 18px; margin-top: 10px;"> Linked Analysis Settings </legend>
+        <table>
+            <tr>
+                <td>
+                    <input id="allowPointSelection" type="checkbox" checked>
+                    <label for="allowPointSelection">Allow data point selection</label>
+                </td>
+            </tr>
+        </table>
         <tr>
             <button id="resetDefaults" type="button" style="margin-top: 10px; margin-bottom: 10px;">Reset to Default</button>
         </tr>
@@ -306,6 +315,7 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
             this._shadowRoot.getElementById('allowLabelOverlap').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('labelFormat').addEventListener('change', this._submit.bind(this));
             this._shadowRoot.getElementById('labelSize').addEventListener('change', this._submit.bind(this));
+            this._shadowRoot.getElementById('allowPointSelection').addEventListener('change', this._submit.bind(this));
 
 
             // Reset button logic
@@ -357,6 +367,7 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
                         allowLabelOverlap: this.allowLabelOverlap,
                         labelFormat: this.labelFormat,
                         labelSize: this.labelSize,
+                        allowPointSelection: this.allowPointSelection,
                         customColors: this.customColors,
                         validCategoryNames: this.validCategoryNames
                     }
@@ -492,6 +503,14 @@ const defaultColors = ['#004b8d', '#939598', '#faa834', '#00aa7e', '#47a5dc', '#
 
         get labelSize() {
             return this._shadowRoot.getElementById('labelSize').value;
+        }
+
+        set allowPointSelection(value) {
+            this._shadowRoot.getElementById('allowPointSelection').checked = value;
+        }
+
+        get allowPointSelection() {
+            return this._shadowRoot.getElementById('allowPointSelection').checked;
         }
 
         get customColors() {

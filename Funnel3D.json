@@ -14,14 +14,14 @@
             "tag": "com-sap-sample-funnel3d",
             "url": "https://belindaxo.github.io/3d-funnel-custom-widget/dist/bundle.js",
             "integrity": "sha256-yhPSIyFjFZnMS87PdMOncFzPqODiPlG9H3eUFFGo9e4=",
-            "ignoreIntegrity": false
+            "ignoreIntegrity": true
         },
         {
             "kind": "styling",
             "tag": "com-sap-sample-funnel3d-aps",
             "url": "https://belindaxo.github.io/3d-funnel-custom-widget/dist/bundle.js",
             "integrity": "sha256-yhPSIyFjFZnMS87PdMOncFzPqODiPlG9H3eUFFGo9e4=",
-            "ignoreIntegrity": false
+            "ignoreIntegrity": true
         }
     ],
     "properties": {
@@ -112,6 +112,11 @@
             "type": "string",
             "description": "The font size of the data labels",
             "default": "12px"
+        },
+        "allowPointSelection": {
+            "type": "boolean",
+            "description": "Allow data point selection for linked analysis",
+            "default": true
         },
         "customColors": {
             "type": "CustomColor[]",
